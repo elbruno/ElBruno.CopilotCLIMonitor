@@ -1,0 +1,120 @@
+using System.CommandLine;
+using ElBruno.CopilotCLIMonitor.Commands;
+using ElBruno.CopilotCLIMonitor.Core.Models;
+using ElBruno.CopilotCLIMonitor.Tests.Fakes;
+
+namespace ElBruno.CopilotCLIMonitor.Tests.Commands;
+
+/// <summary>
+/// Tests for the System.CommandLine-wired command builders in Cli/Commands/.
+/// These validate CLI argument parsing and command wiring end-to-end.
+/// </summary>
+public class SystemCommandLineWiringTests : IDisposable
+{
+    private readonly FakeEventNotifier _notifier = new();
+    private readonly FakeRepositoryDetector _detector = new();
+    private readonly FakeHookInstaller _installer = new();
+    private readonly string _tempDir;
+
+    public SystemCommandLineWiringTests()
+    {
+        _tempDir = Path.Combine(Path.GetTempPath(), $"copilotmon-scl-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(_tempDir);
+    }
+
+    public void Dispose() => Directory.Delete(_tempDir, recursive: true);
+
+    // ── notify command ────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task Notify_WithRequiredArgs_InvokesNotifier()
+    {
+        var root = new RootCommand { NotifyCommand.Build(_notifier) };
+        await root.Parse(["notify", "--event", "task-completed", "--message", "Done"]).InvokeAsync();
+        Assert.Single(_notifier.ReceivedEvents);
+    }
+
+    [Fact]
+    public async Task Notify_TaskCompleted_ParsesEventTypeCorrectly()
+    {
+        var root = new RootCommand { NotifyCommand.Build(_notifier) };
+        await root.Parse(["notify", "--event", "task-completed", "--message", "Done"]).InvokeAsync();
+        var evt = Assert.Single(_notifier.ReceivedEvents);
+        Assert.Equal(EventType.TaskCompleted, evt.EventType);
+    }
+
+    [Fact]
+    public async Task Notify_WithoutRequiredEvent_DoesNotInvokeNotifier()
+    {
+        var root = new RootCommand { NotifyCommand.Build(_notifier) };
+        await root.Parse(["notify", "--message", "Done"]).InvokeAsync();
+        Assert.Empty(_notifier.ReceivedEvents);
+    }
+
+    [Fact]
+    public async Task Notify_WithRepository_PassesRepoToNotifier()
+    {
+        var root = new RootCommand { NotifyCommand.Build(_notifier) };
+        await root.Parse(["notify", "--event", "error", "--message", "Fail", "--repository", "myrepo"]).InvokeAsync();
+        var evt = Assert.Single(_notifier.ReceivedEvents);
+        Assert.Equal("myrepo", evt.Repository);
+    }
+
+    [Fact]
+    public async Task Notify_UnknownEvent_ForwardsAsUnknownEventType()
+    {
+        var root = new RootCommand { NotifyCommand.Build(_notifier) };
+        await root.Parse(["notify", "--event", "custom-type", "--message", "msg"]).InvokeAsync();
+        var evt = Assert.Single(_notifier.ReceivedEvents);
+        Assert.Equal(EventType.Unknown, evt.EventType);
+    }
+
+    // ── init command ──────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task Init_WhenRepoFound_ReturnsZero()
+    {
+        _detector.RootToReturn = _tempDir;
+        var root = new RootCommand { InitCommand.Build(_detector, _installer) };
+        var exit = await root.Parse(["init"]).InvokeAsync();
+        Assert.Equal(0, exit);
+    }
+
+    [Fact]
+    public async Task Init_WhenRepoFound_CallsInstaller()
+    {
+        _detector.RootToReturn = _tempDir;
+        var root = new RootCommand { InitCommand.Build(_detector, _installer) };
+        await root.Parse(["init"]).InvokeAsync();
+        Assert.Equal(_tempDir, _installer.LastInstalledRoot);
+    }
+
+    [Fact]
+    public async Task Init_WhenNoRepo_ReturnsOne()
+    {
+        _detector.RootToReturn = null;
+        var root = new RootCommand { InitCommand.Build(_detector, _installer) };
+        var exit = await root.Parse(["init"]).InvokeAsync();
+        Assert.Equal(1, exit);
+    }
+
+    [Fact]
+    public async Task Init_WhenInstallerFails_ReturnsOne()
+    {
+        _detector.RootToReturn = _tempDir;
+        _installer.ResultToReturn = new Core.Interfaces.HookInstallResult(false, "Access denied");
+        var root = new RootCommand { InitCommand.Build(_detector, _installer) };
+        var exit = await root.Parse(["init"]).InvokeAsync();
+        Assert.Equal(1, exit);
+    }
+
+    // ── doctor command ────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task Doctor_Always_ReturnsZero()
+    {
+        var root = new RootCommand { DoctorCommand.Build(_detector) };
+        var exit = await root.Parse(["doctor"]).InvokeAsync();
+        Assert.Equal(0, exit);
+    }
+}

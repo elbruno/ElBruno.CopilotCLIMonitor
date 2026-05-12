@@ -1,0 +1,50 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElBruno.CopilotCLIMonitor", "src\ElBruno.CopilotCLIMonitor\ElBruno.CopilotCLIMonitor.csproj", "{B061D8E3-1612-43A0-AF71-8F6CC7C2C477}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElBruno.CopilotCLIMonitor.Core", "src\ElBruno.CopilotCLIMonitor.Core\ElBruno.CopilotCLIMonitor.Core.csproj", "{09141708-FB4D-4FD8-9853-8050BF6615A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElBruno.CopilotCLIMonitor.Cli", "src\ElBruno.CopilotCLIMonitor.Cli\ElBruno.CopilotCLIMonitor.Cli.csproj", "{4BA9673C-E78C-41E1-AF0F-5F68CAC6AC59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElBruno.CopilotCLIMonitor.Tests", "tests\ElBruno.CopilotCLIMonitor.Tests\ElBruno.CopilotCLIMonitor.Tests.csproj", "{DFBC4B98-30B9-476E-993C-B9E54540A22A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5C5C74CB-357A-4995-954B-5C52AB178674}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8A793BEE-A5EE-4636-B808-C450823B162C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B061D8E3-1612-43A0-AF71-8F6CC7C2C477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B061D8E3-1612-43A0-AF71-8F6CC7C2C477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B061D8E3-1612-43A0-AF71-8F6CC7C2C477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B061D8E3-1612-43A0-AF71-8F6CC7C2C477}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09141708-FB4D-4FD8-9853-8050BF6615A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09141708-FB4D-4FD8-9853-8050BF6615A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09141708-FB4D-4FD8-9853-8050BF6615A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09141708-FB4D-4FD8-9853-8050BF6615A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BA9673C-E78C-41E1-AF0F-5F68CAC6AC59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BA9673C-E78C-41E1-AF0F-5F68CAC6AC59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BA9673C-E78C-41E1-AF0F-5F68CAC6AC59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BA9673C-E78C-41E1-AF0F-5F68CAC6AC59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFBC4B98-30B9-476E-993C-B9E54540A22A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFBC4B98-30B9-476E-993C-B9E54540A22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFBC4B98-30B9-476E-993C-B9E54540A22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFBC4B98-30B9-476E-993C-B9E54540A22A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B061D8E3-1612-43A0-AF71-8F6CC7C2C477} = {5C5C74CB-357A-4995-954B-5C52AB178674}
+		{09141708-FB4D-4FD8-9853-8050BF6615A1} = {5C5C74CB-357A-4995-954B-5C52AB178674}
+		{4BA9673C-E78C-41E1-AF0F-5F68CAC6AC59} = {5C5C74CB-357A-4995-954B-5C52AB178674}
+		{DFBC4B98-30B9-476E-993C-B9E54540A22A} = {8A793BEE-A5EE-4636-B808-C450823B162C}
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

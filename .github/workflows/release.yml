@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish-nuget:
+    runs-on: windows-latest
+    
+    permissions:
+      contents: read
+      packages: write
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Extract version from tag
+      id: tag
+      run: |
+        $version = "${{ github.ref }}" -replace 'refs/tags/v', ''
+        echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+        echo "Version: $version"
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --configuration Release --no-restore /p:Version=${{ steps.tag.outputs.VERSION }}
+    
+    - name: Test
+      run: dotnet test --configuration Release --no-build --verbosity normal
+    
+    - name: Pack NuGet package
+      run: dotnet pack --configuration Release --no-build --output ./artifacts /p:Version=${{ steps.tag.outputs.VERSION }}
+    
+    - name: Publish to NuGet
+      run: |
+        $packages = Get-ChildItem ./artifacts -Filter *.nupkg
+        foreach ($package in $packages) {
+          dotnet nuget push $package.FullName `
+            --api-key ${{ secrets.NUGET_API_KEY }} `
+            --source https://api.nuget.org/v3/index.json `
+            --skip-duplicate
+        }
+    
+    - name: Upload artifacts to release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ./artifacts/**/*.nupkg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

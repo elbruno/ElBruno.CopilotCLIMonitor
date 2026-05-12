@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>ElBruno.CopilotCLIMonitor</AssemblyName>
+    <RootNamespace>ElBruno.CopilotCLIMonitor</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ElBruno.CopilotCLIMonitor.Core\ElBruno.CopilotCLIMonitor.Core.csproj" />
+  </ItemGroup>
+
+</Project>
