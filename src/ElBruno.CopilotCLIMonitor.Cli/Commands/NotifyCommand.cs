@@ -8,16 +8,18 @@ public static class NotifyCommand
 {
     public static Command Build(IEventNotifier notifier)
     {
-        var eventOption = new Option<string>("--event", "Event type (e.g. task-completed, error, approval-required)")
+        var eventOption = new Option<string>("--event")
         {
+            Description = "Event type (e.g. task-completed, error, approval-required)",
             Required = true
         };
-        var messageOption = new Option<string>("--message", "Notification message")
+        var messageOption = new Option<string>("--message")
         {
+            Description = "Notification message",
             Required = true
         };
-        var repoOption = new Option<string?>("--repository", "Repository name override");
-        var branchOption = new Option<string?>("--branch", "Branch name override");
+        var repoOption = new Option<string?>("--repository") { Description = "Repository name override" };
+        var branchOption = new Option<string?>("--branch") { Description = "Branch name override" };
 
         var command = new Command("notify", "Send a notification event to the monitor")
         {

@@ -7,7 +7,7 @@ public static class InitCommand
 {
     public static Command Build(IRepositoryDetector detector, IHookInstaller installer)
     {
-        var pathOption = new Option<string?>("--path", "Repository root path (defaults to current directory)");
+        var pathOption = new Option<string?>("--path") { Description = "Repository root path (defaults to current directory)" };
 
         var command = new Command("init", "Initialize copilotmon hooks in the current repository")
         {
