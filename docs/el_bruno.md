@@ -1,8 +1,8 @@
-# ElBruno.CopilotCLIMonitor – Product Requirements Document (PRD)
+# ElBruno.copilotclimon – Product Requirements Document (PRD)
 
 ## Overview
 
-`ElBruno.CopilotCLIMonitor` is a Windows-first developer productivity tool designed to monitor long-running GitHub Copilot CLI tasks and provide rich desktop notifications through a lightweight system tray (Systray) application.
+`ElBruno.copilotclimon` is a Windows-first developer productivity tool designed to monitor long-running GitHub Copilot CLI tasks and provide rich desktop notifications through a lightweight system tray (Systray) application.
 
 The product is inspired by the structure, publishing model, and user experience patterns used in the existing repository:
 
@@ -48,7 +48,7 @@ Developers often:
 - Lose visibility into the workflow status
 - Miss approvals or task completion events
 
-`ElBruno.CopilotCLIMonitor` solves this by creating a desktop notification bridge between GitHub Copilot CLI hooks and a native Windows monitoring application.
+`ElBruno.copilotclimon` solves this by creating a desktop notification bridge between GitHub Copilot CLI hooks and a native Windows monitoring application.
 
 ---
 
@@ -194,7 +194,7 @@ This is important because:
 ## Example Initialization
 
 ```bash
-copilotclimonitor init
+copilotclimon init
 ```
 
 Expected behavior:
@@ -223,7 +223,7 @@ Copilot CLI triggers a repository hook.
 Hook executes:
 
 ```bash
-copilotclimonitor notify --event task-completed --message "Migration finished"
+copilotclimon notify --event task-completed --message "Migration finished"
 ```
 
 ### Step 4
@@ -370,9 +370,9 @@ Example:
 
 ```text
 /src
-  /ElBruno.CopilotCLIMonitor
-  /ElBruno.CopilotCLIMonitor.Core
-  /ElBruno.CopilotCLIMonitor.Hooks
+  /ElBruno.copilotclimon
+  /ElBruno.copilotclimon.Core
+  /ElBruno.copilotclimon.Hooks
 ```
 
 ---
@@ -381,7 +381,7 @@ Example:
 
 ```text
 /tests
-  /ElBruno.CopilotCLIMonitor.Tests
+  /ElBruno.copilotclimon.Tests
 ```
 
 ---
@@ -492,7 +492,7 @@ Allow users to configure:
 Command:
 
 ```bash
-copilotclimonitor init
+copilotclimon init
 ```
 
 Should:
@@ -603,31 +603,31 @@ Task failed after 2h 14m
 ### Initialize Repository
 
 ```bash
-copilotclimonitor init
+copilotclimon init
 ```
 
 ### Send Notification
 
 ```bash
-copilotclimonitor notify
+copilotclimon notify
 ```
 
 ### Validate Setup
 
 ```bash
-copilotclimonitor doctor
+copilotclimon doctor
 ```
 
 ### Open Dashboard
 
 ```bash
-copilotclimonitor open
+copilotclimon open
 ```
 
 ### Show Version
 
 ```bash
-copilotclimonitor --version
+copilotclimon --version
 ```
 
 ---
@@ -639,7 +639,7 @@ copilotclimonitor --version
 Stored under:
 
 ```text
-%AppData%\ElBruno\CopilotCLIMonitor
+%AppData%\ElBruno\copilotclimon
 ```
 
 ## Repository Configuration
@@ -649,7 +649,7 @@ Stored locally in repository.
 Potential location:
 
 ```text
-.copilotclimonitor
+.copilotclimon
 ```
 
 ---
@@ -683,7 +683,7 @@ Main distribution method.
 Example installation:
 
 ```bash
-dotnet tool install -g ElBruno.CopilotCLIMonitor
+dotnet tool install -g ElBruno.copilotclimon
 ```
 
 ---
@@ -875,20 +875,20 @@ Reason:
 ## Install
 
 ```bash
-dotnet tool install -g ElBruno.CopilotCLIMonitor
+dotnet tool install -g ElBruno.copilotclimon
 ```
 
 ## Start App
 
 ```bash
-copilotclimonitor
+copilotclimon
 ```
 
 ## Initialize Repository
 
 ```bash
 cd myrepo
-copilotclimonitor init
+copilotclimon init
 ```
 
 ## Run Copilot CLI
@@ -957,7 +957,7 @@ Potential topics:
 
 "Running Copilot CLI tasks for 2 hours while your terminal is minimized? 👀
 
-Meet ElBruno.CopilotCLIMonitor 🚀
+Meet ElBruno.copilotclimon 🚀
 
 A tiny Windows Systray app that keeps you informed with native notifications when your AI workflows finish.
 
@@ -1044,7 +1044,7 @@ Show:
 
 # Final Vision
 
-`ElBruno.CopilotCLIMonitor` should feel like:
+`ElBruno.copilotclimon` should feel like:
 
 - a polished developer utility
 - a natural extension of GitHub Copilot CLI workflows

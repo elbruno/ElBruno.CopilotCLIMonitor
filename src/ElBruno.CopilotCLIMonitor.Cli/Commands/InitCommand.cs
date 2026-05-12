@@ -9,7 +9,7 @@ public static class InitCommand
     {
         var pathOption = new Option<string?>("--path") { Description = "Repository root path (defaults to current directory)" };
 
-        var command = new Command("init", "Initialize copilotmon hooks in the current repository")
+        var command = new Command("init", "Initialize copilotclimon hooks in the current repository")
         {
             pathOption
         };

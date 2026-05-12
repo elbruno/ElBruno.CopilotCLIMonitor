@@ -30,7 +30,7 @@ dotnet tool install -g ElBruno.CopilotCLIMonitor
 ### Start the app
 
 ```powershell
-copilotclimonitor
+copilotclimon
 ```
 
 The application runs in the Windows Systray. Look for the notification icon in your system tray.
@@ -39,7 +39,7 @@ The application runs in the Windows Systray. Look for the notification icon in y
 
 ```bash
 cd your-repository
-copilotclimonitor init
+copilotclimon init
 ```
 
 This installs repository hooks and configures event forwarding.
@@ -47,7 +47,7 @@ This installs repository hooks and configures event forwarding.
 ### Run your Copilot CLI tasks
 
 ```bash
-copilot task run "your task here"
+copilot -p "Using BYOK, answer in one sentence with the wire model/deployment name you are using."
 ```
 
 When your task completes, you'll receive a Windows toast notification—no terminal watching required.
@@ -117,7 +117,7 @@ CLI-based hook installer that:
 ### Initialize repository
 
 ```bash
-copilotclimonitor init
+copilotclimon init
 ```
 
 Detects the current repository, installs hooks, and registers event forwarding.
@@ -125,13 +125,13 @@ Detects the current repository, installs hooks, and registers event forwarding.
 ### Send notification
 
 ```bash
-copilotclimonitor notify --event task-completed --message "Your message here"
+copilotclimon notify --event task-completed --message "Your message here"
 ```
 
 ### Validate setup
 
 ```bash
-copilotclimonitor doctor
+copilotclimon doctor
 ```
 
 Checks system configuration and hook installation.
@@ -139,7 +139,7 @@ Checks system configuration and hook installation.
 ### Open dashboard
 
 ```bash
-copilotclimonitor open
+copilotclimon open
 ```
 
 Opens the events dashboard window.
@@ -147,7 +147,7 @@ Opens the events dashboard window.
 ### Show version
 
 ```bash
-copilotclimonitor --version
+copilotclimon --version
 ```
 
 ## Configuration
@@ -196,7 +196,7 @@ The following hook configuration forwards Copilot CLI events:
 ```bash
 # Installed in: .copilotclimonitor/hooks/on-task-complete.sh
 #!/bin/bash
-copilotclimonitor notify \
+copilotclimon notify \
   --event task-completed \
   --message "Migration task finished" \
   --repository "$(basename $(git rev-parse --show-toplevel))" \

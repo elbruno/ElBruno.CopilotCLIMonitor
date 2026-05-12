@@ -7,11 +7,11 @@ public static class DoctorCommand
 {
     public static Command Build(IRepositoryDetector detector)
     {
-        var command = new Command("doctor", "Validate the copilotmon setup");
+        var command = new Command("doctor", "Validate the copilotclimon setup");
 
         command.SetAction((_, _) =>
         {
-            Console.WriteLine("copilotmon doctor — validating setup");
+            Console.WriteLine("copilotclimon doctor — validating setup");
             Console.WriteLine();
 
             var cwd = Directory.GetCurrentDirectory();
@@ -30,11 +30,11 @@ public static class DoctorCommand
                 {
                     Console.WriteLine("✓ Hook directory: .copilotclimonitor");
                     var script = Path.Combine(hookDir, "notify.ps1");
-                    Console.WriteLine(File.Exists(script) ? "✓ notify.ps1 present" : "✗ notify.ps1 missing — run: copilotmon init");
+                    Console.WriteLine(File.Exists(script) ? "✓ notify.ps1 present" : "✗ notify.ps1 missing — run: copilotclimon init");
                 }
                 else
                 {
-                    Console.WriteLine("✗ Hook directory not found — run: copilotmon init");
+                    Console.WriteLine("✗ Hook directory not found — run: copilotclimon init");
                 }
             }
             else
@@ -43,7 +43,7 @@ public static class DoctorCommand
             }
 
             Console.WriteLine();
-            Console.WriteLine("Done. Start the monitor with: copilotmon");
+            Console.WriteLine("Done. Start the monitor with: copilotclimon");
             return Task.FromResult(0);
         });
 

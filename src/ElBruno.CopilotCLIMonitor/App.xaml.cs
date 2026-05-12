@@ -121,7 +121,7 @@ public partial class App : System.Windows.Application
     private void ShowAbout()
     {
         System.Windows.MessageBox.Show(
-            "CopilotCLI Monitor v0.1.0\n\nMonitors GitHub Copilot CLI tasks and shows\nWindows desktop notifications.\n\nCLI: copilotmon notify --event task-completed --message \"Done\"",
+            "CopilotCLI Monitor v0.1.0\n\nMonitors GitHub Copilot CLI tasks and shows\nWindows desktop notifications.\n\nCLI: copilotclimon notify --event task-completed --message \"Done\"",
             "About CopilotCLI Monitor",
             MessageBoxButton.OK,
             MessageBoxImage.Information);

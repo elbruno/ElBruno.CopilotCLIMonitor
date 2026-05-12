@@ -15,7 +15,7 @@ public class DoctorHandlerTests : IDisposable
 
     public DoctorHandlerTests()
     {
-        _tempDir = Path.Combine(Path.GetTempPath(), $"copilotmon-doctor-{Guid.NewGuid():N}");
+        _tempDir = Path.Combine(Path.GetTempPath(), $"copilotclimon-doctor-{Guid.NewGuid():N}");
         Directory.CreateDirectory(_tempDir);
     }
 
@@ -97,6 +97,6 @@ public class DoctorHandlerTests : IDisposable
         _detector.RootToReturn = null;
         _ipc.IsRunning = false;
         await BuildSut().RunDoctorAsync([]);
-        Assert.Contains("copilotmon doctor", _out.ToString());
+        Assert.Contains("copilotclimon doctor", _out.ToString());
     }
 }

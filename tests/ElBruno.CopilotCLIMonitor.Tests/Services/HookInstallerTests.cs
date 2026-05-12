@@ -9,7 +9,7 @@ public class HookInstallerTests : IDisposable
 
     public HookInstallerTests()
     {
-        _tempDir = Path.Combine(Path.GetTempPath(), $"copilotmon-installer-{Guid.NewGuid():N}");
+        _tempDir = Path.Combine(Path.GetTempPath(), $"copilotclimon-installer-{Guid.NewGuid():N}");
         Directory.CreateDirectory(_tempDir);
     }
 
@@ -40,12 +40,12 @@ public class HookInstallerTests : IDisposable
     }
 
     [Fact]
-    public void Install_ValidRepo_NotifyScriptContainsCopilotmonCommand()
+    public void Install_ValidRepo_NotifyScriptContainsCopilotclimonCommand()
     {
         _sut.Install(_tempDir);
         var scriptPath = Path.Combine(_tempDir, ".copilotclimonitor", "notify.ps1");
         var content = File.ReadAllText(scriptPath);
-        Assert.Contains("copilotmon notify", content);
+        Assert.Contains("copilotclimon notify", content);
     }
 
     [Fact]

@@ -4,7 +4,7 @@ using ElBruno.CopilotCLIMonitor.Core.Models;
 namespace ElBruno.CopilotCLIMonitor.Cli.Handlers;
 
 /// <summary>
-/// Testable command handlers for the copilotmon CLI.
+/// Testable command handlers for the copilotclimon CLI.
 /// All I/O goes through injected interfaces so tests can swap them out.
 /// </summary>
 public sealed class CliCommandHandlers(
@@ -65,7 +65,7 @@ public sealed class CliCommandHandlers(
             return 0;
         }
 
-        await _err.WriteLineAsync("✗ Monitor is not running. Start it with: copilotmon");
+        await _err.WriteLineAsync("✗ Monitor is not running. Start it with: copilotclimon");
         return 2;
     }
 
@@ -103,7 +103,7 @@ public sealed class CliCommandHandlers(
 
     public async Task<int> RunDoctorAsync(string[] args)
     {
-        await _out.WriteLineAsync("copilotmon doctor — validating setup");
+        await _out.WriteLineAsync("copilotclimon doctor — validating setup");
 
         var allOk = true;
         var cwd = Directory.GetCurrentDirectory();
@@ -122,12 +122,12 @@ public sealed class CliCommandHandlers(
                 await _out.WriteLineAsync("✓ Hook directory exists: .copilotclimonitor");
                 var script = Path.Combine(hookDir, "notify.ps1");
                 var config = Path.Combine(hookDir, "config.json");
-                await _out.WriteLineAsync(File.Exists(script) ? "✓ notify.ps1 present" : "✗ notify.ps1 missing — run: copilotmon init");
-                await _out.WriteLineAsync(File.Exists(config) ? "✓ config.json present" : "✗ config.json missing — run: copilotmon init");
+                await _out.WriteLineAsync(File.Exists(script) ? "✓ notify.ps1 present" : "✗ notify.ps1 missing — run: copilotclimon init");
+                await _out.WriteLineAsync(File.Exists(config) ? "✓ config.json present" : "✗ config.json missing — run: copilotclimon init");
             }
             else
             {
-                await _out.WriteLineAsync("✗ Hook directory not found — run: copilotmon init");
+                await _out.WriteLineAsync("✗ Hook directory not found — run: copilotclimon init");
                 allOk = false;
             }
         }
@@ -141,7 +141,7 @@ public sealed class CliCommandHandlers(
             await _out.WriteLineAsync($"✓ Monitor is running at {IpcConstants.HealthUrl()}");
         else
         {
-            await _out.WriteLineAsync("✗ Monitor is not running — start it with: copilotmon");
+            await _out.WriteLineAsync("✗ Monitor is not running — start it with: copilotclimon");
             allOk = false;
         }
 
@@ -156,7 +156,7 @@ public sealed class CliCommandHandlers(
         var running = await ipcClient.IsRunningAsync();
         if (!running)
         {
-            await _err.WriteLineAsync("Monitor is not running. Start it with: copilotmon");
+            await _err.WriteLineAsync("Monitor is not running. Start it with: copilotclimon");
             return 1;
         }
 

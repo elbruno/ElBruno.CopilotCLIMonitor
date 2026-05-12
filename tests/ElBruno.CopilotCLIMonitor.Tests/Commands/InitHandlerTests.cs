@@ -16,7 +16,7 @@ public class InitHandlerTests : IDisposable
 
     public InitHandlerTests()
     {
-        _tempDir = Path.Combine(Path.GetTempPath(), $"copilotmon-init-handler-{Guid.NewGuid():N}");
+        _tempDir = Path.Combine(Path.GetTempPath(), $"copilotclimon-init-handler-{Guid.NewGuid():N}");
         Directory.CreateDirectory(_tempDir);
     }
 

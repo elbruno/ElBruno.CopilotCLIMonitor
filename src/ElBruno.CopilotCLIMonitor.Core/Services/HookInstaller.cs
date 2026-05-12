@@ -50,6 +50,6 @@ public class HookInstaller : IHookInstaller
             [string]$Event = "task-completed",
             [string]$Message = "Task completed"
         )
-        copilotmon notify --event $Event --message $Message
+        copilotclimon notify --event $Event --message $Message
         """;
 }

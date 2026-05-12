@@ -7,7 +7,7 @@ var detector = new RepositoryDetector();
 var installer = new HookInstaller();
 var notifier = new HttpEventNotifier();
 
-var root = new RootCommand("copilotmon — GitHub Copilot CLI task monitor");
+var root = new RootCommand("copilotclimon — GitHub Copilot CLI task monitor");
 
 root.Add(NotifyCommand.Build(notifier));
 root.Add(InitCommand.Build(detector, installer));

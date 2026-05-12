@@ -18,7 +18,7 @@ public class SystemCommandLineWiringTests : IDisposable
 
     public SystemCommandLineWiringTests()
     {
-        _tempDir = Path.Combine(Path.GetTempPath(), $"copilotmon-scl-{Guid.NewGuid():N}");
+        _tempDir = Path.Combine(Path.GetTempPath(), $"copilotclimon-scl-{Guid.NewGuid():N}");
         Directory.CreateDirectory(_tempDir);
     }
 
@@ -116,5 +116,28 @@ public class SystemCommandLineWiringTests : IDisposable
         var root = new RootCommand { DoctorCommand.Build(_detector) };
         var exit = await root.Parse(["doctor"]).InvokeAsync();
         Assert.Equal(0, exit);
+    }
+
+    // ── command metadata ─────────────────────────────────────────────────────
+
+    [Fact]
+    public void RootCommand_Description_ContainsCopilotclimon()
+    {
+        var root = new RootCommand("copilotclimon — GitHub Copilot CLI task monitor");
+        Assert.Contains("copilotclimon", root.Description);
+    }
+
+    [Fact]
+    public void InitCommand_Description_ContainsCopilotclimon()
+    {
+        var cmd = InitCommand.Build(_detector, _installer);
+        Assert.Contains("copilotclimon", cmd.Description);
+    }
+
+    [Fact]
+    public void DoctorCommand_Description_ContainsCopilotclimon()
+    {
+        var cmd = DoctorCommand.Build(_detector);
+        Assert.Contains("copilotclimon", cmd.Description);
     }
 }

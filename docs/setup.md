@@ -11,19 +11,19 @@
 ### Step 1: Install the .NET tool
 
 ```powershell
-dotnet tool install -g ElBruno.CopilotCLIMonitor
+dotnet tool install -g ElBruno.copilotclimon
 ```
 
 Verify installation:
 
 ```powershell
-copilotclimonitor --version
+copilotclimon --version
 ```
 
 ### Step 2: Start the Systray application
 
 ```powershell
-copilotclimonitor
+copilotclimon
 ```
 
 The application starts in the background. Look for the notification icon in your Windows system tray.
@@ -34,7 +34,7 @@ Navigate to your repository and run:
 
 ```bash
 cd your-repository
-copilotclimonitor init
+copilotclimon init
 ```
 
 Expected output:
@@ -53,7 +53,7 @@ Your repository is ready for notifications!
 Validate that hooks are working:
 
 ```bash
-copilotclimonitor doctor
+copilotclimon doctor
 ```
 
 This command checks:
@@ -67,7 +67,7 @@ This command checks:
 Send a test notification:
 
 ```bash
-copilotclimonitor notify --event test --message "Test notification"
+copilotclimon notify --event test --message "Test notification"
 ```
 
 You should see a Windows toast notification appear.
@@ -94,10 +94,10 @@ Open settings from the Systray context menu:
 
 ### Repository-specific configuration
 
-Repository configuration is stored in `.copilotclimonitor`:
+Repository configuration is stored in `.copilotclimon`:
 
 ```text
-.copilotclimonitor/
+.copilotclimon/
 ├── config.json
 └── hooks/
     ├── on-task-completed.sh
@@ -106,7 +106,7 @@ Repository configuration is stored in `.copilotclimonitor`:
     └── on-agent-waiting.sh
 ```
 
-Edit `.copilotclimonitor/config.json` to customize behavior per repository:
+Edit `.copilotclimon/config.json` to customize behavior per repository:
 
 ```json
 {
@@ -132,27 +132,27 @@ Edit `.copilotclimonitor/config.json` to customize behavior per repository:
 Update to the latest version:
 
 ```powershell
-dotnet tool update -g ElBruno.CopilotCLIMonitor
+dotnet tool update -g ElBruno.copilotclimon
 ```
 
 Then restart the Systray application:
 
 1. Right-click the notification icon in the system tray
 2. Select "Exit"
-3. Run `copilotclimonitor` again
+3. Run `copilotclimon` again
 
 ## Uninstalling
 
 Remove the .NET tool:
 
 ```powershell
-dotnet tool uninstall -g ElBruno.CopilotCLIMonitor
+dotnet tool uninstall -g ElBruno.copilotclimon
 ```
 
 Optional: Remove local repository configuration:
 
 ```bash
-rm -r .copilotclimonitor
+rm -r .copilotclimon
 ```
 
 ## Startup behavior
@@ -165,12 +165,12 @@ Or manually add to Windows Startup:
 
 1. Press `Win + R`
 2. Type `shell:startup`
-3. Create a shortcut to `copilotclimonitor`
+3. Create a shortcut to `copilotclimon`
 
 ### Manual startup
 
 ```powershell
-copilotclimonitor
+copilotclimon
 ```
 
 ## Logging
@@ -178,7 +178,7 @@ copilotclimonitor
 Logs are stored locally for debugging:
 
 ```text
-%AppData%\ElBruno\CopilotCLIMonitor\logs\
+%AppData%\ElBruno\copilotclimon\logs\
 ```
 
 View recent logs from Systray menu → "Open logs"

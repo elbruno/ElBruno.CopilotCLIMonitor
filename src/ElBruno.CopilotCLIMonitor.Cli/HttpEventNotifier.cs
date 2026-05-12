@@ -29,7 +29,7 @@ public sealed class HttpEventNotifier : IEventNotifier
         else
         {
             Console.Error.WriteLine($"✗ Monitor not running. Event: {monitorEvent.EventType} — {monitorEvent.Message}");
-            Console.Error.WriteLine($"  Start the monitor with: copilotmon");
+            Console.Error.WriteLine($"  Start the monitor with: copilotclimon");
         }
     }
 }

@@ -2,14 +2,14 @@
 
 ## Overview
 
-ElBruno.CopilotCLIMonitor is a Windows-first monitoring solution for long-running GitHub Copilot CLI tasks. The architecture consists of two main components that work together to deliver notifications.
+ElBruno.copilotclimon is a Windows-first monitoring solution for long-running GitHub Copilot CLI tasks. The architecture consists of two main components that work together to deliver notifications.
 
 ## System architecture
 
 ```
 GitHub Copilot CLI
        ↓ (triggers hooks)
-Repository hooks (.copilotclimonitor/hooks/)
+Repository hooks (.copilotclimon/hooks/)
        ↓ (forwards events)
 CLI notification command
        ↓ (IPC communication)
@@ -34,12 +34,12 @@ Persistent Windows background application that receives events and displays noti
 
 ### Architecture
 
-**Entry point:** `ElBruno.CopilotCLIMonitor.exe`
+**Entry point:** `ElBruno.copilotclimon.exe`
 
 **Main projects:**
-- `ElBruno.CopilotCLIMonitor` – WPF Systray application
-- `ElBruno.CopilotCLIMonitor.Core` – Shared business logic
-- `ElBruno.CopilotCLIMonitor.Notifications` – Windows notification abstractions
+- `ElBruno.copilotclimon` – WPF Systray application
+- `ElBruno.copilotclimon.Core` – Shared business logic
+- `ElBruno.copilotclimon.Notifications` – Windows notification abstractions
 
 ### Technology stack
 
@@ -53,7 +53,7 @@ Persistent Windows background application that receives events and displays noti
 **Global configuration:**
 
 ```text
-%AppData%\ElBruno\CopilotCLIMonitor\
+%AppData%\ElBruno\copilotclimon\
 ├── config.json
 ├── settings.json
 └── logs\
@@ -83,38 +83,38 @@ Repository-level CLI integration that forwards Copilot CLI events to the Systray
 
 ### Architecture
 
-**CLI entry point:** `copilotclimonitor`
+**CLI entry point:** `copilotclimon`
 
 **Main projects:**
-- `ElBruno.CopilotCLIMonitor.CLI` – Command-line interface
-- `ElBruno.CopilotCLIMonitor.Hooks` – Hook installation and management
+- `ElBruno.copilotclimon.CLI` – Command-line interface
+- `ElBruno.copilotclimon.Hooks` – Hook installation and management
 
 ### CLI commands
 
-#### `copilotclimonitor init`
+#### `copilotclimon init`
 
 Installs hooks in current repository:
 
 1. Detect repository root
-2. Create `.copilotclimonitor/` directory
+2. Create `.copilotclimon/` directory
 3. Deploy hook scripts
 4. Create repository configuration
 5. Validate setup
 6. Display summary
 
-#### `copilotclimonitor notify`
+#### `copilotclimon notify`
 
 Forward event to Systray application:
 
 ```bash
-copilotclimonitor notify \
+copilotclimon notify \
   --event task-completed \
   --message "Migration finished" \
   --repository "my-repo" \
   --branch "main"
 ```
 
-#### `copilotclimonitor doctor`
+#### `copilotclimon doctor`
 
 Validate system configuration:
 
@@ -124,26 +124,26 @@ Validate system configuration:
 4. Test IPC connectivity
 5. Display diagnostics
 
-#### `copilotclimonitor open`
+#### `copilotclimon open`
 
 Open events dashboard window
 
-#### `copilotclimonitor --version`
+#### `copilotclimon --version`
 
 Display version information
 
 ### Hook model
 
-Hooks are repository-scoped shell scripts deployed in `.copilotclimonitor/hooks/`:
+Hooks are repository-scoped shell scripts deployed in `.copilotclimon/hooks/`:
 
-**Example hook:** `.copilotclimonitor/hooks/on-task-completed.sh`
+**Example hook:** `.copilotclimon/hooks/on-task-completed.sh`
 
 ```bash
 #!/bin/bash
 REPO=$(basename $(git rev-parse --show-toplevel))
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event task-completed \
   --message "Task finished successfully" \
   --repository "$REPO" \
@@ -159,7 +159,7 @@ copilotclimonitor notify \
 
 ### Configuration
 
-Repository configuration stored in `.copilotclimonitor/config.json`:
+Repository configuration stored in `.copilotclimon/config.json`:
 
 ```json
 {
@@ -186,7 +186,7 @@ Repository configuration stored in `.copilotclimonitor/config.json`:
 ### Event flow
 
 1. **GitHub Copilot CLI** executes hook on event trigger
-2. **Hook script** calls `copilotclimonitor notify` with event details
+2. **Hook script** calls `copilotclimon notify` with event details
 3. **CLI tool** connects to running Systray application via IPC
 4. **CLI tool** sends event payload (JSON)
 5. **Systray application** receives and processes event
@@ -208,7 +208,7 @@ Systray app processes request
 **Option B: Named pipes** (alternative)
 
 ```
-CLI → Named pipe: \\.\pipe\copilotclimonitor
+CLI → Named pipe: \\.\pipe\copilotclimon
       ↓ (Binary protocol)
 Systray app processes stream
 ```
@@ -255,16 +255,16 @@ Systray app processes stream
 
 ### Installation
 
-User runs: `dotnet tool install -g ElBruno.CopilotCLIMonitor`
+User runs: `dotnet tool install -g ElBruno.copilotclimon`
 
 This installs:
-- CLI executable (`copilotclimonitor`)
+- CLI executable (`copilotclimon`)
 - Systray application executable
 - Supporting libraries
 
 ### Startup
 
-User runs: `copilotclimonitor`
+User runs: `copilotclimon`
 
 This starts:
 - Systray application (background)
@@ -273,11 +273,11 @@ This starts:
 
 ### Repository integration
 
-User runs: `copilotclimonitor init`
+User runs: `copilotclimon init`
 
 This creates:
-- `.copilotclimonitor/` directory
-- Hook scripts in `.copilotclimonitor/hooks/`
+- `.copilotclimon/` directory
+- Hook scripts in `.copilotclimon/hooks/`
 - Repository configuration file
 
 ## Security model

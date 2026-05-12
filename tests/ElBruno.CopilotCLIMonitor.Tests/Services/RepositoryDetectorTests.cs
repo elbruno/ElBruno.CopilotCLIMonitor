@@ -67,7 +67,7 @@ public class RepositoryDetectorTests
     public void GetCurrentBranch_WhenInsideTempDirOutsideGit_ReturnsNull()
     {
         // Create a temp dir that is NOT a git repo
-        var tempDir = Path.Combine(Path.GetTempPath(), $"copilotmon-test-{Guid.NewGuid():N}");
+        var tempDir = Path.Combine(Path.GetTempPath(), $"copilotclimon-test-{Guid.NewGuid():N}");
         Directory.CreateDirectory(tempDir);
         try
         {
