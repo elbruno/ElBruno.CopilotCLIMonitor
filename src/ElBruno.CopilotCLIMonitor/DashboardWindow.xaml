@@ -20,9 +20,11 @@
                        Foreground="Gray" FontSize="11" Margin="0,2,0,0"/>
             <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                 <TextBlock Text="Filter:" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                <TextBox x:Name="FilterTextBox" Width="220" Height="26" TextChanged="FilterTextBox_TextChanged"/>
+                <TextBox x:Name="FilterTextBox" Width="220" Height="26" TextChanged="FilterTextBox_TextChanged"
+                         AutomationProperties.Name="Filter events text input" TabIndex="0"/>
                 <TextBlock Text="Event:" VerticalAlignment="Center" Margin="12,0,6,0"/>
-                <ComboBox x:Name="EventTypeFilterComboBox" Width="180" Height="26" SelectionChanged="EventTypeFilterComboBox_SelectionChanged"/>
+                <ComboBox x:Name="EventTypeFilterComboBox" Width="180" Height="26" SelectionChanged="EventTypeFilterComboBox_SelectionChanged"
+                          AutomationProperties.Name="Event type filter" TabIndex="1"/>
             </StackPanel>
             <Separator Margin="0,8,0,0"/>
         </StackPanel>
@@ -30,7 +32,8 @@
         <!-- Event list -->
         <ListView x:Name="EventList" Grid.Row="1"
                   BorderThickness="1" BorderBrush="#CCCCCC"
-                  SelectionMode="Single">
+                  SelectionMode="Single"
+                  AutomationProperties.Name="Recent events list" TabIndex="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Time" Width="140"
@@ -51,9 +54,9 @@
             <TextBlock x:Name="StatusText" VerticalAlignment="Center"
                        Foreground="Gray" FontSize="11" Margin="0,0,12,0"/>
             <Button Content="Clear History" Width="110" Height="28"
-                    Click="ClearHistory_Click"/>
+                    Click="ClearHistory_Click" AutomationProperties.Name="Clear event history" TabIndex="3"/>
             <Button Content="Close" Width="80" Height="28"
-                    Margin="8,0,0,0" Click="Close_Click"/>
+                    Margin="8,0,0,0" Click="Close_Click" AutomationProperties.Name="Close dashboard window" TabIndex="4"/>
         </StackPanel>
     </Grid>
 </Window>

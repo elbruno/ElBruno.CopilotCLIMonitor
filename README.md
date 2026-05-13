@@ -227,6 +227,10 @@ See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/bl
 
 See [coverage.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/coverage.md) for local and CI coverage report generation.
 
+## Accessibility testing
+
+See [accessibility-testing.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/accessibility-testing.md) for keyboard, screen reader, and WCAG-focused validation checklist.
+
 ## Telemetry (optional)
 
 See [telemetry.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/telemetry.md) for opt-in telemetry behavior and data details.
