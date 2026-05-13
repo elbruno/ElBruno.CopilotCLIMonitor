@@ -73,6 +73,7 @@ jobs:
     - name: Upload package to release
       uses: softprops/action-gh-release@v2
       with:
+        tag_name: ${{ github.event.release.tag_name || inputs.tag }}
         files: .\artifacts\**\*.nupkg
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
