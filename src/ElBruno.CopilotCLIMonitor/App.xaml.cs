@@ -13,9 +13,11 @@ public partial class App : System.Windows.Application
     private NotifyIcon? _trayIcon;
     private IpcServer? _ipcServer;
     private DashboardWindow? _dashboard;
+    private ToolStripMenuItem? _pauseNotificationsMenuItem;
     private readonly EventStore _eventStore = new();
     private ILoggerFactory? _loggerFactory;
     private ILogger<App>? _logger;
+    private bool _notificationsPaused;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -43,7 +45,10 @@ public partial class App : System.Windows.Application
         menu.Items.Add("Open Dashboard", null, (_, _) => OpenDashboard());
         menu.Items.Add("-");
         menu.Items.Add("Recent Events", null, (_, _) => OpenDashboard());
+        menu.Items.Add("Settings", null, (_, _) => ShowSettings());
         menu.Items.Add("-");
+        _pauseNotificationsMenuItem = new ToolStripMenuItem("Pause Notifications", null, (_, _) => ToggleNotificationsPause());
+        menu.Items.Add(_pauseNotificationsMenuItem);
         menu.Items.Add("About", null, (_, _) => ShowAbout());
         menu.Items.Add("-");
         menu.Items.Add("Exit", null, (_, _) => ExitApp());
@@ -81,7 +86,10 @@ public partial class App : System.Windows.Application
         Dispatcher.BeginInvoke(() =>
         {
             _eventStore.Add(monitorEvent);
-            ShowNotification(monitorEvent);
+            if (!_notificationsPaused)
+            {
+                ShowNotification(monitorEvent);
+            }
             _dashboard?.RefreshEvents(_eventStore.Recent);
         });
     }
@@ -149,6 +157,28 @@ public partial class App : System.Windows.Application
             MessageBoxButton.OK,
             MessageBoxImage.Information);
     }
+
+    private void ShowSettings()
+    {
+        var tokenConfigured = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(IpcConstants.AuthTokenEnvVar));
+        System.Windows.MessageBox.Show(
+            BuildSettingsSummary(IpcConstants.DefaultPort, tokenConfigured),
+            "CopilotCLI Monitor Settings",
+            MessageBoxButton.OK,
+            MessageBoxImage.Information);
+    }
+
+    private void ToggleNotificationsPause()
+    {
+        _notificationsPaused = !_notificationsPaused;
+        if (_pauseNotificationsMenuItem is not null)
+        {
+            _pauseNotificationsMenuItem.Text = _notificationsPaused ? "Resume Notifications" : "Pause Notifications";
+        }
+    }
+
+    private static string BuildSettingsSummary(int ipcPort, bool tokenConfigured) =>
+        $"IPC Port: {ipcPort}\nAuthentication Token: {(tokenConfigured ? "Configured" : "Not Configured")}\nNotifications: Windows tray balloon tips";
 
     private void ExitApp()
     {
