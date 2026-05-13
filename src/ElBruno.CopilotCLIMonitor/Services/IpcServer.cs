@@ -100,9 +100,7 @@ public sealed class IpcServer : IIpcServer
 
             if (req.HttpMethod == "POST" && req.Url?.AbsolutePath == IpcConstants.NotifyPath)
             {
-                using var reader = new System.IO.StreamReader(req.InputStream, Encoding.UTF8);
-                var body = await reader.ReadToEndAsync();
-                var notifyReq = JsonSerializer.Deserialize<NotifyRequest>(body, _jsonOpts);
+                var notifyReq = await JsonSerializer.DeserializeAsync<NotifyRequest>(req.InputStream, _jsonOpts);
 
                 if (notifyReq is null)
                 {
@@ -157,8 +155,7 @@ public sealed class IpcServer : IIpcServer
 
     private static async Task WriteJsonAsync(HttpListenerResponse resp, object payload)
     {
-        var json = JsonSerializer.Serialize(payload, _jsonOpts);
-        var bytes = Encoding.UTF8.GetBytes(json);
+        var bytes = JsonSerializer.SerializeToUtf8Bytes(payload, _jsonOpts);
         resp.ContentType = "application/json";
         resp.ContentLength64 = bytes.Length;
         resp.StatusCode = resp.StatusCode == 0 ? 200 : resp.StatusCode;
