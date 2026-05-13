@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using ElBruno.CopilotCLIMonitor.Core.Models;
+using ElBruno.CopilotCLIMonitor.Models;
 using ElBruno.CopilotCLIMonitor.Core.Services;
 using ElBruno.CopilotCLIMonitor.Services;
 using Microsoft.Extensions.Logging;
@@ -15,15 +16,18 @@ public partial class App : System.Windows.Application
     private DashboardWindow? _dashboard;
     private ToolStripMenuItem? _pauseNotificationsMenuItem;
     private readonly EventStore _eventStore = new();
+    private readonly UserPreferencesStore _preferencesStore = new();
     private ILoggerFactory? _loggerFactory;
     private ILogger<App>? _logger;
     private bool _notificationsPaused;
+    private UserPreferences _preferences = new();
 
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
         _loggerFactory = LoggingFactoryBuilder.Create();
         _logger = _loggerFactory.CreateLogger<App>();
+        _preferences = _preferencesStore.Load();
         _logger.LogInformation("Application startup.");
 
         InitializeTrayIcon();
@@ -86,9 +90,13 @@ public partial class App : System.Windows.Application
         Dispatcher.BeginInvoke(() =>
         {
             _eventStore.Add(monitorEvent);
-            if (!_notificationsPaused)
+            if (ShouldDisplayNotification(_preferences, DateTime.Now) && !_notificationsPaused)
             {
                 ShowNotification(monitorEvent);
+                if (_preferences.SoundEnabled)
+                {
+                    System.Media.SystemSounds.Asterisk.Play();
+                }
             }
             _dashboard?.RefreshEvents(_eventStore.Recent);
         });
@@ -160,9 +168,20 @@ public partial class App : System.Windows.Application
 
     private void ShowSettings()
     {
+        var settingsWindow = new SettingsWindow(_preferences);
+        var saved = settingsWindow.ShowDialog();
+        if (saved != true || settingsWindow.UpdatedPreferences is null)
+        {
+            return;
+        }
+
+        _preferences = settingsWindow.UpdatedPreferences;
+        _preferencesStore.Save(_preferences);
+        Environment.SetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL", _preferences.LogLevel);
+
         var tokenConfigured = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(IpcConstants.AuthTokenEnvVar));
         System.Windows.MessageBox.Show(
-            BuildSettingsSummary(IpcConstants.DefaultPort, tokenConfigured),
+            BuildSettingsSummary(IpcConstants.DefaultPort, tokenConfigured, _preferences),
             "CopilotCLI Monitor Settings",
             MessageBoxButton.OK,
             MessageBoxImage.Information);
@@ -177,8 +196,38 @@ public partial class App : System.Windows.Application
         }
     }
 
-    private static string BuildSettingsSummary(int ipcPort, bool tokenConfigured) =>
-        $"IPC Port: {ipcPort}\nAuthentication Token: {(tokenConfigured ? "Configured" : "Not Configured")}\nNotifications: Windows tray balloon tips";
+    private static string BuildSettingsSummary(int ipcPort, bool tokenConfigured, UserPreferences preferences) =>
+        $"IPC Port: {ipcPort}\nAuthentication Token: {(tokenConfigured ? "Configured" : "Not Configured")}\nNotifications Enabled: {preferences.NotificationsEnabled}\nQuiet Hours: {(preferences.QuietHoursEnabled ? $"{preferences.QuietHoursStart}:00-{preferences.QuietHoursEnd}:00" : "Disabled")}\nLogging Level: {preferences.LogLevel}";
+
+    private static bool ShouldDisplayNotification(UserPreferences preferences, DateTime localNow)
+    {
+        if (!preferences.NotificationsEnabled)
+        {
+            return false;
+        }
+
+        if (!preferences.QuietHoursEnabled)
+        {
+            return true;
+        }
+
+        return !IsWithinQuietHours(localNow.Hour, preferences.QuietHoursStart, preferences.QuietHoursEnd);
+    }
+
+    private static bool IsWithinQuietHours(int currentHour, int quietStartHour, int quietEndHour)
+    {
+        if (quietStartHour == quietEndHour)
+        {
+            return true;
+        }
+
+        if (quietStartHour < quietEndHour)
+        {
+            return currentHour >= quietStartHour && currentHour < quietEndHour;
+        }
+
+        return currentHour >= quietStartHour || currentHour < quietEndHour;
+    }
 
     private void ExitApp()
     {

@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Windows.Forms;
+using ElBruno.CopilotCLIMonitor.Models;
 using ElBruno.CopilotCLIMonitor.Core.Models;
 
 namespace ElBruno.CopilotCLIMonitor.Tests.App;
@@ -60,10 +61,36 @@ public class AppFormattingTests
             .GetMethod("BuildSettingsSummary", BindingFlags.NonPublic | BindingFlags.Static);
 
         Assert.NotNull(method);
-        var summary = method!.Invoke(null, [41234, true]) as string;
+        var preferences = new UserPreferences
+        {
+            NotificationsEnabled = true,
+            QuietHoursEnabled = true,
+            QuietHoursStart = 22,
+            QuietHoursEnd = 7,
+            LogLevel = "Debug"
+        };
+        var summary = method!.Invoke(null, [41234, true, preferences]) as string;
 
         Assert.NotNull(summary);
         Assert.Contains("IPC Port: 41234", summary);
         Assert.Contains("Authentication Token: Configured", summary);
+        Assert.Contains("Notifications Enabled: True", summary);
+        Assert.Contains("Quiet Hours: 22:00-7:00", summary);
+    }
+
+    [Theory]
+    [InlineData(23, 22, 7, true)]
+    [InlineData(6, 22, 7, true)]
+    [InlineData(12, 22, 7, false)]
+    [InlineData(9, 9, 17, true)]
+    [InlineData(18, 9, 17, false)]
+    public void IsWithinQuietHours_ReturnsExpectedValue(int current, int start, int end, bool expected)
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("IsWithinQuietHours", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var isQuiet = method!.Invoke(null, [current, start, end]);
+        Assert.Equal(expected, isQuiet);
     }
 }
