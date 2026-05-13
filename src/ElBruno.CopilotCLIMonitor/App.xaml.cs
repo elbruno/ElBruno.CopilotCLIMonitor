@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using ElBruno.CopilotCLIMonitor.Core.Models;
 using ElBruno.CopilotCLIMonitor.Core.Services;
 using ElBruno.CopilotCLIMonitor.Services;
+using Microsoft.Extensions.Logging;
 
 namespace ElBruno.CopilotCLIMonitor;
 
@@ -13,10 +14,15 @@ public partial class App : System.Windows.Application
     private IpcServer? _ipcServer;
     private DashboardWindow? _dashboard;
     private readonly EventStore _eventStore = new();
+    private ILoggerFactory? _loggerFactory;
+    private ILogger<App>? _logger;
 
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+        _loggerFactory = LoggingFactoryBuilder.Create();
+        _logger = _loggerFactory.CreateLogger<App>();
+        _logger.LogInformation("Application startup.");
 
         InitializeTrayIcon();
         StartIpcServer();
@@ -61,13 +67,17 @@ public partial class App : System.Windows.Application
 
     private void StartIpcServer()
     {
-        _ipcServer = new IpcServer(IpcConstants.DefaultPort);
+        _ipcServer = new IpcServer(IpcConstants.DefaultPort, _loggerFactory?.CreateLogger<IpcServer>());
         _ipcServer.EventReceived += OnEventReceived;
         _ipcServer.Start();
     }
 
     private void OnEventReceived(MonitorEvent monitorEvent)
     {
+        _logger?.LogDebug(
+            "Dispatching notification event type={EventType} repository={Repository} branch={Branch}.",
+            monitorEvent.EventType, monitorEvent.Repository, monitorEvent.Branch);
+
         Dispatcher.BeginInvoke(() =>
         {
             _eventStore.Add(monitorEvent);
@@ -137,8 +147,10 @@ public partial class App : System.Windows.Application
 
     protected override void OnExit(ExitEventArgs e)
     {
+        _logger?.LogInformation("Application exit.");
         _trayIcon?.Dispose();
         _ipcServer?.Stop();
+        _loggerFactory?.Dispose();
         base.OnExit(e);
     }
 }
