@@ -246,6 +246,10 @@ copilotclimon notify \
 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
+## Product screenshots
+
+Screenshot catalog and capture standards are documented in [screenshots.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/screenshots.md).
+
 ## Hook configuration guide
 
 For advanced hook setup, custom scripts, and secure event routing, see [hook-configuration.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/hook-configuration.md).
