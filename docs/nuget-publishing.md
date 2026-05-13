@@ -101,8 +101,9 @@ When a GitHub Release is published, the `release.yml` workflow automatically:
 2. Builds the project
 3. Runs tests
 4. Creates NuGet package
-5. Publishes to NuGet.org
-6. Uploads artifacts to release
+5. Exchanges the GitHub OIDC token for a short-lived NuGet API key
+6. Publishes to NuGet.org
+7. Uploads artifacts to release
 
 ## Publishing workflows
 
@@ -122,6 +123,8 @@ Steps:
 5. Create NuGet package
 6. Upload artifacts
 
+This workflow is CI-only. It never publishes to NuGet.org.
+
 ### Release Workflow
 
 **File:** `.github/workflows/release.yml`
@@ -135,8 +138,11 @@ Steps:
 3. Restore and build
 4. Run tests
 5. Create NuGet package
-6. Publish to NuGet.org using Trusted Publisher
-7. Upload package to GitHub Release
+6. Use `NuGet/login@v1` with GitHub OIDC to get a short-lived API key
+7. Publish to NuGet.org using Trusted Publisher
+8. Upload package to GitHub Release
+
+The NuGet Trusted Publishing policy must allow the `release.yml` workflow file for this repository. The workflow uses `github.repository_owner` as the NuGet username, so the repository owner must also be a package owner on NuGet.org.
 
 ## Project file configuration
 
