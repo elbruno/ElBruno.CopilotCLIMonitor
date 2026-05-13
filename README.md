@@ -239,6 +239,10 @@ See [accessibility-testing.md](https://github.com/elbruno/ElBruno.CopilotCLIMoni
 
 See [performance-testing.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/performance-testing.md) for memory/CPU/responsiveness guardrail tests.
 
+## Code quality metrics
+
+See [code-quality-metrics.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/code-quality-metrics.md) for CodeQL and SonarQube integration details.
+
 ## Telemetry (optional)
 
 See [telemetry.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/telemetry.md) for opt-in telemetry behavior and data details.
