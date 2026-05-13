@@ -6,6 +6,7 @@ Source logo variants are stored as SVG and can be exported to PNG/ICO.
 
 - `images/logo/copilotclimon-logo-light.svg`
 - `images/logo/copilotclimon-logo-dark.svg`
+- `images/logo/app-icon.ico`
 
 ## Target export formats
 
@@ -16,3 +17,9 @@ Source logo variants are stored as SVG and can be exported to PNG/ICO.
 ## Recommended export flow
 
 Use your preferred SVG export tool to generate PNG and ICO artifacts from the source files above.
+
+To regenerate the application icon used by the WPF app:
+
+```powershell
+.\scripts\generate-app-icon.ps1
+```
