@@ -215,6 +215,10 @@ See [installer.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/mai
 
 See [portable-distribution.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/portable-distribution.md) for no-installation packaging and usage.
 
+## Chocolatey packaging
+
+See [chocolatey.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/chocolatey.md) for creating and publishing Chocolatey packages.
+
 ## Troubleshooting
 
 See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/troubleshooting.md) for common issues and solutions.

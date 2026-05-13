@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>elbruno.copilotclimonitor</id>
+    <version>$version$</version>
+    <title>ElBruno.CopilotCLIMonitor</title>
+    <authors>elbruno</authors>
+    <owners>elbruno</owners>
+    <projectUrl>https://github.com/elbruno/ElBruno.CopilotCLIMonitor</projectUrl>
+    <licenseUrl>https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Windows system tray monitor for GitHub Copilot CLI notifications.</description>
+    <tags>copilot github cli monitor systray notifications</tags>
+    <releaseNotes>https://github.com/elbruno/ElBruno.CopilotCLIMonitor/releases</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
