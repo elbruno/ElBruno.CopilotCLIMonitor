@@ -18,6 +18,8 @@ public static class IpcConstants
     public const string NotifyPath = "/notify";
     public const string StatusPath = "/status";
     public const string HealthPath = "/health";
+    public const string AuthHeaderName = "X-CopilotCliMon-Token";
+    public const string AuthTokenEnvVar = "COPILOTCLIMON_IPC_TOKEN";
 
     public static string BaseUrl(int port = DefaultPort) => $"http://localhost:{port}";
     public static string NotifyUrl(int port = DefaultPort) => $"{BaseUrl(port)}{NotifyPath}";

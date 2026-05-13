@@ -1,4 +1,5 @@
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
@@ -77,6 +78,13 @@ public sealed class IpcServer : IIpcServer
 
         try
         {
+            if (!IsAuthorizedRequest(req))
+            {
+                resp.StatusCode = 401;
+                await WriteJsonAsync(resp, new { error = "unauthorized" });
+                return;
+            }
+
             if (req.HttpMethod == "GET" && req.Url?.AbsolutePath is IpcConstants.HealthPath or IpcConstants.StatusPath or "/open")
             {
                 await WriteJsonAsync(resp, new { status = "running", port = _port });
@@ -155,6 +163,25 @@ public sealed class IpcServer : IIpcServer
         resp.ContentLength64 = bytes.Length;
         resp.StatusCode = resp.StatusCode == 0 ? 200 : resp.StatusCode;
         await resp.OutputStream.WriteAsync(bytes);
+    }
+
+    private static bool IsAuthorizedRequest(HttpListenerRequest req)
+    {
+        var expectedToken = Environment.GetEnvironmentVariable(IpcConstants.AuthTokenEnvVar);
+        if (string.IsNullOrWhiteSpace(expectedToken))
+        {
+            return true;
+        }
+
+        var providedToken = req.Headers[IpcConstants.AuthHeaderName];
+        if (string.IsNullOrEmpty(providedToken))
+        {
+            return false;
+        }
+
+        var expectedBytes = Encoding.UTF8.GetBytes(expectedToken);
+        var providedBytes = Encoding.UTF8.GetBytes(providedToken);
+        return CryptographicOperations.FixedTimeEquals(expectedBytes, providedBytes);
     }
 
     private static readonly JsonSerializerOptions _jsonOpts = new(JsonSerializerDefaults.Web);
