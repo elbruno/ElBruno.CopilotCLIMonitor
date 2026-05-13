@@ -23,8 +23,6 @@ jobs:
   verify-main:
     name: Phase 1 - Verify Main Branch
     runs-on: windows-latest
-    outputs:
-      status: ${{ steps.verify.outputs.status }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -48,24 +46,14 @@ jobs:
         run: dotnet test ${{ env.SOLUTION_FILE }} --configuration Release --no-build --verbosity normal
 
       - name: Verify status
-        id: verify
-        shell: pwsh
-        run: |
-          if ($LASTEXITCODE -eq 0) {
-            "status=success" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
-            Write-Host "✅ Main branch is green"
-          } else {
-            "status=failed" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
-            Write-Host "❌ Tests failed - cannot proceed with release"
-            exit 1
-          }
+        run: echo "✅ Main branch is green"
 
   # Phase 2: Version auto-increment
   version-bump:
     name: Phase 2 - Version Auto-Increment
     runs-on: windows-latest
     needs: verify-main
-    if: needs.verify-main.outputs.status == 'success'
+    if: needs.verify-main.result == 'success'
     outputs:
       commit_hash: ${{ steps.bump.outputs.commit_hash }}
     steps:
