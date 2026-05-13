@@ -33,6 +33,7 @@ This project does not intentionally send user event payloads to external service
 ## Security controls
 
 - Optional IPC authentication token (`COPILOTCLIMON_IPC_TOKEN`)
+- Optional encrypted token storage using Windows DPAPI (`%APPDATA%\CopilotCliMon\ipc-token.bin`)
 - Input validation for IPC notify requests
 - Security scanning in CI workflows
 

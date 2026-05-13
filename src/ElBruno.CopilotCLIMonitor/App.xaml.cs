@@ -19,6 +19,7 @@ public partial class App : System.Windows.Application
     private ToolStripMenuItem? _pauseNotificationsMenuItem;
     private readonly EventStore _eventStore = new();
     private readonly UserPreferencesStore _preferencesStore = new();
+    private readonly ProtectedTokenStore _tokenStore = new();
     private ILoggerFactory? _loggerFactory;
     private ILogger<App>? _logger;
     private bool _notificationsPaused;
@@ -31,6 +32,7 @@ public partial class App : System.Windows.Application
         _loggerFactory = LoggingFactoryBuilder.Create();
         _logger = _loggerFactory.CreateLogger<App>();
         _preferences = _preferencesStore.Load();
+        LoadStoredTokenIfMissing();
         CopilotCliMonitorEventSource.Log.AppStartup();
         if (_preferences.TelemetryOptIn && !string.IsNullOrWhiteSpace(_preferences.TelemetryInstallationId))
         {
@@ -187,6 +189,11 @@ public partial class App : System.Windows.Application
         }
 
         _preferences = settingsWindow.UpdatedPreferences;
+        if (!string.IsNullOrWhiteSpace(settingsWindow.UpdatedToken))
+        {
+            _tokenStore.SaveToken(settingsWindow.UpdatedToken);
+            Environment.SetEnvironmentVariable(IpcConstants.AuthTokenEnvVar, settingsWindow.UpdatedToken);
+        }
         if (_preferences.TelemetryOptIn && string.IsNullOrWhiteSpace(_preferences.TelemetryInstallationId))
         {
             _preferences.TelemetryInstallationId = Guid.NewGuid().ToString("N");
@@ -258,6 +265,20 @@ public partial class App : System.Windows.Application
         }
 
         return currentHour >= quietStartHour || currentHour < quietEndHour;
+    }
+
+    private void LoadStoredTokenIfMissing()
+    {
+        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(IpcConstants.AuthTokenEnvVar)))
+        {
+            return;
+        }
+
+        var storedToken = _tokenStore.LoadToken();
+        if (!string.IsNullOrWhiteSpace(storedToken))
+        {
+            Environment.SetEnvironmentVariable(IpcConstants.AuthTokenEnvVar, storedToken);
+        }
     }
 
     private void ExitApp()
