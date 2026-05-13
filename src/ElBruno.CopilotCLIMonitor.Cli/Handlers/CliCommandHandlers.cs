@@ -147,6 +147,7 @@ public sealed class CliCommandHandlers(
                 await _out.WriteLineAsync("✓ Hook directory exists: .copilotclimonitor");
                 var script = Path.Combine(hookDir, "notify.ps1");
                 var config = Path.Combine(hookDir, "config.json");
+                var copilotHookFile = Path.Combine(repoRoot, ".github", "hooks", "copilotclimon-notify.json");
                 await _out.WriteLineAsync(File.Exists(script) ? "✓ notify.ps1 present" : "✗ notify.ps1 missing — run: copilotclimon init");
                 await _out.WriteLineAsync(File.Exists(config) ? "✓ config.json present" : "✗ config.json missing — run: copilotclimon init");
                 if (File.Exists(config))
@@ -161,6 +162,10 @@ public sealed class CliCommandHandlers(
                         allOk = false;
                     }
                 }
+                await _out.WriteLineAsync(File.Exists(copilotHookFile)
+                    ? "✓ .github/hooks/copilotclimon-notify.json present"
+                    : "✗ .github/hooks/copilotclimon-notify.json missing — run: copilotclimon init");
+                allOk &= File.Exists(script) && File.Exists(config) && File.Exists(copilotHookFile);
             }
             else
             {

@@ -120,6 +120,9 @@ public sealed class CliSystrayIntegrationTests : IDisposable
               }
             }
             """);
+        var githubHooksDir = Path.Combine(_tempRepoDir, ".github", "hooks");
+        Directory.CreateDirectory(githubHooksDir);
+        File.WriteAllText(Path.Combine(githubHooksDir, "copilotclimon-notify.json"), "{}");
 
         var detector = new FakeRepositoryDetector { RootToReturn = _tempRepoDir, BranchToReturn = "main" };
         var handlers = new CliCommandHandlers(

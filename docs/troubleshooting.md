@@ -63,10 +63,14 @@ Ensure the directory is readable and writable.
 3. Try manual hook installation:
 
 ```bash
-copilotclimon init --verbose
+copilotclimon init --default --force
 ```
 
-Review the verbose output for specific errors.
+Then run:
+
+```bash
+copilotclimon doctor
+```
 
 ### Notifications not appearing
 
@@ -246,13 +250,14 @@ Settings → System → Sound → Volume mixer
 1. Verify hook files exist:
 
 ```bash
-ls -la .copilotclimonitor/hooks/
+ls -la .copilotclimonitor/
+ls -la .github/hooks/
 ```
 
-2. Test hook manually:
+2. Reinstall managed hook/config files:
 
 ```bash
-bash .copilotclimonitor/hooks/on-task-completed.sh
+copilotclimon upgrade
 ```
 
 3. Check Copilot CLI hook configuration:
@@ -263,10 +268,10 @@ copilot --help | grep hook
 
 Ensure Copilot CLI supports the hook you're trying to use.
 
-4. Enable debug logging:
+4. Send a direct test event:
 
 ```bash
-ELBRUNODEBUG=1 bash .copilotclimonitor/hooks/on-task-completed.sh
+copilotclimon notify --event test --message "Test from troubleshooting"
 ```
 
 ## Getting help

@@ -42,7 +42,21 @@ cd your-repository
 copilotclimon init
 ```
 
-This installs repository hooks and configures event forwarding.
+This runs interactive setup (hook trigger selection), then installs repository hooks and configures event forwarding.
+
+Use non-interactive defaults for automation:
+
+```bash
+copilotclimon init --default
+```
+
+Refresh managed files with latest templates:
+
+```bash
+copilotclimon upgrade
+# or force a reinstall during init
+copilotclimon init --default --force
+```
 
 ### Run your Copilot CLI tasks
 
@@ -126,7 +140,25 @@ CLI-based hook installer that:
 copilotclimon init
 ```
 
-Detects the current repository, installs hooks, and registers event forwarding.
+Detects the current repository, prompts for hook trigger selection, installs hooks, and registers event forwarding.
+
+Automation mode:
+
+```bash
+copilotclimon init --default
+```
+
+Force overwrite managed files:
+
+```bash
+copilotclimon init --default --force
+```
+
+### Upgrade managed hook/config files
+
+```bash
+copilotclimon upgrade
+```
 
 ### Send notification
 
