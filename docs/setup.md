@@ -101,18 +101,15 @@ You should see a Windows toast notification appear.
 Open settings from the Systray context menu:
 
 1. Click the notification icon in the system tray
-2. Select "Settings"
+2. Select "Settings" (menu: Open Dashboard, Settings, About, Exit)
 3. Configure preferences
 
-**Available settings:**
-- Notification type (toast, sound, visual)
-- Toast duration (3–10 seconds)
-- Sound enabled/disabled
-- Quiet hours (e.g., 22:00–08:00)
-- Repository filters
-- Event filtering
-- Startup on Windows boot
-- Logging level (Info, Debug)
+**Suggested settings options:**
+- Notifications: enabled, toast duration, sound on/off
+- Focus mode: quiet hours and priority-only alerts
+- Filters: repository include/exclude and event-type filters
+- Startup: launch at Windows login
+- Data and diagnostics: max recent events, retention period, log level
 
 ### Repository-specific configuration
 

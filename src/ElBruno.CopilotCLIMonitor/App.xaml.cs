@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using ElBruno.CopilotCLIMonitor.Core.Models;
 using ElBruno.CopilotCLIMonitor.Core.Services;
 using ElBruno.CopilotCLIMonitor.Services;
+using ElBruno.CopilotCLIMonitor.Views;
 
 namespace ElBruno.CopilotCLIMonitor;
 
@@ -36,7 +37,7 @@ public partial class App : System.Windows.Application
         var menu = new ContextMenuStrip();
         menu.Items.Add("Open Dashboard", null, (_, _) => OpenDashboard());
         menu.Items.Add("-");
-        menu.Items.Add("Recent Events", null, (_, _) => OpenDashboard());
+        menu.Items.Add("Settings", null, (_, _) => OpenSettings());
         menu.Items.Add("-");
         menu.Items.Add("About", null, (_, _) => ShowAbout());
         menu.Items.Add("-");
@@ -126,6 +127,12 @@ public partial class App : System.Windows.Application
             "About CopilotCLI Monitor",
             MessageBoxButton.OK,
             MessageBoxImage.Information);
+    }
+
+    private static void OpenSettings()
+    {
+        var settingsWindow = new SettingsWindow();
+        settingsWindow.ShowDialog();
     }
 
     private void ExitApp()

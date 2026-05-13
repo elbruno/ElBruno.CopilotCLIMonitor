@@ -1,5 +1,6 @@
 using System.CommandLine;
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
+using ElBruno.CopilotCLIMonitor.Core.Services;
 
 namespace ElBruno.CopilotCLIMonitor.Commands;
 
@@ -37,6 +38,19 @@ public static class DoctorCommand
                     Console.WriteLine(File.Exists(copilotHookFile)
                         ? "✓ .github/hooks/copilotclimon-notify.json present"
                         : "✗ .github/hooks/copilotclimon-notify.json missing — run: copilotclimon init or copilotclimon upgrade");
+
+                    if (File.Exists(copilotHookFile))
+                    {
+                        if (HookSelectionReader.TryReadSelectedTriggers(copilotHookFile, out var selectedHooks, out var readError))
+                        {
+                            var selectedHooksText = selectedHooks.Count == 0 ? "(none)" : string.Join(", ", selectedHooks);
+                            Console.WriteLine($"✓ Hooks selected in init: {selectedHooksText}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"⚠ Could not read init hook selections: {readError}");
+                        }
+                    }
                 }
                 else
                 {

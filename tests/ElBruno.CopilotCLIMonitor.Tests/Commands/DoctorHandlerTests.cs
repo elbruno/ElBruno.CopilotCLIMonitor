@@ -40,10 +40,58 @@ public class DoctorHandlerTests : IDisposable
         File.WriteAllText(Path.Combine(hookDir, "config.json"), "{}");
         var githubHooksDir = Path.Combine(_tempDir, ".github", "hooks");
         Directory.CreateDirectory(githubHooksDir);
-        File.WriteAllText(Path.Combine(githubHooksDir, "copilotclimon-notify.json"), "{}");
+        File.WriteAllText(
+            Path.Combine(githubHooksDir, "copilotclimon-notify.json"),
+            """
+            {
+              "version": 1,
+              "hooks": {
+                "agentStop": [
+                  { "type": "command", "powershell": ".\\.copilotclimonitor\\notify.ps1 -Event task-completed -Message \"Copilot task completed\"", "cwd": ".", "timeoutSec": 10 }
+                ],
+                "sessionEnd": [
+                  { "type": "command", "powershell": ".\\.copilotclimonitor\\notify.ps1 -Event task-completed -Message \"Copilot session ended\"", "cwd": ".", "timeoutSec": 10 }
+                ]
+              }
+            }
+            """);
 
         var exit = await BuildSut().RunDoctorAsync([]);
         Assert.Equal(0, exit);
+    }
+
+    [Fact]
+    public async Task Doctor_WhenHooksConfigured_OutputsSelectedHookNames()
+    {
+        _ipc.IsRunning = true;
+        _detector.RootToReturn = _tempDir;
+
+        var hookDir = Path.Combine(_tempDir, ".copilotclimonitor");
+        Directory.CreateDirectory(hookDir);
+        File.WriteAllText(Path.Combine(hookDir, "notify.ps1"), "");
+        File.WriteAllText(Path.Combine(hookDir, "config.json"), "{}");
+
+        var githubHooksDir = Path.Combine(_tempDir, ".github", "hooks");
+        Directory.CreateDirectory(githubHooksDir);
+        File.WriteAllText(
+            Path.Combine(githubHooksDir, "copilotclimon-notify.json"),
+            """
+            {
+              "version": 1,
+              "hooks": {
+                "errorOccurred": [
+                  { "type": "command", "powershell": ".\\.copilotclimonitor\\notify.ps1 -Event error -Message \"Copilot command failed\"", "cwd": ".", "timeoutSec": 10 }
+                ],
+                "sessionStart": [
+                  { "type": "command", "powershell": ".\\.copilotclimonitor\\notify.ps1 -Event warning -Message \"Copilot session started\"", "cwd": ".", "timeoutSec": 10 }
+                ]
+              }
+            }
+            """);
+
+        await BuildSut().RunDoctorAsync([]);
+
+        Assert.Contains("Hooks selected in init: errorOccurred, sessionStart", _out.ToString());
     }
 
     [Fact]
