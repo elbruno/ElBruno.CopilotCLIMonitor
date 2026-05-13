@@ -51,20 +51,20 @@ public partial class App : System.Windows.Application
         {
             Icon = icon,
             Visible = true,
-            Text = "CopilotCLI Monitor"
+            Text = UiResources.Get("TrayAppName")
         };
 
         var menu = new ContextMenuStrip();
-        menu.Items.Add("Open Dashboard", null, (_, _) => OpenDashboard());
+        menu.Items.Add(UiResources.Get("MenuOpenDashboard"), null, (_, _) => OpenDashboard());
         menu.Items.Add("-");
-        menu.Items.Add("Recent Events", null, (_, _) => OpenDashboard());
-        menu.Items.Add("Settings", null, (_, _) => ShowSettings());
+        menu.Items.Add(UiResources.Get("MenuRecentEvents"), null, (_, _) => OpenDashboard());
+        menu.Items.Add(UiResources.Get("MenuSettings"), null, (_, _) => ShowSettings());
         menu.Items.Add("-");
-        _pauseNotificationsMenuItem = new ToolStripMenuItem("Pause Notifications", null, (_, _) => ToggleNotificationsPause());
+        _pauseNotificationsMenuItem = new ToolStripMenuItem(UiResources.Get("MenuPauseNotifications"), null, (_, _) => ToggleNotificationsPause());
         menu.Items.Add(_pauseNotificationsMenuItem);
-        menu.Items.Add("About", null, (_, _) => ShowAbout());
+        menu.Items.Add(UiResources.Get("MenuAbout"), null, (_, _) => ShowAbout());
         menu.Items.Add("-");
-        menu.Items.Add("Exit", null, (_, _) => ExitApp());
+        menu.Items.Add(UiResources.Get("MenuExit"), null, (_, _) => ExitApp());
 
         _trayIcon.ContextMenuStrip = menu;
         _trayIcon.DoubleClick += (_, _) => OpenDashboard();
@@ -165,8 +165,8 @@ public partial class App : System.Windows.Application
     private void ShowAbout()
     {
         System.Windows.MessageBox.Show(
-            "CopilotCLI Monitor v0.1.0\n\nMonitors GitHub Copilot CLI tasks and shows\nWindows desktop notifications.\n\nCLI: copilotclimon notify --event task-completed --message \"Done\"",
-            "About CopilotCLI Monitor",
+            UiResources.Get("AboutMessage", Environment.NewLine),
+            UiResources.Get("AboutTitle"),
             MessageBoxButton.OK,
             MessageBoxImage.Information);
     }
@@ -200,7 +200,7 @@ public partial class App : System.Windows.Application
         var tokenConfigured = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(IpcConstants.AuthTokenEnvVar));
         System.Windows.MessageBox.Show(
             BuildSettingsSummary(IpcConstants.DefaultPort, tokenConfigured, _preferences),
-            "CopilotCLI Monitor Settings",
+            UiResources.Get("SettingsTitle"),
             MessageBoxButton.OK,
             MessageBoxImage.Information);
     }
@@ -210,12 +210,19 @@ public partial class App : System.Windows.Application
         _notificationsPaused = !_notificationsPaused;
         if (_pauseNotificationsMenuItem is not null)
         {
-            _pauseNotificationsMenuItem.Text = _notificationsPaused ? "Resume Notifications" : "Pause Notifications";
+            _pauseNotificationsMenuItem.Text = _notificationsPaused ? UiResources.Get("MenuResumeNotifications") : UiResources.Get("MenuPauseNotifications");
         }
     }
 
     private static string BuildSettingsSummary(int ipcPort, bool tokenConfigured, UserPreferences preferences) =>
-        $"IPC Port: {ipcPort}\nAuthentication Token: {(tokenConfigured ? "Configured" : "Not Configured")}\nNotifications Enabled: {preferences.NotificationsEnabled}\nQuiet Hours: {(preferences.QuietHoursEnabled ? $"{preferences.QuietHoursStart}:00-{preferences.QuietHoursEnd}:00" : "Disabled")}\nLogging Level: {preferences.LogLevel}\nTelemetry: {(preferences.TelemetryOptIn ? "Enabled (Anonymous)" : "Disabled")}";
+        UiResources.Get("SettingsSummaryTemplate",
+            ipcPort,
+            tokenConfigured ? UiResources.Get("TokenConfigured") : UiResources.Get("TokenNotConfigured"),
+            preferences.NotificationsEnabled,
+            preferences.QuietHoursEnabled ? $"{preferences.QuietHoursStart}:00-{preferences.QuietHoursEnd}:00" : UiResources.Get("QuietHoursDisabled"),
+            preferences.LogLevel,
+            Environment.NewLine,
+            preferences.TelemetryOptIn ? UiResources.Get("TelemetryEnabled") : UiResources.Get("TelemetryDisabled"));
 
     private static bool ShouldDisplayNotification(UserPreferences preferences, DateTime localNow)
     {

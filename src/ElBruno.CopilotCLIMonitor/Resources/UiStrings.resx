@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+  </resheader>
+  <data name="TrayAppName" xml:space="preserve">
+    <value>CopilotCLI Monitor</value>
+  </data>
+  <data name="MenuOpenDashboard" xml:space="preserve">
+    <value>Open Dashboard</value>
+  </data>
+  <data name="MenuRecentEvents" xml:space="preserve">
+    <value>Recent Events</value>
+  </data>
+  <data name="MenuSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MenuPauseNotifications" xml:space="preserve">
+    <value>Pause Notifications</value>
+  </data>
+  <data name="MenuResumeNotifications" xml:space="preserve">
+    <value>Resume Notifications</value>
+  </data>
+  <data name="MenuAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="MenuExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="AboutTitle" xml:space="preserve">
+    <value>About CopilotCLI Monitor</value>
+  </data>
+  <data name="AboutMessage" xml:space="preserve">
+    <value>CopilotCLI Monitor v0.1.0{0}{0}Monitors GitHub Copilot CLI tasks and shows{0}Windows desktop notifications.{0}{0}CLI: copilotclimon notify --event task-completed --message "Done"</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>CopilotCLI Monitor Settings</value>
+  </data>
+  <data name="SettingsSummaryTemplate" xml:space="preserve">
+    <value>IPC Port: {0}{5}Authentication Token: {1}{5}Notifications Enabled: {2}{5}Quiet Hours: {3}{5}Logging Level: {4}{5}Telemetry: {6}</value>
+  </data>
+  <data name="TokenConfigured" xml:space="preserve">
+    <value>Configured</value>
+  </data>
+  <data name="TokenNotConfigured" xml:space="preserve">
+    <value>Not Configured</value>
+  </data>
+  <data name="QuietHoursDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="TelemetryEnabled" xml:space="preserve">
+    <value>Enabled (Anonymous)</value>
+  </data>
+  <data name="TelemetryDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="StatusListeningTemplate" xml:space="preserve">
+    <value>{0} event(s)   |   Listening on port {1}</value>
+  </data>
+  <data name="StatusHistoryCleared" xml:space="preserve">
+    <value>History cleared.</value>
+  </data>
+</root>
