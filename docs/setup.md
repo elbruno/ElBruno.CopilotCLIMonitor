@@ -58,6 +58,7 @@ copilotclimon doctor
 
 This command checks:
 - Hook files are present
+- Hook `config.json` schema is valid
 - Hook configuration is valid
 - Systray application is running
 - Network connectivity is available

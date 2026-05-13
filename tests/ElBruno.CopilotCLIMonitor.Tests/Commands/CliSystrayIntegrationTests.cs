@@ -101,7 +101,25 @@ public sealed class CliSystrayIntegrationTests : IDisposable
         var hookDir = Path.Combine(_tempRepoDir, ".copilotclimonitor");
         Directory.CreateDirectory(hookDir);
         File.WriteAllText(Path.Combine(hookDir, "notify.ps1"), "# test");
-        File.WriteAllText(Path.Combine(hookDir, "config.json"), "{}");
+        File.WriteAllText(
+            Path.Combine(hookDir, "config.json"),
+            """
+            {
+              "version": "1.0",
+              "repository": "integration-test-repo",
+              "enabled": true,
+              "notificationsEnabled": true,
+              "events": ["task-completed"],
+              "quietHours": {
+                "enabled": false,
+                "start": "22:00",
+                "end": "08:00"
+              },
+              "routing": {
+                "sourceTagging": true
+              }
+            }
+            """);
 
         var detector = new FakeRepositoryDetector { RootToReturn = _tempRepoDir, BranchToReturn = "main" };
         var handlers = new CliCommandHandlers(
