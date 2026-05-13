@@ -30,3 +30,16 @@ Telemetry is stored locally in:
 `%APPDATA%\CopilotCliMon\telemetry.log`
 
 One JSON line is written per event.
+
+## ETW support
+
+The application also emits ETW events via EventSource name:
+
+`ElBruno-CopilotCliMonitor`
+
+Current ETW events:
+
+- `AppStartup`
+- `EventReceived`
+- `NotificationShown`
+- `NotificationSuppressed`
