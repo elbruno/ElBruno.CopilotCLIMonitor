@@ -219,6 +219,10 @@ See [portable-distribution.md](https://github.com/elbruno/ElBruno.CopilotCLIMoni
 
 See [chocolatey.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/chocolatey.md) for creating and publishing Chocolatey packages.
 
+## Windows Store packaging
+
+See [microsoft-store.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/microsoft-store.md) for generating MSIX artifacts and Partner Center submission steps.
+
 ## Troubleshooting
 
 See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/troubleshooting.md) for common issues and solutions.
