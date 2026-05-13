@@ -1,0 +1,65 @@
+using System.Net;
+using ElBruno.CopilotCLIMonitor.Core.Models;
+using ElBruno.CopilotCLIMonitor.Core.Services;
+using ElBruno.CopilotCLIMonitor.Services;
+
+namespace ElBruno.CopilotCLIMonitor.Tests.Services;
+
+public class IpcServerTests
+{
+    [Fact]
+    public async Task SendNotifyAsync_WhenServerRunning_RaisesEventWithRequestData()
+    {
+        var port = ReserveFreePort();
+        using var server = new IpcServer(port);
+        server.Start();
+
+        try
+        {
+            var received = new TaskCompletionSource<MonitorEvent>(TaskCreationOptions.RunContinuationsAsynchronously);
+            server.EventReceived += evt => received.TrySetResult(evt);
+
+            var client = new HttpIpcClient(port);
+            var sent = await client.SendNotifyAsync(new NotifyRequest("task-completed", "Done", "repo", "main"));
+            var monitorEvent = await received.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+            Assert.True(sent);
+            Assert.Equal(EventType.TaskCompleted, monitorEvent.EventType);
+            Assert.Equal("Done", monitorEvent.Message);
+            Assert.Equal("repo", monitorEvent.Repository);
+            Assert.Equal("main", monitorEvent.Branch);
+        }
+        finally
+        {
+            server.Stop();
+        }
+    }
+
+    [Fact]
+    public async Task IsRunningAsync_WhenServerRunning_ReturnsTrue()
+    {
+        var port = ReserveFreePort();
+        using var server = new IpcServer(port);
+        server.Start();
+
+        try
+        {
+            var client = new HttpIpcClient(port);
+            var isRunning = await client.IsRunningAsync();
+            Assert.True(isRunning);
+        }
+        finally
+        {
+            server.Stop();
+        }
+    }
+
+    private static int ReserveFreePort()
+    {
+        var listener = new System.Net.Sockets.TcpListener(IPAddress.Loopback, 0);
+        listener.Start();
+        var port = ((IPEndPoint)listener.LocalEndpoint).Port;
+        listener.Stop();
+        return port;
+    }
+}
