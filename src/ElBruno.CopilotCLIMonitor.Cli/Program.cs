@@ -1,5 +1,6 @@
 using System.CommandLine;
 using ElBruno.CopilotCLIMonitor.Cli;
+using ElBruno.CopilotCLIMonitor.Cli.Services;
 using ElBruno.CopilotCLIMonitor.Commands;
 using ElBruno.CopilotCLIMonitor.Core.Services;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,12 @@ var detector = new RepositoryDetector();
 var installer = new HookInstaller();
 using var loggerFactory = LoggingFactoryBuilder.Create();
 var notifier = new HttpEventNotifier(logger: loggerFactory.CreateLogger<HttpEventNotifier>());
+
+if (args.Length == 0)
+{
+    var launcher = new MonitorAppLauncher(loggerFactory.CreateLogger<MonitorAppLauncher>());
+    return await launcher.LaunchAsync();
+}
 
 var root = new RootCommand("copilotclimon — GitHub Copilot CLI task monitor");
 

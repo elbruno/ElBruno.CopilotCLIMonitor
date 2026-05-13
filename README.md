@@ -21,10 +21,20 @@ ElBruno.CopilotCLIMonitor bridges GitHub Copilot CLI hooks and Windows desktop n
 
 ## Quick start
 
-### Install
+### Install CLI bridge
 
 ```powershell
 dotnet tool install -g ElBruno.CopilotCLIMonitor
+```
+
+### Install desktop app
+
+Install the tray app (portable ZIP, installer, or Chocolatey package) so `ElBruno.CopilotCLIMonitor.exe` exists on your machine.
+
+If your executable is in a custom path, set:
+
+```powershell
+$env:COPILOTCLIMON_APP_PATH="C:\path\to\ElBruno.CopilotCLIMonitor.exe"
 ```
 
 ### Start the app
