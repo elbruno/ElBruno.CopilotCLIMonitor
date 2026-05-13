@@ -1,8 +1,10 @@
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 using ElBruno.CopilotCLIMonitor.Core.Models;
+using ElBruno.CopilotCLIMonitor.Core.Services;
 using Microsoft.Extensions.Logging;
 
 namespace ElBruno.CopilotCLIMonitor.Services;
@@ -76,6 +78,13 @@ public sealed class IpcServer : IIpcServer
 
         try
         {
+            if (!IsAuthorizedRequest(req))
+            {
+                resp.StatusCode = 401;
+                await WriteJsonAsync(resp, new { error = "unauthorized" });
+                return;
+            }
+
             if (req.HttpMethod == "GET" && req.Url?.AbsolutePath is IpcConstants.HealthPath or IpcConstants.StatusPath or "/open")
             {
                 await WriteJsonAsync(resp, new { status = "running", port = _port });
@@ -91,15 +100,21 @@ public sealed class IpcServer : IIpcServer
 
             if (req.HttpMethod == "POST" && req.Url?.AbsolutePath == IpcConstants.NotifyPath)
             {
-                using var reader = new System.IO.StreamReader(req.InputStream, Encoding.UTF8);
-                var body = await reader.ReadToEndAsync();
-                var notifyReq = JsonSerializer.Deserialize<NotifyRequest>(body, _jsonOpts);
+                var notifyReq = await JsonSerializer.DeserializeAsync<NotifyRequest>(req.InputStream, _jsonOpts);
 
                 if (notifyReq is null)
                 {
                     _logger.LogWarning("Received invalid (null) notify request body.");
                     resp.StatusCode = 400;
                     await WriteJsonAsync(resp, new NotifyResponse(false, "Invalid request body"));
+                    return;
+                }
+
+                if (!NotifyRequestValidator.TryValidate(notifyReq, out var validationError))
+                {
+                    _logger.LogWarning("Rejected invalid notify request: {Reason}", validationError);
+                    resp.StatusCode = 400;
+                    await WriteJsonAsync(resp, new NotifyResponse(false, validationError));
                     return;
                 }
 
@@ -113,7 +128,7 @@ public sealed class IpcServer : IIpcServer
                     "Event received via IPC: type={EventType} repo={Repository} branch={Branch}",
                     monitorEvent.EventType, monitorEvent.Repository ?? "(none)", monitorEvent.Branch ?? "(none)");
 
-                EventReceived?.Invoke(monitorEvent);
+                DispatchEventAsync(monitorEvent);
                 await WriteJsonAsync(resp, new NotifyResponse(true));
                 return;
             }
@@ -140,15 +155,54 @@ public sealed class IpcServer : IIpcServer
 
     private static async Task WriteJsonAsync(HttpListenerResponse resp, object payload)
     {
-        var json = JsonSerializer.Serialize(payload, _jsonOpts);
-        var bytes = Encoding.UTF8.GetBytes(json);
+        var bytes = JsonSerializer.SerializeToUtf8Bytes(payload, _jsonOpts);
         resp.ContentType = "application/json";
         resp.ContentLength64 = bytes.Length;
         resp.StatusCode = resp.StatusCode == 0 ? 200 : resp.StatusCode;
         await resp.OutputStream.WriteAsync(bytes);
     }
 
+    private static bool IsAuthorizedRequest(HttpListenerRequest req)
+    {
+        var expectedToken = Environment.GetEnvironmentVariable(IpcConstants.AuthTokenEnvVar);
+        if (string.IsNullOrWhiteSpace(expectedToken))
+        {
+            return true;
+        }
+
+        var providedToken = req.Headers[IpcConstants.AuthHeaderName];
+        if (string.IsNullOrEmpty(providedToken))
+        {
+            return false;
+        }
+
+        var expectedBytes = Encoding.UTF8.GetBytes(expectedToken);
+        var providedBytes = Encoding.UTF8.GetBytes(providedToken);
+        return CryptographicOperations.FixedTimeEquals(expectedBytes, providedBytes);
+    }
+
     private static readonly JsonSerializerOptions _jsonOpts = new(JsonSerializerDefaults.Web);
+
+    private void DispatchEventAsync(MonitorEvent monitorEvent)
+    {
+        var handlers = EventReceived;
+        if (handlers is null)
+        {
+            return;
+        }
+
+        _ = Task.Run(() =>
+        {
+            try
+            {
+                handlers.Invoke(monitorEvent);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Event handler failed while processing IPC event.");
+            }
+        });
+    }
 
     public void Dispose()
     {

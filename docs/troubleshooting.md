@@ -1,5 +1,14 @@
 # Troubleshooting
 
+## FAQ (quick answers)
+
+| Question | Quick answer |
+|---|---|
+| Why don’t I see notifications? | Ensure tray app is running and notifications are enabled in Settings. |
+| How do I run diagnostics? | Use `copilotclimon doctor` and `copilotclimon diagnostic --enable`. |
+| Where are logs stored? | `%APPDATA%\CopilotCliMon\logs` (or `COPILOTCLIMON_LOG_DIR` if set). |
+| Why are hook installs failing? | Confirm you are inside a writable Git repository. |
+
 ## Common issues
 
 ### Application doesn't start
@@ -98,7 +107,7 @@ copilotclimon notify --event test --message "Test"
 5. Review logs:
 
 ```powershell
-Get-Content "$env:APPDATA\ElBruno\CopilotCLIMonitor\logs\*.log" -Tail 20
+Get-Content "$env:APPDATA\CopilotCliMon\logs\*.log" -Tail 20
 ```
 
 ### "Permission denied" errors
@@ -165,13 +174,13 @@ Test-NetConnection -ComputerName 127.0.0.1 -Port 8765
 1. Verify configuration file location:
 
 ```powershell
-ls "$env:APPDATA\ElBruno\CopilotCLIMonitor\config.json"
+ls "$env:APPDATA\CopilotCliMon\preferences.json"
 ```
 
 2. Check file permissions:
 
 ```powershell
-Get-Acl "$env:APPDATA\ElBruno\CopilotCLIMonitor\config.json"
+Get-Acl "$env:APPDATA\CopilotCliMon\preferences.json"
 ```
 
 Ensure your user has write permissions.
@@ -269,11 +278,10 @@ copilotclimon notify --event test --message "Test from troubleshooting"
 
 ### Enable debug logging
 
-Set environment variable:
+Enable diagnostic mode:
 
 ```powershell
-$env:ELBRUNODEBUG = "1"
-copilotclimon
+copilotclimon diagnostic --enable
 ```
 
 This produces verbose output helpful for diagnostics.
@@ -283,7 +291,7 @@ This produces verbose output helpful for diagnostics.
 View application logs:
 
 ```powershell
-$logsPath = "$env:APPDATA\ElBruno\CopilotCLIMonitor\logs"
+$logsPath = "$env:APPDATA\CopilotCliMon\logs"
 Get-ChildItem $logsPath -Recurse | Sort-Object LastWriteTime -Descending | Select-Object -First 5
 Get-Content (Get-ChildItem $logsPath -Recurse | Sort-Object LastWriteTime -Descending | Select-Object -First 1).FullName
 ```

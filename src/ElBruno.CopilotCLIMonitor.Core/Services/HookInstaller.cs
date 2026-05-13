@@ -42,13 +42,7 @@ public class HookInstaller : IHookInstaller
             if (!File.Exists(configPath) || options.Force)
             {
                 var repoName = Path.GetFileName(repositoryRoot.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
-                File.WriteAllText(configPath, $$"""
-                    {
-                        "repository": "{{repoName}}",
-                        "notificationsEnabled": true,
-                        "events": ["task-completed", "approval-required", "error", "warning"]
-                    }
-                    """);
+                File.WriteAllText(configPath, BuildDefaultConfig(repoName));
             }
 
             var githubHooksDir = Path.Combine(repositoryRoot, GithubHooksDirectory, GithubHooksSubDirectory);
@@ -76,6 +70,33 @@ public class HookInstaller : IHookInstaller
             [string]$Message = "Task completed"
         )
         copilotclimon notify --event $Event --message $Message
+        """;
+
+    private static string BuildDefaultConfig(string repoName) =>
+        $$"""
+        {
+            "version": "1.0",
+            "repository": "{{repoName}}",
+            "enabled": true,
+            "notificationsEnabled": true,
+            "events": [
+                "task-completed",
+                "approval-required",
+                "error",
+                "warning",
+                "build-completed",
+                "test-completed",
+                "workflow-completed"
+            ],
+            "quietHours": {
+                "enabled": false,
+                "start": "22:00",
+                "end": "08:00"
+            },
+            "routing": {
+                "sourceTagging": true
+            }
+        }
         """;
 
     private static IReadOnlyList<string> ResolveHookSelection(IReadOnlyList<string>? enabledHookTriggers)

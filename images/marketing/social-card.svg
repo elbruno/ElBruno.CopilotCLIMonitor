@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="80" y="180" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="56" font-weight="700">CopilotCLI Monitor</text>
+  <text x="80" y="250" fill="#c9d1d9" font-family="Segoe UI, Arial, sans-serif" font-size="28">Desktop notifications for GitHub Copilot CLI workflows</text>
+  <circle cx="1040" cy="170" r="90" fill="#2563eb"/>
+  <text x="1004" y="187" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="56" font-weight="700">C</text>
+  <text x="80" y="420" fill="#58a6ff" font-family="Segoe UI, Arial, sans-serif" font-size="24">• System tray monitor</text>
+  <text x="80" y="460" fill="#58a6ff" font-family="Segoe UI, Arial, sans-serif" font-size="24">• Hook integration</text>
+  <text x="80" y="500" fill="#58a6ff" font-family="Segoe UI, Arial, sans-serif" font-size="24">• Event dashboard</text>
+  <text x="80" y="570" fill="#8b949e" font-family="Segoe UI, Arial, sans-serif" font-size="22">github.com/elbruno/ElBruno.CopilotCLIMonitor</text>
+</svg>

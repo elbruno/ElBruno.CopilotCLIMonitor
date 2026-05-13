@@ -26,8 +26,8 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
-    - name: Run tests
-      run: dotnet test --configuration Release --no-build --verbosity normal
+    - name: Run tests with coverage
+      run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory .\artifacts\coverage-results
 
     - name: Pack NuGet package
       run: dotnet pack --configuration Release --no-build --output .\artifacts
@@ -37,3 +37,9 @@ jobs:
       with:
         name: nuget-packages
         path: .\artifacts\**\*.nupkg
+
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-reports
+        path: .\artifacts\coverage-results\**\coverage.cobertura.xml
