@@ -25,6 +25,12 @@ Store screenshots in:
 images/screenshots/
 ```
 
+Notification icon source asset:
+
+```text
+images/notification-icon.svg
+```
+
 Recommended naming:
 
 - `tray-context-menu.png`
