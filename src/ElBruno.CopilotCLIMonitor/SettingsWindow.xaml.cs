@@ -5,8 +5,11 @@ namespace ElBruno.CopilotCLIMonitor;
 
 public partial class SettingsWindow : Window
 {
+    private readonly UserPreferences _initialPreferences;
+
     public SettingsWindow(UserPreferences preferences)
     {
+        _initialPreferences = preferences;
         InitializeComponent();
         QuietHoursStartComboBox.ItemsSource = Enumerable.Range(0, 24).ToList();
         QuietHoursEndComboBox.ItemsSource = Enumerable.Range(0, 24).ToList();
@@ -25,6 +28,7 @@ public partial class SettingsWindow : Window
         QuietHoursEndComboBox.SelectedItem = preferences.QuietHoursEnd;
         LogLevelComboBox.SelectedItem = preferences.LogLevel;
         StartWithWindowsCheckBox.IsChecked = preferences.StartWithWindows;
+        TelemetryOptInCheckBox.IsChecked = preferences.TelemetryOptIn;
     }
 
     private void Save_Click(object sender, RoutedEventArgs e)
@@ -37,7 +41,9 @@ public partial class SettingsWindow : Window
             QuietHoursStart = QuietHoursStartComboBox.SelectedItem is int start ? start : 22,
             QuietHoursEnd = QuietHoursEndComboBox.SelectedItem is int end ? end : 7,
             LogLevel = LogLevelComboBox.SelectedItem as string ?? "Information",
-            StartWithWindows = StartWithWindowsCheckBox.IsChecked ?? false
+            StartWithWindows = StartWithWindowsCheckBox.IsChecked ?? false,
+            TelemetryOptIn = TelemetryOptInCheckBox.IsChecked ?? false,
+            TelemetryInstallationId = _initialPreferences.TelemetryInstallationId
         };
 
         DialogResult = true;

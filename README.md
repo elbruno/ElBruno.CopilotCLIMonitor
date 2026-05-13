@@ -209,6 +209,10 @@ See [installer.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/mai
 
 See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/troubleshooting.md) for common issues and solutions.
 
+## Telemetry (optional)
+
+See [telemetry.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/telemetry.md) for opt-in telemetry behavior and data details.
+
 ## User manual
 
 See [user-manual.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/user-manual.md) for end-user step-by-step usage.

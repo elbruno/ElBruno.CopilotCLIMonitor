@@ -21,6 +21,7 @@ public partial class App : System.Windows.Application
     private ILogger<App>? _logger;
     private bool _notificationsPaused;
     private UserPreferences _preferences = new();
+    private UserTelemetryClient? _telemetryClient;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -28,6 +29,11 @@ public partial class App : System.Windows.Application
         _loggerFactory = LoggingFactoryBuilder.Create();
         _logger = _loggerFactory.CreateLogger<App>();
         _preferences = _preferencesStore.Load();
+        if (_preferences.TelemetryOptIn && !string.IsNullOrWhiteSpace(_preferences.TelemetryInstallationId))
+        {
+            _telemetryClient = new UserTelemetryClient(_preferences.TelemetryInstallationId);
+            _telemetryClient.TrackEvent("app_start");
+        }
         _logger.LogInformation("Application startup.");
 
         InitializeTrayIcon();
@@ -86,6 +92,7 @@ public partial class App : System.Windows.Application
         _logger?.LogDebug(
             "Dispatching notification event type={EventType} repository={Repository} branch={Branch}.",
             monitorEvent.EventType, monitorEvent.Repository, monitorEvent.Branch);
+        _telemetryClient?.TrackEvent("event_received", monitorEvent.EventType.ToString(), monitorEvent.Repository);
 
         Dispatcher.BeginInvoke(() =>
         {
@@ -176,6 +183,19 @@ public partial class App : System.Windows.Application
         }
 
         _preferences = settingsWindow.UpdatedPreferences;
+        if (_preferences.TelemetryOptIn && string.IsNullOrWhiteSpace(_preferences.TelemetryInstallationId))
+        {
+            _preferences.TelemetryInstallationId = Guid.NewGuid().ToString("N");
+        }
+        if (_preferences.TelemetryOptIn && !string.IsNullOrWhiteSpace(_preferences.TelemetryInstallationId))
+        {
+            _telemetryClient ??= new UserTelemetryClient(_preferences.TelemetryInstallationId);
+            _telemetryClient.TrackEvent("telemetry_enabled");
+        }
+        else
+        {
+            _telemetryClient = null;
+        }
         _preferencesStore.Save(_preferences);
         Environment.SetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL", _preferences.LogLevel);
 
@@ -197,7 +217,7 @@ public partial class App : System.Windows.Application
     }
 
     private static string BuildSettingsSummary(int ipcPort, bool tokenConfigured, UserPreferences preferences) =>
-        $"IPC Port: {ipcPort}\nAuthentication Token: {(tokenConfigured ? "Configured" : "Not Configured")}\nNotifications Enabled: {preferences.NotificationsEnabled}\nQuiet Hours: {(preferences.QuietHoursEnabled ? $"{preferences.QuietHoursStart}:00-{preferences.QuietHoursEnd}:00" : "Disabled")}\nLogging Level: {preferences.LogLevel}";
+        $"IPC Port: {ipcPort}\nAuthentication Token: {(tokenConfigured ? "Configured" : "Not Configured")}\nNotifications Enabled: {preferences.NotificationsEnabled}\nQuiet Hours: {(preferences.QuietHoursEnabled ? $"{preferences.QuietHoursStart}:00-{preferences.QuietHoursEnd}:00" : "Disabled")}\nLogging Level: {preferences.LogLevel}\nTelemetry: {(preferences.TelemetryOptIn ? "Enabled (Anonymous)" : "Disabled")}";
 
     private static bool ShouldDisplayNotification(UserPreferences preferences, DateTime localNow)
     {

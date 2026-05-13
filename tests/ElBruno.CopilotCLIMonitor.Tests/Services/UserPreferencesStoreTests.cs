@@ -30,7 +30,9 @@ public sealed class UserPreferencesStoreTests : IDisposable
             QuietHoursStart = 21,
             QuietHoursEnd = 6,
             LogLevel = "Debug",
-            StartWithWindows = true
+            StartWithWindows = true,
+            TelemetryOptIn = true,
+            TelemetryInstallationId = "abc123"
         };
 
         store.Save(expected);
@@ -43,6 +45,8 @@ public sealed class UserPreferencesStoreTests : IDisposable
         Assert.Equal(6, loaded.QuietHoursEnd);
         Assert.Equal("Debug", loaded.LogLevel);
         Assert.True(loaded.StartWithWindows);
+        Assert.True(loaded.TelemetryOptIn);
+        Assert.Equal("abc123", loaded.TelemetryInstallationId);
     }
 
     public void Dispose()
