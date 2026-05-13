@@ -7,7 +7,7 @@
     <AssemblyName>ElBruno.CopilotCLIMonitor.Core</AssemblyName>
     <RootNamespace>ElBruno.CopilotCLIMonitor.Core</RootNamespace>
     <IsPackable>true</IsPackable>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Title>GitHub Copilot CLI Monitor - Core Library</Title>
     <Authors>El Bruno</Authors>
     <Description>Core library for GitHub Copilot CLI Monitor. Provides event processing and systray notification capabilities.</Description>
