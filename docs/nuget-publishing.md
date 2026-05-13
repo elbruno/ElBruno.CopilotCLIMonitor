@@ -20,6 +20,10 @@ dotnet tool install -g ElBruno.CopilotCLIMonitor
 
 **Repository:** https://github.com/elbruno/ElBruno.CopilotCLIMonitor
 
+**Package icon:** `images\nuget-icon.png` (packed into the NuGet package as `images\nuget-icon.png`)
+
+**Package README:** Repository `README.md` (packed into the NuGet package as `README.md`)
+
 ## Trusted Publisher setup
 
 ElBruno.CopilotCLIMonitor is configured as a NuGet Trusted Publisher. This allows secure publishing without storing API keys.
@@ -95,7 +99,7 @@ git push origin v1.0.0
 
 ### 7. Automated publishing
 
-When a GitHub Release is published, the `release.yml` workflow automatically:
+When a GitHub Release is published, the `publish-nuget.yml` workflow automatically:
 
 1. Extracts version from tag
 2. Builds the project
@@ -125,9 +129,9 @@ Steps:
 
 This workflow is CI-only. It never publishes to NuGet.org.
 
-### Release Workflow
+### Publish NuGet workflow
 
-**File:** `.github/workflows/release.yml`
+**File:** `.github/workflows/publish-nuget.yml`
 
 Triggers on:
 - GitHub Release published
@@ -142,47 +146,36 @@ Steps:
 7. Publish to NuGet.org using Trusted Publisher
 8. Upload package to GitHub Release
 
-The NuGet Trusted Publishing policy must allow the `release.yml` workflow file for this repository. The workflow uses `github.repository_owner` as the NuGet username, so the repository owner must also be a package owner on NuGet.org.
+The NuGet Trusted Publishing policy must allow the `.github/workflows/publish-nuget.yml` workflow file for this repository. The workflow uses `github.repository_owner` as the NuGet username, so the repository owner must also be a package owner on NuGet.org.
 
 ## Project file configuration
 
-### NuGet metadata in .csproj
+### NuGet metadata in the CLI .csproj
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    
-    <!-- NuGet Package Metadata -->
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>copilotclimon</ToolCommandName>
+    <IsPackable>true</IsPackable>
     <PackageId>ElBruno.CopilotCLIMonitor</PackageId>
-    <Version>1.0.0</Version>
     <Title>GitHub Copilot CLI Monitor</Title>
     <Authors>ElBruno</Authors>
-    <Description>Windows Systray application for monitoring long-running GitHub Copilot CLI tasks with native notifications.</Description>
+    <Description>Windows-first .NET tool that forwards GitHub Copilot CLI events to the ElBruno.CopilotCLIMonitor systray app.</Description>
     <PackageProjectUrl>https://github.com/elbruno/ElBruno.CopilotCLIMonitor</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/elbruno/ElBruno.CopilotCLIMonitor</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>copilot;cli;notifications;systray;wpc;dotnet-tool</PackageTags>
-    <PackageIcon>icon.png</PackageIcon>
-    
-    <!-- Semantic Versioning -->
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix></VersionSuffix>
-    
-    <!-- .NET Tool -->
-    <PackAsTool>true</PackAsTool>
-    <ToolCommandName>copilotclimon</ToolCommandName>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIcon>images\nuget-icon.png</PackageIcon>
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="README.md" Pack="true" PackagePath="\"/>
-    <None Include="images/icon.png" Pack="true" PackagePath="\"/>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" Link="README.md" />
+    <None Include="..\..\images\nuget-icon.png" Pack="true" PackagePath="images\" Link="images\nuget-icon.png" />
   </ItemGroup>
 
 </Project>
@@ -196,14 +189,14 @@ To test the package locally before publishing to NuGet:
 # Build the project
 dotnet build --configuration Release
 
-# Pack the package
-dotnet pack --configuration Release --output ./test-packages
+# Pack the CLI package
+dotnet pack .\src\ElBruno.CopilotCLIMonitor.Cli\ElBruno.CopilotCLIMonitor.Cli.csproj --configuration Release --output .\test-packages
 
 # Uninstall current version (if installed)
 dotnet tool uninstall -g ElBruno.CopilotCLIMonitor
 
 # Install from local package
-dotnet tool install -g ElBruno.CopilotCLIMonitor --add-source ./test-packages
+dotnet tool install -g ElBruno.CopilotCLIMonitor --add-source .\test-packages
 ```
 
 ## Verification

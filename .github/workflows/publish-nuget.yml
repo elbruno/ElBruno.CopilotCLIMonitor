@@ -1,11 +1,11 @@
-name: Release
+name: Publish NuGet
 
 on:
   release:
     types: [published]
 
 jobs:
-  publish-nuget:
+  publish:
     runs-on: windows-latest
 
     permissions:
@@ -19,10 +19,11 @@ jobs:
 
     - name: Extract version from tag
       id: tag
+      shell: pwsh
       run: |
         $version = "${{ github.event.release.tag_name }}" -replace '^v', ''
-        echo "VERSION=$version" >> $env:GITHUB_OUTPUT
-        echo "Version: $version"
+        "VERSION=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        Write-Host "Version: $version"
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -30,16 +31,16 @@ jobs:
         dotnet-version: '10.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore .\ElBruno.CopilotCLIMonitor.sln
 
     - name: Build
-      run: dotnet build --configuration Release --no-restore /p:Version=${{ steps.tag.outputs.VERSION }}
+      run: dotnet build .\ElBruno.CopilotCLIMonitor.sln --configuration Release --no-restore /p:Version=${{ steps.tag.outputs.VERSION }}
 
-    - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
+    - name: Run tests
+      run: dotnet test .\ElBruno.CopilotCLIMonitor.sln --configuration Release --no-build --nologo
 
-    - name: Pack NuGet package
-      run: dotnet pack --configuration Release --no-build --output .\artifacts /p:Version=${{ steps.tag.outputs.VERSION }}
+    - name: Pack CLI package
+      run: dotnet pack .\src\ElBruno.CopilotCLIMonitor.Cli\ElBruno.CopilotCLIMonitor.Cli.csproj --configuration Release --no-build --output .\artifacts /p:Version=${{ steps.tag.outputs.VERSION }}
 
     - name: NuGet login
       id: login
@@ -48,8 +49,9 @@ jobs:
         user: ${{ github.repository_owner }}
 
     - name: Publish to NuGet
+      shell: pwsh
       run: |
-        $packages = Get-ChildItem .\artifacts -Filter *.nupkg -File
+        $packages = Get-ChildItem .\artifacts -Filter *.nupkg -File | Where-Object { $_.Name -notlike '*.snupkg' }
         foreach ($package in $packages) {
           dotnet nuget push $package.FullName `
             --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" `
@@ -57,8 +59,8 @@ jobs:
             --skip-duplicate
         }
 
-    - name: Upload artifacts to release
-      uses: softprops/action-gh-release@v1
+    - name: Upload package to release
+      uses: softprops/action-gh-release@v2
       with:
         files: .\artifacts\**\*.nupkg
       env:

@@ -177,15 +177,15 @@ Local hook configuration:
 
 ## Setup guide
 
-See [setup.md](docs/setup.md) for detailed installation and configuration instructions.
+See [setup.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/setup.md) for detailed installation and configuration instructions.
 
 ## Troubleshooting
 
-See [troubleshooting.md](docs/troubleshooting.md) for common issues and solutions.
+See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/troubleshooting.md) for common issues and solutions.
 
 ## Architecture documentation
 
-See [architecture.md](docs/architecture.md) for technical design details.
+See [architecture.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/architecture.md) for technical design details.
 
 ## Examples
 

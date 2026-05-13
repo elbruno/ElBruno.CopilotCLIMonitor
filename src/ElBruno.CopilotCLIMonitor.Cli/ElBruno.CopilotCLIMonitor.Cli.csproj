@@ -8,13 +8,21 @@
     <AssemblyName>copilotclimon</AssemblyName>
     <RootNamespace>ElBruno.CopilotCLIMonitor.Cli</RootNamespace>
     <PackAsTool>true</PackAsTool>
+    <IsPackable>true</IsPackable>
     <ToolCommandName>copilotclimon</ToolCommandName>
     <PackageId>ElBruno.CopilotCLIMonitor</PackageId>
     <Version>0.1.0</Version>
+    <Title>GitHub Copilot CLI Monitor</Title>
     <Authors>El Bruno</Authors>
-    <Description>GitHub Copilot CLI Monitor – Windows Systray notifier for long-running AI tasks</Description>
+    <Description>Windows-first .NET tool that forwards GitHub Copilot CLI events to the ElBruno.CopilotCLIMonitor systray app.</Description>
     <PackageTags>copilot;cli;monitor;systray;notifications;windows;dotnet-tool</PackageTags>
+    <PackageProjectUrl>https://github.com/elbruno/ElBruno.CopilotCLIMonitor</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>images\nuget-icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/elbruno/ElBruno.CopilotCLIMonitor</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +31,11 @@
 
   <ItemGroup>
     <PackageReference Include="System.CommandLine" Version="3.0.0-preview.4.26230.115" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" Link="README.md" />
+    <None Include="..\..\images\nuget-icon.png" Pack="true" PackagePath="images\" Link="images\nuget-icon.png" />
   </ItemGroup>
 
 </Project>

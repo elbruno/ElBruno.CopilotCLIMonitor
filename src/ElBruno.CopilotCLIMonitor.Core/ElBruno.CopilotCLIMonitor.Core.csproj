@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <AssemblyName>ElBruno.CopilotCLIMonitor.Core</AssemblyName>
     <RootNamespace>ElBruno.CopilotCLIMonitor.Core</RootNamespace>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
 </Project>

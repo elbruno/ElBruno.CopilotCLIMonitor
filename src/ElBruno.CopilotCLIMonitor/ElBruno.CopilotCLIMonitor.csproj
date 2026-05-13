@@ -9,6 +9,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <AssemblyName>ElBruno.CopilotCLIMonitor</AssemblyName>
     <RootNamespace>ElBruno.CopilotCLIMonitor</RootNamespace>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
