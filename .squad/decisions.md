@@ -213,6 +213,22 @@
 ### Decision 24 — v1.0 Release Readiness
 **Date:** 2026-05-13 | **Agent:** Sish (DevOps/Release)
 - **Infrastructure: 90% ready** (NuGet OIDC, CI/CD, packaging, version strategy all production-ready)
+
+### Decision 25 — Wave 1 Foundation Complete & Merged
+**Date:** 2026-05-13 | **Agent:** Scribe (Team Lead) | **Status:** ACTIVE
+- **Merged branches:** squad/5-structured-logging, squad/44-ui-design-system, squad/64-version-bump
+- **Commits:**
+  - d53bea1: [squad:dolph] Add structured logging to Core services (fixes #5) — 108 tests passing
+  - 7da2fe0: [squad:sish] Release pipeline skeleton, version-bump script, NuGet metadata validation
+  - 0fb006f: [squad:chevy] UI design system foundation: MVVM structure, GitHub-blue palette, Settings UI mockup
+- **Main branch HEAD:** 0fb006f (fast-forward merge complete)
+- **Files added:** 31 files, 9,668 insertions (+) / 23 deletions (-)
+- **Key deliverables:**
+  - Core: ILogger<T>? support in all 4 services (EventStore, MonitorEventParser, IpcServer, HttpEventNotifier)
+  - Core: New MonitorEventParser service with round-trip logging tests
+  - Release: `.github/workflows/release-v1.0.yml`, `scripts/version-bump.ps1`, NuGet metadata validation
+  - WPF: MVVM structure (ViewModels/, Views/, Styles/), GitHub-blue design system (Colors.xaml, Buttons.xaml, TextBlocks.xaml), Settings UI mockup
+- **Next phase:** Wave 1B (IPC config, event persistence, quiet hours), then Wave 2 (Settings UI binding, toast notifications, dashboard)
 - **Blockers for v1.0 core:** None (MSI installer and auto-update deferred to v1.1)
 - **v1.1 roadmap:** MSI installer (WiX recommended), auto-update mechanism (NuGet API check), WinGet submission
 - **Workarounds:** .NET Tool installation for v1.0 (ship now); MSI 2-4 weeks post-1.0
