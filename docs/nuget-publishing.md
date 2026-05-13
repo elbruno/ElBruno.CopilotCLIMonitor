@@ -20,7 +20,7 @@ dotnet tool install -g ElBruno.CopilotCLIMonitor
 
 **Repository:** https://github.com/elbruno/ElBruno.CopilotCLIMonitor
 
-**Package icon:** `images\nuget-icon.png` (packed into the NuGet package as `images\nuget-icon.png`)
+**Package icon:** `images\nuget-icon.png` (GPT-Image-2-generated artwork, packed into the NuGet package as `images\nuget-icon.png`)
 
 **Package README:** Repository `README.md` (packed into the NuGet package as `README.md`)
 
