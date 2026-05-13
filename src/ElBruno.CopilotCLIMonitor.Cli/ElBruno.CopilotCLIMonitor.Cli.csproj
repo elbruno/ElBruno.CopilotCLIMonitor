@@ -38,6 +38,11 @@
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" Link="README.md" />
     <None Include="..\..\images\nuget-icon.png" Pack="true" PackagePath="images\" Link="images\nuget-icon.png" />
+    <None Include="..\ElBruno.CopilotCLIMonitor\bin\$(Configuration)\net10.0-windows\**\*"
+          Pack="true"
+          PackagePath="tools\$(TargetFramework)\any\monitor\%(RecursiveDir)%(Filename)%(Extension)"
+          Visible="false"
+          Condition="Exists('..\ElBruno.CopilotCLIMonitor\bin\$(Configuration)\net10.0-windows\ElBruno.CopilotCLIMonitor.exe')" />
   </ItemGroup>
 
 </Project>

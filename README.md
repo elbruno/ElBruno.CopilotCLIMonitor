@@ -27,9 +27,11 @@ ElBruno.CopilotCLIMonitor bridges GitHub Copilot CLI hooks and Windows desktop n
 dotnet tool install -g ElBruno.CopilotCLIMonitor
 ```
 
-### Install desktop app
+The NuGet tool package includes the monitor desktop binaries and `copilotclimon` will launch them by default.
 
-Install the tray app (portable ZIP, installer, or Chocolatey package) so `ElBruno.CopilotCLIMonitor.exe` exists on your machine.
+### Optional: install desktop app separately
+
+You can still install the tray app via portable ZIP, installer, or Chocolatey.
 
 If your executable is in a custom path, set:
 

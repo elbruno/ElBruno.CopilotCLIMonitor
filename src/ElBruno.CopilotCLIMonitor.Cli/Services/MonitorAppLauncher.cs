@@ -37,7 +37,7 @@ public sealed class MonitorAppLauncher
         if (string.IsNullOrWhiteSpace(executablePath))
         {
             Console.Error.WriteLine("✗ Could not find ElBruno.CopilotCLIMonitor.exe.");
-            Console.Error.WriteLine("Install the desktop app (portable/installer/chocolatey), then run: copilotclimon");
+            Console.Error.WriteLine("Reinstall the latest dotnet tool package, or install the desktop app separately (portable/installer/chocolatey), then run: copilotclimon");
             return 1;
         }
 
@@ -97,6 +97,8 @@ public sealed class MonitorAppLauncher
         {
             candidates.Add(Path.Combine(localAppData, "Programs", "ElBruno.CopilotCLIMonitor", "ElBruno.CopilotCLIMonitor.exe"));
         }
+
+        candidates.Add(Path.Combine(AppContext.BaseDirectory, "monitor", "ElBruno.CopilotCLIMonitor.exe"));
 
         var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
         if (!string.IsNullOrWhiteSpace(programData))
