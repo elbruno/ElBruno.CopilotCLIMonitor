@@ -81,7 +81,9 @@ public class HookInstallerTests : IDisposable
         var hookConfigPath = Path.Combine(_tempDir, ".github", "hooks", "copilotclimon-notify.json");
         var content = File.ReadAllText(hookConfigPath);
         Assert.Contains("\"agentStop\"", content);
+        Assert.Contains("\"bash\"", content);
         Assert.Contains("notify.ps1", content);
+        Assert.Contains("\"command\"", content);
     }
 
     [Fact]

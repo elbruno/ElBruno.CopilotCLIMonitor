@@ -38,6 +38,7 @@ copilotclimon init
 ```
 
 `init` is interactive by default and lets you choose which Copilot hook triggers to register.
+Generated hook entries include `powershell` and `bash`/`command` fields so they run on Windows-local Copilot CLI and Linux-based Copilot surfaces.
 
 For automation/CI, use:
 
@@ -75,6 +76,8 @@ This command checks:
 - Hook configuration is valid
 - Systray application is running
 - Network connectivity is available
+
+After creating or editing hook files, restart Copilot CLI so it reloads hook configuration.
 
 ### Upgrade repository hook/config templates
 
