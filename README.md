@@ -223,6 +223,10 @@ See [chocolatey.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/ma
 
 See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/troubleshooting.md) for common issues and solutions.
 
+## Windows security notes
+
+See [windows-security-notes.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/windows-security-notes.md) for Defender/SmartScreen and antivirus compatibility guidance.
+
 ## Code coverage
 
 See [coverage.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/coverage.md) for local and CI coverage report generation.
