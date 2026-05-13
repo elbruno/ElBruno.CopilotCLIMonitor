@@ -93,6 +93,12 @@ Open settings from the Systray context menu:
 - Startup on Windows boot
 - Logging level (Info, Debug)
 
+When sound is enabled, alert tones are event-aware:
+
+- Error / hook failure → system **Hand** sound
+- Warning / approval required / long-running warning → system **Exclamation** sound
+- Completed events (task/build/test/workflow) → system **Asterisk** sound
+
 Preferences are loaded in this order:
 
 1. `%ProgramData%\CopilotCliMon\preferences.system.json` (machine-wide defaults)

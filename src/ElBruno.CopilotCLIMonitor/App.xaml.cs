@@ -114,7 +114,7 @@ public partial class App : System.Windows.Application
                 ShowNotification(monitorEvent);
                 if (_preferences.SoundEnabled)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    GetNotificationSound(monitorEvent.EventType).Play();
                 }
             }
             else
@@ -163,6 +163,14 @@ public partial class App : System.Windows.Application
         EventType.Error or EventType.HookFailed => ToolTipIcon.Error,
         EventType.ApprovalRequired or EventType.Warning or EventType.LongRunningTaskWarning => ToolTipIcon.Warning,
         _ => ToolTipIcon.Info
+    };
+
+    private static System.Media.SystemSound GetNotificationSound(EventType t) => t switch
+    {
+        EventType.Error or EventType.HookFailed => System.Media.SystemSounds.Hand,
+        EventType.ApprovalRequired or EventType.Warning or EventType.LongRunningTaskWarning => System.Media.SystemSounds.Exclamation,
+        EventType.TaskCompleted or EventType.BuildCompleted or EventType.TestCompleted or EventType.WorkflowCompleted => System.Media.SystemSounds.Asterisk,
+        _ => System.Media.SystemSounds.Beep
     };
 
     private void OpenDashboard()
