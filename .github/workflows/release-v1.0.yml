@@ -1,0 +1,285 @@
+name: Release v1.0 Pipeline
+
+# Manual trigger for v1.0 release
+# USAGE: gh workflow run release-v1.0.yml --ref main
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.0)'
+        required: true
+        default: '1.0.0'
+      draft:
+        description: 'Create as draft release'
+        required: false
+        default: 'false'
+
+env:
+  DOTNET_VERSION: '10.0.x'
+  SOLUTION_FILE: 'ElBruno.CopilotCLIMonitor.sln'
+
+jobs:
+  # Phase 1: Verify main branch is green
+  verify-main:
+    name: Phase 1 - Verify Main Branch
+    runs-on: windows-latest
+    outputs:
+      status: ${{ steps.verify.outputs.status }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.SOLUTION_FILE }}
+
+      - name: Build Release
+        run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Release --no-restore
+
+      - name: Run tests
+        id: test
+        run: dotnet test ${{ env.SOLUTION_FILE }} --configuration Release --no-build --verbosity normal
+
+      - name: Verify status
+        id: verify
+        shell: pwsh
+        run: |
+          if ($LASTEXITCODE -eq 0) {
+            "status=success" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+            Write-Host "✅ Main branch is green"
+          } else {
+            "status=failed" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+            Write-Host "❌ Tests failed - cannot proceed with release"
+            exit 1
+          }
+
+  # Phase 2: Version auto-increment
+  version-bump:
+    name: Phase 2 - Version Auto-Increment
+    runs-on: windows-latest
+    needs: verify-main
+    if: needs.verify-main.outputs.status == 'success'
+    outputs:
+      commit_hash: ${{ steps.bump.outputs.commit_hash }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "action@github.com"
+
+      - name: Run version bump script
+        id: bump
+        shell: pwsh
+        run: |
+          # Download and execute version-bump script
+          $scriptPath = "scripts/version-bump.ps1"
+          if (Test-Path $scriptPath) {
+            & $scriptPath -Version "${{ github.event.inputs.version }}"
+            $commitHash = & git rev-parse HEAD
+            "commit_hash=$commitHash" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+            Write-Host "✅ Version bumped to ${{ github.event.inputs.version }}"
+          } else {
+            Write-Error "version-bump.ps1 not found"
+          }
+
+      - name: Push changes
+        run: |
+          git push origin main
+
+  # Phase 3: Create git tag
+  create-tag:
+    name: Phase 3 - Create Git Tag
+    runs-on: windows-latest
+    needs: version-bump
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create and push tag
+        shell: pwsh
+        run: |
+          $tag = "v${{ github.event.inputs.version }}"
+          Write-Host "Creating tag: $tag"
+          
+          git config user.name "github-actions"
+          git config user.email "action@github.com"
+          
+          # Create annotated tag
+          git tag -a $tag -m "Release $tag" ${{ needs.version-bump.outputs.commit_hash }}
+          
+          # Push tag
+          git push origin $tag
+          Write-Host "✅ Tag created and pushed: $tag"
+
+  # Phase 4: Pack and publish NuGet packages
+  publish-nuget:
+    name: Phase 4 - Publish NuGet Packages
+    runs-on: windows-latest
+    needs: [version-bump, create-tag]
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: "v${{ github.event.inputs.version }}"
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.SOLUTION_FILE }}
+
+      - name: Build Release
+        run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Release --no-restore /p:Version=${{ github.event.inputs.version }}
+
+      - name: Run tests
+        run: dotnet test ${{ env.SOLUTION_FILE }} --configuration Release --no-build --verbosity normal
+
+      - name: Pack NuGet packages
+        shell: pwsh
+        run: |
+          # Pack CLI tool
+          dotnet pack .\src\ElBruno.CopilotCLIMonitor.Cli\ElBruno.CopilotCLIMonitor.Cli.csproj `
+            --configuration Release `
+            --no-build `
+            --output .\artifacts `
+            /p:Version=${{ github.event.inputs.version }}
+          
+          Write-Host "✅ NuGet packages packed"
+          Get-ChildItem .\artifacts -Filter *.nupkg -File
+
+      - name: Authenticate with NuGet
+        # NOTE: GitHub OIDC support for NuGet requires trusted publisher setup
+        # See: https://learn.microsoft.com/en-us/nuget/nuget-org/nuget-publish-with-github-actions
+        uses: NuGet/login@v1
+        with:
+          user: ${{ github.repository_owner }}
+          # API Key will come from GitHub Secrets - requires manual setup in NuGet.org dashboard
+
+      - name: Publish to NuGet
+        shell: pwsh
+        run: |
+          $packages = Get-ChildItem .\artifacts -Filter *.nupkg -File | Where-Object { $_.Name -notlike '*.snupkg' }
+          Write-Host "Publishing $($packages.Count) package(s)..."
+          
+          foreach ($package in $packages) {
+            Write-Host "Publishing: $($package.Name)"
+            dotnet nuget push $package.FullName `
+              --api-key "${{ secrets.NUGET_API_KEY }}" `
+              --source https://api.nuget.org/v3/index.json `
+              --skip-duplicate
+          }
+          
+          Write-Host "✅ All packages published to NuGet"
+
+  # Phase 5: Create GitHub Release
+  create-release:
+    name: Phase 5 - Create GitHub Release
+    runs-on: windows-latest
+    needs: [version-bump, create-tag, publish-nuget]
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: "v${{ github.event.inputs.version }}"
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: nuget-packages
+          path: ./artifacts
+
+      - name: Generate changelog
+        id: changelog
+        shell: pwsh
+        run: |
+          $version = "${{ github.event.inputs.version }}"
+          $changelog = @(
+            "## Release $version",
+            "",
+            "### 🎉 Release Highlights",
+            "- v1.0 general availability",
+            "- Full feature parity with development",
+            "- Production-ready monitoring capabilities",
+            "",
+            "### 📦 Packages",
+            "- ElBruno.CopilotCLIMonitor (CLI tool)",
+            "",
+            "### 🔗 Links",
+            "- [NuGet.org Package](https://www.nuget.org/packages/ElBruno.CopilotCLIMonitor/)",
+            "- [GitHub Repository](https://github.com/${{ github.repository }})",
+            "",
+            "### 📝 Installation",
+            "``````bash",
+            "dotnet tool install -g ElBruno.CopilotCLIMonitor --version $version",
+            "``````",
+            ""
+          ) -join "`n"
+          
+          "changelog<<EOF`n$changelog`nEOF" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ github.event.inputs.version }}"
+          name: "Release ${{ github.event.inputs.version }}"
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: ${{ github.event.inputs.draft }}
+          prerelease: false
+          files: ./artifacts/**/*.nupkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Summary
+  release-summary:
+    name: Release Summary
+    runs-on: windows-latest
+    needs: [verify-main, version-bump, create-tag, publish-nuget, create-release]
+    if: always()
+    steps:
+      - name: Print Summary
+        shell: pwsh
+        run: |
+          Write-Host "╔═══════════════════════════════════════════════╗" -ForegroundColor Cyan
+          Write-Host "║     v1.0 Release Pipeline - Summary          ║" -ForegroundColor Cyan
+          Write-Host "╚═══════════════════════════════════════════════╝" -ForegroundColor Cyan
+          
+          Write-Host "`nPhase Results:" -ForegroundColor Yellow
+          Write-Host "  ✅ Phase 1 (Verify Main): ${{ needs.verify-main.result }}"
+          Write-Host "  ✅ Phase 2 (Version Bump): ${{ needs.version-bump.result }}"
+          Write-Host "  ✅ Phase 3 (Create Tag): ${{ needs.create-tag.result }}"
+          Write-Host "  ✅ Phase 4 (Publish NuGet): ${{ needs.publish-nuget.result }}"
+          Write-Host "  ✅ Phase 5 (GitHub Release): ${{ needs.create-release.result }}"
+          
+          Write-Host "`nRelease Information:" -ForegroundColor Yellow
+          Write-Host "  Version: v${{ github.event.inputs.version }}"
+          Write-Host "  Commit: ${{ needs.version-bump.outputs.commit_hash }}"
+          Write-Host "  Draft: ${{ github.event.inputs.draft }}"
+          
+          if ("${{ needs.release-summary.result }}" -eq "success") {
+            Write-Host "`n✨ Release Complete! ✨" -ForegroundColor Green
+          } else {
+            Write-Host "`n⚠️  Some phases had issues" -ForegroundColor Yellow
+          }

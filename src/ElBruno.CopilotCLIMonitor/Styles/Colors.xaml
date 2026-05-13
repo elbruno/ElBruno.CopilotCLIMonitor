@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- GitHub-blue Palette -->
+    <!-- Primary: #1f6feb (GitHub blue) -->
+    <Color x:Key="GitHubPrimaryColor">#1f6feb</Color>
+    <SolidColorBrush x:Key="GitHubPrimaryBrush" Color="{StaticResource GitHubPrimaryColor}" />
+
+    <!-- Accent: #388bfd (lighter blue for hover/active) -->
+    <Color x:Key="GitHubAccentColor">#388bfd</Color>
+    <SolidColorBrush x:Key="GitHubAccentBrush" Color="{StaticResource GitHubAccentColor}" />
+
+    <!-- Background: #0d1117 (dark background) -->
+    <Color x:Key="GitHubBackgroundColor">#0d1117</Color>
+    <SolidColorBrush x:Key="GitHubBackgroundBrush" Color="{StaticResource GitHubBackgroundColor}" />
+
+    <!-- Surface: #161b22 (slightly lighter for panels) -->
+    <Color x:Key="GitHubSurfaceColor">#161b22</Color>
+    <SolidColorBrush x:Key="GitHubSurfaceBrush" Color="{StaticResource GitHubSurfaceColor}" />
+
+    <!-- Text: #c9d1d9 (light text) -->
+    <Color x:Key="GitHubTextColor">#c9d1d9</Color>
+    <SolidColorBrush x:Key="GitHubTextBrush" Color="{StaticResource GitHubTextColor}" />
+
+    <!-- Secondary Text: #8b949e (muted text) -->
+    <Color x:Key="GitHubSecondaryTextColor">#8b949e</Color>
+    <SolidColorBrush x:Key="GitHubSecondaryTextBrush" Color="{StaticResource GitHubSecondaryTextColor}" />
+
+    <!-- Border: #30363d (subtle border) -->
+    <Color x:Key="GitHubBorderColor">#30363d</Color>
+    <SolidColorBrush x:Key="GitHubBorderBrush" Color="{StaticResource GitHubBorderColor}" />
+
+    <!-- Danger: #da3633 (error red) -->
+    <Color x:Key="GitHubDangerColor">#da3633</Color>
+    <SolidColorBrush x:Key="GitHubDangerBrush" Color="{StaticResource GitHubDangerColor}" />
+
+    <!-- Success: #238636 (success green) -->
+    <Color x:Key="GitHubSuccessColor">#238636</Color>
+    <SolidColorBrush x:Key="GitHubSuccessBrush" Color="{StaticResource GitHubSuccessColor}" />
+
+    <!-- Warning: #d29922 (warning orange) -->
+    <Color x:Key="GitHubWarningColor">#d29922</Color>
+    <SolidColorBrush x:Key="GitHubWarningBrush" Color="{StaticResource GitHubWarningColor}" />
+
+</ResourceDictionary>

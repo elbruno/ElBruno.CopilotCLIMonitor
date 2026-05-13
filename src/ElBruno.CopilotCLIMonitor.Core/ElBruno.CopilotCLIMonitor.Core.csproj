@@ -6,7 +6,17 @@
     <Nullable>enable</Nullable>
     <AssemblyName>ElBruno.CopilotCLIMonitor.Core</AssemblyName>
     <RootNamespace>ElBruno.CopilotCLIMonitor.Core</RootNamespace>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
+    <Version>0.1.0</Version>
+    <Title>GitHub Copilot CLI Monitor - Core Library</Title>
+    <Authors>El Bruno</Authors>
+    <Description>Core library for GitHub Copilot CLI Monitor. Provides event processing and systray notification capabilities.</Description>
+    <PackageTags>copilot;cli;monitor;library;events</PackageTags>
+    <PackageProjectUrl>https://github.com/elbruno/ElBruno.CopilotCLIMonitor</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/elbruno/ElBruno.CopilotCLIMonitor</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

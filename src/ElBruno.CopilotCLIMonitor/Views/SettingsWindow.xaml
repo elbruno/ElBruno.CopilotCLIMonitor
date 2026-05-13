@@ -1,0 +1,178 @@
+<Window x:Class="ElBruno.CopilotCLIMonitor.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Copilot CLI Monitor Settings"
+        Width="600"
+        Height="500"
+        Background="{StaticResource GitHubBackgroundBrush}"
+        Foreground="{StaticResource GitHubTextBrush}"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Styles/Buttons.xaml"/>
+                <ResourceDictionary Source="/Styles/TextBlocks.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title Bar -->
+        <Border Grid.Row="0" Background="{StaticResource GitHubSurfaceBrush}" 
+                BorderBrush="{StaticResource GitHubBorderBrush}" 
+                BorderThickness="0,0,0,1"
+                Padding="20,16">
+            <TextBlock Style="{StaticResource Heading2TextBlockStyle}"
+                       Text="Settings"
+                       Margin="0"/>
+        </Border>
+
+        <!-- Settings Sections -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Padding="20">
+                
+                <!-- IPC Configuration Section -->
+                <TextBlock Style="{StaticResource Heading3TextBlockStyle}" 
+                          Text="IPC Configuration"
+                          Margin="0,0,0,12"/>
+                <Border Background="{StaticResource GitHubSurfaceBrush}"
+                        BorderBrush="{StaticResource GitHubBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="16"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                      Style="{StaticResource BodyTextBlockStyle}"
+                                      Text="Port:"
+                                      VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1"
+                                      Style="{StaticResource SecondaryTextBlockStyle}"
+                                      Text="[Awaiting CoreSettings API]"
+                                      IsEnabled="False"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Event Store Settings Section -->
+                <TextBlock Style="{StaticResource Heading3TextBlockStyle}" 
+                          Text="Event Store Settings"
+                          Margin="0,0,0,12"/>
+                <Border Background="{StaticResource GitHubSurfaceBrush}"
+                        BorderBrush="{StaticResource GitHubBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="16"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                      Style="{StaticResource BodyTextBlockStyle}"
+                                      Text="Max Events:"
+                                      VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1"
+                                      Style="{StaticResource SecondaryTextBlockStyle}"
+                                      Text="[Awaiting CoreSettings API]"
+                                      IsEnabled="False"/>
+                        </Grid>
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                      Style="{StaticResource BodyTextBlockStyle}"
+                                      Text="Retention:"
+                                      VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1"
+                                      Style="{StaticResource SecondaryTextBlockStyle}"
+                                      Text="[Awaiting CoreSettings API]"
+                                      IsEnabled="False"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Logging Configuration Section -->
+                <TextBlock Style="{StaticResource Heading3TextBlockStyle}" 
+                          Text="Logging Configuration"
+                          Margin="0,0,0,12"/>
+                <Border Background="{StaticResource GitHubSurfaceBrush}"
+                        BorderBrush="{StaticResource GitHubBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="16"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                      Style="{StaticResource BodyTextBlockStyle}"
+                                      Text="Log Level:"
+                                      VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1"
+                                      Style="{StaticResource SecondaryTextBlockStyle}"
+                                      Text="[Awaiting CoreSettings API]"
+                                      IsEnabled="False"/>
+                        </Grid>
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                      Style="{StaticResource BodyTextBlockStyle}"
+                                      Text="Output Path:"
+                                      VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1"
+                                      Style="{StaticResource SecondaryTextBlockStyle}"
+                                      Text="[Awaiting CoreSettings API]"
+                                      IsEnabled="False"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                          Text="Settings are currently read-only. Full configuration will be available after logging APIs merge."
+                          Margin="0,0,0,12"
+                          Foreground="{StaticResource GitHubSecondaryTextBrush}"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Button Bar -->
+        <Border Grid.Row="2" Background="{StaticResource GitHubSurfaceBrush}" 
+                BorderBrush="{StaticResource GitHubBorderBrush}" 
+                BorderThickness="0,1,0,0"
+                Padding="20,16">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Style="{StaticResource SecondaryButtonStyle}"
+                        Content="Cancel"
+                        Margin="0,0,12,0"
+                        Click="CancelButton_Click"/>
+                <Button Style="{StaticResource PrimaryButtonStyle}"
+                        Content="OK"
+                        Click="OkButton_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
