@@ -18,35 +18,40 @@
                        Foreground="Gray" FontSize="11" Margin="0,2,0,12"/>
 
             <CheckBox x:Name="NotificationsEnabledCheckBox"
-                      Content="Enable notifications" Margin="0,0,0,8"/>
+                      Content="Enable notifications" Margin="0,0,0,8"
+                      AutomationProperties.Name="Enable notifications"/>
             <CheckBox x:Name="SoundEnabledCheckBox"
-                      Content="Play sound for notifications" Margin="0,0,0,8"/>
+                      Content="Play sound for notifications" Margin="0,0,0,8"
+                      AutomationProperties.Name="Enable notification sound"/>
             <CheckBox x:Name="StartWithWindowsCheckBox"
-                      Content="Start with Windows" Margin="0,0,0,12"/>
+                      Content="Start with Windows" Margin="0,0,0,12"
+                      AutomationProperties.Name="Start application with Windows"/>
             <CheckBox x:Name="TelemetryOptInCheckBox"
-                      Content="Share anonymous telemetry (opt-in)" Margin="0,0,0,12"/>
+                      Content="Share anonymous telemetry (opt-in)" Margin="0,0,0,12"
+                      AutomationProperties.Name="Enable anonymous telemetry"/>
 
             <TextBlock Text="Quiet Hours" FontWeight="SemiBold" Margin="0,0,0,6"/>
             <CheckBox x:Name="QuietHoursEnabledCheckBox"
-                      Content="Enable quiet hours" Margin="0,0,0,8"/>
+                      Content="Enable quiet hours" Margin="0,0,0,8"
+                      AutomationProperties.Name="Enable quiet hours"/>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                 <TextBlock Text="Start hour:" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                <ComboBox x:Name="QuietHoursStartComboBox" Width="70"/>
+                <ComboBox x:Name="QuietHoursStartComboBox" Width="70" AutomationProperties.Name="Quiet hours start hour"/>
                 <TextBlock Text="End hour:" VerticalAlignment="Center" Margin="16,0,8,0"/>
-                <ComboBox x:Name="QuietHoursEndComboBox" Width="70"/>
+                <ComboBox x:Name="QuietHoursEndComboBox" Width="70" AutomationProperties.Name="Quiet hours end hour"/>
             </StackPanel>
 
             <TextBlock Text="Logging Level" FontWeight="SemiBold" Margin="0,0,0,6"/>
-            <ComboBox x:Name="LogLevelComboBox" Width="180"/>
+            <ComboBox x:Name="LogLevelComboBox" Width="180" AutomationProperties.Name="Logging level selection"/>
 
             <TextBlock Text="IPC Authentication Token (optional)" FontWeight="SemiBold" Margin="0,12,0,6"/>
-            <PasswordBox x:Name="IpcTokenPasswordBox" Width="280"/>
+            <PasswordBox x:Name="IpcTokenPasswordBox" Width="280" AutomationProperties.Name="IPC authentication token"/>
             <TextBlock Text="Leave blank to keep current token." Foreground="Gray" FontSize="11" Margin="0,4,0,0"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
-            <Button Content="Cancel" Width="80" Margin="0,0,8,0" Click="Cancel_Click"/>
-            <Button Content="Save" Width="80" IsDefault="True" Click="Save_Click"/>
+            <Button Content="Cancel" Width="80" Margin="0,0,8,0" Click="Cancel_Click" AutomationProperties.Name="Cancel settings changes"/>
+            <Button Content="Save" Width="80" IsDefault="True" Click="Save_Click" AutomationProperties.Name="Save settings changes"/>
         </StackPanel>
     </Grid>
 </Window>
