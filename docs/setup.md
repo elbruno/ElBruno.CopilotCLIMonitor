@@ -11,7 +11,7 @@
 ### Step 1: Install the .NET tool
 
 ```powershell
-dotnet tool install -g ElBruno.copilotclimon
+dotnet tool install -g ElBruno.CopilotCLIMonitor
 ```
 
 Verify installation:
@@ -94,10 +94,10 @@ Open settings from the Systray context menu:
 
 ### Repository-specific configuration
 
-Repository configuration is stored in `.copilotclimon`:
+Repository configuration is stored in `.copilotclimonitor`:
 
 ```text
-.copilotclimon/
+.copilotclimonitor/
 ├── config.json
 └── hooks/
     ├── on-task-completed.sh
@@ -106,7 +106,7 @@ Repository configuration is stored in `.copilotclimon`:
     └── on-agent-waiting.sh
 ```
 
-Edit `.copilotclimon/config.json` to customize behavior per repository:
+Edit `.copilotclimonitor/config.json` to customize behavior per repository:
 
 ```json
 {
@@ -132,7 +132,7 @@ Edit `.copilotclimon/config.json` to customize behavior per repository:
 Update to the latest version:
 
 ```powershell
-dotnet tool update -g ElBruno.copilotclimon
+dotnet tool update -g ElBruno.CopilotCLIMonitor
 ```
 
 Then restart the Systray application:
@@ -146,13 +146,13 @@ Then restart the Systray application:
 Remove the .NET tool:
 
 ```powershell
-dotnet tool uninstall -g ElBruno.copilotclimon
+dotnet tool uninstall -g ElBruno.CopilotCLIMonitor
 ```
 
 Optional: Remove local repository configuration:
 
 ```bash
-rm -r .copilotclimon
+rm -r .copilotclimonitor
 ```
 
 ## Startup behavior
@@ -178,7 +178,7 @@ copilotclimon
 Logs are stored locally for debugging:
 
 ```text
-%AppData%\ElBruno\copilotclimon\logs\
+%AppData%\ElBruno\CopilotCLIMonitor\logs\
 ```
 
 View recent logs from Systray menu → "Open logs"

@@ -53,10 +53,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Settings management
 
 #### CLI Tool
-- `copilotclimonitor init` – Initialize repository
-- `copilotclimonitor notify` – Send notifications
-- `copilotclimonitor doctor` – Validate setup
-- `copilotclimonitor open` – Open dashboard
+- `copilotclimon init` – Initialize repository
+- `copilotclimon notify` – Send notifications
+- `copilotclimon doctor` – Validate setup
+- `copilotclimon open` – Open dashboard
 - `--version` – Display version
 
 #### Hook Integration

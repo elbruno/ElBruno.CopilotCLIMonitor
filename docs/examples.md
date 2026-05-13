@@ -6,7 +6,7 @@ Initialize a repository for notifications:
 
 ```bash
 cd my-awesome-project
-copilotclimonitor init
+copilotclimon init
 ```
 
 Expected output:
@@ -29,7 +29,7 @@ Validating setup...
 ✅ Setup complete! Your repository is ready for notifications.
 
 Next steps:
-- Run: copilotclimonitor doctor (to validate)
+- Run: copilotclimon doctor (to validate)
 - Run: copilot task run "your task" (to test)
 ```
 
@@ -38,7 +38,7 @@ Next steps:
 From within a repository or script:
 
 ```bash
-copilotclimonitor notify \
+copilotclimon notify \
   --event task-completed \
   --message "Data migration completed successfully" \
   --repository "my-awesome-project" \
@@ -69,7 +69,7 @@ copilot task run "Generate unit tests for UserService"
 1. Copilot CLI completes
 2. Copilot CLI fires `on-task-completed` hook
 3. Hook script executes (`.copilotclimonitor/hooks/on-task-completed.sh`)
-4. Hook calls `copilotclimonitor notify`
+4. Hook calls `copilotclimon notify`
 5. Notification appears in Systray
 
 ## Example 4: Error notification
@@ -136,7 +136,7 @@ else
   PRIORITY="high"
 fi
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event build-completed \
   --message "$MESSAGE" \
   --repository "$REPO" \
@@ -157,15 +157,15 @@ Setup multiple repositories with the same tool:
 ```bash
 # Repository 1
 cd C:\repos\project-a
-copilotclimonitor init
+copilotclimon init
 
 # Repository 2
 cd C:\repos\project-b
-copilotclimonitor init
+copilotclimon init
 
 # Repository 3
 cd C:\repos\project-c
-copilotclimonitor init
+copilotclimon init
 ```
 
 Single Systray application serves all repositories. Notifications include repository name:
@@ -246,7 +246,7 @@ Forward events to external systems (future enhancement):
 
 ```bash
 # Example: POST to webhook endpoint
-copilotclimonitor notify \
+copilotclimon notify \
   --event task-completed \
   --message "Task finished" \
   --webhook "https://your-webhook-endpoint.com/events"
@@ -264,19 +264,19 @@ Typical validation workflow before committing:
 
 ```bash
 # 1. Initialize monitoring
-copilotclimonitor init
+copilotclimon init
 
 # 2. Validate setup
-copilotclimonitor doctor
+copilotclimon doctor
 
 # 3. Send test notification
-copilotclimonitor notify --event test --message "Test"
+copilotclimon notify --event test --message "Test"
 
 # 4. Run your Copilot CLI task
 copilot task run "Your task here"
 
 # 5. When complete, check history
-copilotclimonitor open
+copilotclimon open
 ```
 
 ## Example 12: Command reference
@@ -288,22 +288,22 @@ Quick reference for common commands:
 dotnet tool install -g ElBruno.CopilotCLIMonitor
 
 # Start application
-copilotclimonitor
+copilotclimon
 
 # Initialize repository
-copilotclimonitor init
+copilotclimon init
 
 # Test notifications
-copilotclimonitor notify --event test --message "Test"
+copilotclimon notify --event test --message "Test"
 
 # Run diagnostics
-copilotclimonitor doctor
+copilotclimon doctor
 
 # Open dashboard
-copilotclimonitor open
+copilotclimon open
 
 # Show version
-copilotclimonitor --version
+copilotclimon --version
 
 # Uninstall
 dotnet tool uninstall -g ElBruno.CopilotCLIMonitor

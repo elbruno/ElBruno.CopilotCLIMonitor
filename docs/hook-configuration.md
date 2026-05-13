@@ -2,7 +2,7 @@
 
 ## Overview
 
-Repository hooks are the bridge between GitHub Copilot CLI and the Systray notification application. After running `copilotclimonitor init`, your repository contains hook scripts that forward events automatically.
+Repository hooks are the bridge between GitHub Copilot CLI and the Systray notification application. After running `copilotclimon init`, your repository contains hook scripts that forward events automatically.
 
 ## Hook directory structure
 
@@ -32,7 +32,7 @@ Fires when a Copilot CLI task completes successfully.
 REPO=$(basename $(git rev-parse --show-toplevel))
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event task-completed \
   --message "Task completed successfully" \
   --repository "$REPO" \
@@ -49,7 +49,7 @@ REPO=$(basename $(git rev-parse --show-toplevel))
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 TASK_NAME="${1:-Unknown}"
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event task-completed \
   --message "✓ $TASK_NAME completed successfully" \
   --repository "$REPO" \
@@ -69,7 +69,7 @@ REPO=$(basename $(git rev-parse --show-toplevel))
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 ERROR_MESSAGE="${1:-Unknown error}"
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event error \
   --message "Error: $ERROR_MESSAGE" \
   --repository "$REPO" \
@@ -88,7 +88,7 @@ Fires when a task requires user approval.
 REPO=$(basename $(git rev-parse --show-toplevel))
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event approval-required \
   --message "Approval required for task execution" \
   --repository "$REPO" \
@@ -107,7 +107,7 @@ Fires when an agent is waiting for user input.
 REPO=$(basename $(git rev-parse --show-toplevel))
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event agent-waiting \
   --message "Agent is waiting for your input" \
   --repository "$REPO" \
@@ -129,7 +129,7 @@ ERROR_CODE="${1:-0}"
 ERROR_MESSAGE="${2:-Unknown error}"
 TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event error \
   --message "[$ERROR_CODE] $ERROR_MESSAGE" \
   --repository "$REPO" \
@@ -149,7 +149,7 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
 SLACK_WEBHOOK="${SLACK_WEBHOOK_URL:-}"
 
 # Send to ElBruno.CopilotCLIMonitor
-copilotclimonitor notify \
+copilotclimon notify \
   --event task-completed \
   --message "Task completed successfully" \
   --repository "$REPO" \
@@ -178,7 +178,7 @@ END_TIME=$(date +%s)
 DURATION=$((END_TIME - START_TIME))
 DURATION_MIN=$((DURATION / 60))
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event task-completed \
   --message "✓ Completed in ${DURATION_MIN}m" \
   --repository "$REPO" \
@@ -277,7 +277,7 @@ set -x  # Enable debug output
 REPO=$(basename $(git rev-parse --show-toplevel))
 echo "DEBUG: Repository: $REPO" >&2
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event task-completed \
   --message "Task completed"
 ```
@@ -325,7 +325,7 @@ REPO=$(basename $(git rev-parse --show-toplevel))
 BUILD_TIME=$1
 BUILD_STATUS=$2
 
-copilotclimonitor notify \
+copilotclimon notify \
   --event build-completed \
   --message "Build: $BUILD_STATUS in ${BUILD_TIME}s" \
   --repository "$REPO"
@@ -347,7 +347,7 @@ Don't notify on minor events:
 #!/bin/bash
 # Only notify if important flag is set
 if [ "${NOTIFY_ALL:-0}" == "1" ]; then
-  copilotclimonitor notify --event task-completed --message "Done"
+  copilotclimon notify --event task-completed --message "Done"
 fi
 ```
 
@@ -365,7 +365,7 @@ else
   MSG="✗ Tests failed"
 fi
 
-copilotclimonitor notify --event test-complete --message "$MSG"
+copilotclimon notify --event test-complete --message "$MSG"
 ```
 
 ### Pattern 3: Rate limiting
@@ -386,7 +386,7 @@ if [ -f "$LOCKFILE" ]; then
   fi
 fi
 
-copilotclimonitor notify --event task-completed --message "Done"
+copilotclimon notify --event task-completed --message "Done"
 date +%s > "$LOCKFILE"
 ```
 
@@ -396,7 +396,7 @@ After customizing hooks, verify they work:
 
 ```bash
 # Run diagnostics
-copilotclimonitor doctor
+copilotclimon doctor
 
 # Test a hook manually
 bash .copilotclimonitor/hooks/on-task-completed.sh

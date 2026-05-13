@@ -1,34 +1,34 @@
 # NuGet publishing
 
-This document explains how ElBruno.copilotclimon is published to NuGet and configured as a Trusted Publisher.
+This document explains how ElBruno.CopilotCLIMonitor is published to NuGet and configured as a Trusted Publisher.
 
 ## Overview
 
-ElBruno.copilotclimon is published as a .NET Tool to NuGet.org. The publishing process uses GitHub Actions with OpenID Connect (OIDC) for secure, token-free authentication.
+ElBruno.CopilotCLIMonitor is published as a .NET Tool to NuGet.org. The publishing process uses GitHub Actions with OpenID Connect (OIDC) for secure, token-free authentication.
 
 ## Package information
 
-**Package ID:** `ElBruno.copilotclimon`
+**Package ID:** `ElBruno.CopilotCLIMonitor`
 
 **Package type:** .NET Tool
 
 **Installation:**
 
 ```powershell
-dotnet tool install -g ElBruno.copilotclimon
+dotnet tool install -g ElBruno.CopilotCLIMonitor
 ```
 
-**Repository:** https://github.com/elbruno/ElBruno.copilotclimon
+**Repository:** https://github.com/elbruno/ElBruno.CopilotCLIMonitor
 
 ## Trusted Publisher setup
 
-ElBruno.copilotclimon is configured as a NuGet Trusted Publisher. This allows secure publishing without storing API keys.
+ElBruno.CopilotCLIMonitor is configured as a NuGet Trusted Publisher. This allows secure publishing without storing API keys.
 
 ### Configuration
 
 **Publisher name:** ElBruno
 
-**Repository:** elbruno/ElBruno.copilotclimon
+**Repository:** elbruno/ElBruno.CopilotCLIMonitor
 
 **Authentication method:** OpenID Connect (OIDC)
 
@@ -86,7 +86,7 @@ git push origin v1.0.0
 
 ### 6. Create GitHub Release
 
-1. Go to https://github.com/elbruno/ElBruno.copilotclimon/releases
+1. Go to https://github.com/elbruno/ElBruno.CopilotCLIMonitor/releases
 2. Click "Create a new release"
 3. Select tag: `v1.0.0`
 4. Title: `Version 1.0.0`
@@ -151,14 +151,14 @@ Steps:
     <UseWPF>true</UseWPF>
     
     <!-- NuGet Package Metadata -->
-    <PackageId>ElBruno.copilotclimon</PackageId>
+    <PackageId>ElBruno.CopilotCLIMonitor</PackageId>
     <Version>1.0.0</Version>
     <Title>GitHub Copilot CLI Monitor</Title>
     <Authors>ElBruno</Authors>
     <Description>Windows Systray application for monitoring long-running GitHub Copilot CLI tasks with native notifications.</Description>
-    <PackageProjectUrl>https://github.com/elbruno/ElBruno.copilotclimon</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/elbruno/ElBruno.CopilotCLIMonitor</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/elbruno/ElBruno.copilotclimon</RepositoryUrl>
+    <RepositoryUrl>https://github.com/elbruno/ElBruno.CopilotCLIMonitor</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>copilot;cli;notifications;systray;wpc;dotnet-tool</PackageTags>
@@ -194,10 +194,10 @@ dotnet build --configuration Release
 dotnet pack --configuration Release --output ./test-packages
 
 # Uninstall current version (if installed)
-dotnet tool uninstall -g ElBruno.copilotclimon
+dotnet tool uninstall -g ElBruno.CopilotCLIMonitor
 
 # Install from local package
-dotnet tool install -g ElBruno.copilotclimon --add-source ./test-packages
+dotnet tool install -g ElBruno.CopilotCLIMonitor --add-source ./test-packages
 ```
 
 ## Verification
@@ -206,10 +206,10 @@ After publishing to NuGet, verify the package:
 
 ```bash
 # Uninstall local version
-dotnet tool uninstall -g ElBruno.copilotclimon
+dotnet tool uninstall -g ElBruno.CopilotCLIMonitor
 
 # Install from NuGet
-dotnet tool install -g ElBruno.copilotclimon
+dotnet tool install -g ElBruno.CopilotCLIMonitor
 
 # Verify installation
 copilotclimon --version
@@ -221,11 +221,11 @@ copilotclimon --version
 
 NuGet package is owned and managed by the ElBruno account.
 
-Owners can be managed at: https://www.nuget.org/packages/ElBruno.copilotclimon/Ownership
+Owners can be managed at: https://www.nuget.org/packages/ElBruno.CopilotCLIMonitor/ownership
 
 ### Package page
 
-https://www.nuget.org/packages/ElBruno.copilotclimon
+https://www.nuget.org/packages/ElBruno.CopilotCLIMonitor
 
 ### Statistics
 
@@ -269,11 +269,11 @@ Download statistics and version history available on the NuGet.org package page.
 nuget locals all -clear
 
 # Reinstall
-dotnet tool install -g ElBruno.copilotclimon
+dotnet tool install -g ElBruno.CopilotCLIMonitor
 ```
 
 ## Related
 
 - [Setup guide](docs/setup.md)
-- [GitHub repository](https://github.com/elbruno/ElBruno.copilotclimon)
-- [NuGet package](https://www.nuget.org/packages/ElBruno.copilotclimon)
+- [GitHub repository](https://github.com/elbruno/ElBruno.CopilotCLIMonitor)
+- [NuGet package](https://www.nuget.org/packages/ElBruno.CopilotCLIMonitor)

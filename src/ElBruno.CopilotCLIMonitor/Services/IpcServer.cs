@@ -6,7 +6,7 @@ using ElBruno.CopilotCLIMonitor.Core.Models;
 namespace ElBruno.CopilotCLIMonitor.Services;
 
 /// <summary>
-/// Lightweight HTTP server that listens for events from the copilotmon CLI.
+/// Lightweight HTTP server that listens for events from the copilotclimon CLI.
 /// Binds to localhost only — no elevated privileges required.
 /// </summary>
 public sealed class IpcServer : IDisposable

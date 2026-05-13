@@ -9,7 +9,7 @@ ElBruno.copilotclimon is a Windows-first monitoring solution for long-running Gi
 ```
 GitHub Copilot CLI
        ↓ (triggers hooks)
-Repository hooks (.copilotclimon/hooks/)
+Repository hooks (.copilotclimonitor/)
        ↓ (forwards events)
 CLI notification command
        ↓ (IPC communication)
@@ -34,12 +34,12 @@ Persistent Windows background application that receives events and displays noti
 
 ### Architecture
 
-**Entry point:** `ElBruno.copilotclimon.exe`
+**Entry point:** `ElBruno.CopilotCLIMonitor.exe`
 
 **Main projects:**
-- `ElBruno.copilotclimon` – WPF Systray application
-- `ElBruno.copilotclimon.Core` – Shared business logic
-- `ElBruno.copilotclimon.Notifications` – Windows notification abstractions
+- `ElBruno.CopilotCLIMonitor` – WPF Systray application
+- `ElBruno.CopilotCLIMonitor.Core` – Shared business logic
+- `ElBruno.CopilotCLIMonitor.Hooks` – Hook installation support
 
 ### Technology stack
 
@@ -53,7 +53,7 @@ Persistent Windows background application that receives events and displays noti
 **Global configuration:**
 
 ```text
-%AppData%\ElBruno\copilotclimon\
+%AppData%\ElBruno\CopilotCLIMonitor\
 ├── config.json
 ├── settings.json
 └── logs\
@@ -86,8 +86,8 @@ Repository-level CLI integration that forwards Copilot CLI events to the Systray
 **CLI entry point:** `copilotclimon`
 
 **Main projects:**
-- `ElBruno.copilotclimon.CLI` – Command-line interface
-- `ElBruno.copilotclimon.Hooks` – Hook installation and management
+- `ElBruno.CopilotCLIMonitor.Cli` – Command-line interface
+- `ElBruno.CopilotCLIMonitor.Hooks` – Hook installation and management
 
 ### CLI commands
 
@@ -96,7 +96,7 @@ Repository-level CLI integration that forwards Copilot CLI events to the Systray
 Installs hooks in current repository:
 
 1. Detect repository root
-2. Create `.copilotclimon/` directory
+2. Create `.copilotclimonitor/` directory
 3. Deploy hook scripts
 4. Create repository configuration
 5. Validate setup
@@ -134,9 +134,9 @@ Display version information
 
 ### Hook model
 
-Hooks are repository-scoped shell scripts deployed in `.copilotclimon/hooks/`:
+Hooks are repository-scoped shell scripts deployed in `.copilotclimonitor/`:
 
-**Example hook:** `.copilotclimon/hooks/on-task-completed.sh`
+**Example hook:** `.copilotclimonitor/notify.ps1`
 
 ```bash
 #!/bin/bash
@@ -159,7 +159,7 @@ copilotclimon notify \
 
 ### Configuration
 
-Repository configuration stored in `.copilotclimon/config.json`:
+Repository configuration stored in `.copilotclimonitor/config.json`:
 
 ```json
 {
@@ -255,7 +255,7 @@ Systray app processes stream
 
 ### Installation
 
-User runs: `dotnet tool install -g ElBruno.copilotclimon`
+User runs: `dotnet tool install -g ElBruno.CopilotCLIMonitor`
 
 This installs:
 - CLI executable (`copilotclimon`)
@@ -276,8 +276,8 @@ This starts:
 User runs: `copilotclimon init`
 
 This creates:
-- `.copilotclimon/` directory
-- Hook scripts in `.copilotclimon/hooks/`
+- `.copilotclimonitor/` directory
+- Hook script in `.copilotclimonitor/notify.ps1`
 - Repository configuration file
 
 ## Security model

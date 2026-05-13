@@ -4,7 +4,7 @@
 
 ### Application doesn't start
 
-**Symptom:** Running `copilotclimonitor` produces no output or error.
+**Symptom:** Running `copilotclimon` produces no output or error.
 
 **Solutions:**
 
@@ -33,7 +33,7 @@ If a process is using the default port, update configuration to use a different 
 
 ### Hooks not installed
 
-**Symptom:** Running `copilotclimonitor init` shows an error.
+**Symptom:** Running `copilotclimon init` shows an error.
 
 **Solutions:**
 
@@ -54,7 +54,7 @@ Ensure the directory is readable and writable.
 3. Try manual hook installation:
 
 ```bash
-copilotclimonitor init --verbose
+copilotclimon init --verbose
 ```
 
 Review the verbose output for specific errors.
@@ -74,7 +74,7 @@ Get-Process -Name "ElBruno.CopilotCLIMonitor" -ErrorAction SilentlyContinue
 If not running, start it:
 
 ```powershell
-copilotclimonitor
+copilotclimon
 ```
 
 2. Verify notification settings:
@@ -88,7 +88,7 @@ Settings → System → Notifications & actions → Ensure notifications are ena
 4. Send a test notification:
 
 ```bash
-copilotclimonitor notify --event test --message "Test"
+copilotclimon notify --event test --message "Test"
 ```
 
 5. Review logs:
@@ -113,7 +113,7 @@ touch .copilotclimonitor/test.txt && rm .copilotclimonitor/test.txt
 
 ```powershell
 # Run PowerShell as administrator
-copilotclimonitor init
+copilotclimon init
 ```
 
 Note: The application should work without admin privileges. If admin is required, there may be a configuration issue.
@@ -126,7 +126,7 @@ ls -la .copilotclimonitor/hooks/
 
 ### "IPC communication failed" error
 
-**Symptom:** `copilotclimonitor notify` fails with communication error.
+**Symptom:** `copilotclimon notify` fails with communication error.
 
 **Solutions:**
 
@@ -137,7 +137,7 @@ ls -la .copilotclimonitor/hooks/
 Stop-Process -Name "ElBruno.CopilotCLIMonitor" -Force -ErrorAction SilentlyContinue
 
 # Start new instance
-copilotclimonitor
+copilotclimon
 ```
 
 2. Check for firewall blocking:
@@ -268,7 +268,7 @@ Set environment variable:
 
 ```powershell
 $env:ELBRUNODEBUG = "1"
-copilotclimonitor
+copilotclimon
 ```
 
 This produces verbose output helpful for diagnostics.
@@ -286,7 +286,7 @@ Get-Content (Get-ChildItem $logsPath -Recurse | Sort-Object LastWriteTime -Desce
 ### Run diagnostics
 
 ```bash
-copilotclimonitor doctor
+copilotclimon doctor
 ```
 
 This produces a detailed system check report.
@@ -295,7 +295,7 @@ This produces a detailed system check report.
 
 When reporting issues on GitHub, include:
 
-1. Output from `copilotclimonitor doctor`
+1. Output from `copilotclimon doctor`
 2. Relevant log files (last 50 lines)
 3. Steps to reproduce
 4. Windows version (10/11)

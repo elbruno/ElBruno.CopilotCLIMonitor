@@ -132,9 +132,9 @@ dotnet tool install -g ElBruno.CopilotCLIMonitor
 
 **Setup:**
 ```bash
-copilotclimonitor        # Start the app
+copilotclimon        # Start the app
 cd your-repo
-copilotclimonitor init   # Configure your repository
+copilotclimon init   # Configure your repository
 ```
 
 **Features:**

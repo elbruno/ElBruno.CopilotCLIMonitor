@@ -370,9 +370,9 @@ Example:
 
 ```text
 /src
-  /ElBruno.copilotclimon
-  /ElBruno.copilotclimon.Core
-  /ElBruno.copilotclimon.Hooks
+  /ElBruno.CopilotCLIMonitor
+  /ElBruno.CopilotCLIMonitor.Core
+  /ElBruno.CopilotCLIMonitor.Hooks
 ```
 
 ---
@@ -381,7 +381,7 @@ Example:
 
 ```text
 /tests
-  /ElBruno.copilotclimon.Tests
+  /ElBruno.CopilotCLIMonitor.Tests
 ```
 
 ---
@@ -639,7 +639,7 @@ copilotclimon --version
 Stored under:
 
 ```text
-%AppData%\ElBruno\copilotclimon
+%AppData%\ElBruno\CopilotCLIMonitor
 ```
 
 ## Repository Configuration
@@ -649,7 +649,7 @@ Stored locally in repository.
 Potential location:
 
 ```text
-.copilotclimon
+.copilotclimonitor
 ```
 
 ---
@@ -683,7 +683,7 @@ Main distribution method.
 Example installation:
 
 ```bash
-dotnet tool install -g ElBruno.copilotclimon
+dotnet tool install -g ElBruno.CopilotCLIMonitor
 ```
 
 ---
@@ -875,7 +875,7 @@ Reason:
 ## Install
 
 ```bash
-dotnet tool install -g ElBruno.copilotclimon
+dotnet tool install -g ElBruno.CopilotCLIMonitor
 ```
 
 ## Start App
