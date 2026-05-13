@@ -185,6 +185,7 @@ Optional machine-wide defaults can be stored in:
 ```
 
 Machine-wide values load first, then per-user values override them.
+Environment variables can override both file-based layers; see [setup.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/setup.md#environment-variable-overrides).
 
 ### Repository configuration
 

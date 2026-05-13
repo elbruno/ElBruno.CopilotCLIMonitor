@@ -97,6 +97,30 @@ Preferences are loaded in this order:
 
 1. `%ProgramData%\CopilotCliMon\preferences.system.json` (machine-wide defaults)
 2. `%AppData%\CopilotCliMon\preferences.json` (per-user overrides)
+3. Environment variables (highest priority)
+
+### Environment variable overrides
+
+Set one or more of these variables to override file-based settings:
+
+- `COPILOTCLIMON_PREFERENCES_PATH`
+- `COPILOTCLIMON_SYSTEM_PREFERENCES_PATH`
+- `COPILOTCLIMON_NOTIFICATIONS_ENABLED`
+- `COPILOTCLIMON_SOUND_ENABLED`
+- `COPILOTCLIMON_QUIET_HOURS_ENABLED`
+- `COPILOTCLIMON_QUIET_HOURS_START`
+- `COPILOTCLIMON_QUIET_HOURS_END`
+- `COPILOTCLIMON_LOG_LEVEL`
+- `COPILOTCLIMON_START_WITH_WINDOWS`
+- `COPILOTCLIMON_TELEMETRY_OPT_IN`
+- `COPILOTCLIMON_TELEMETRY_INSTALLATION_ID`
+
+Example:
+
+```powershell
+$env:COPILOTCLIMON_LOG_LEVEL = "Debug"
+$env:COPILOTCLIMON_NOTIFICATIONS_ENABLED = "true"
+```
 
 ### Repository-specific configuration
 
