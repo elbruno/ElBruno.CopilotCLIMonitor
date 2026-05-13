@@ -222,6 +222,10 @@ copilotclimon notify \
 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
+## Hook configuration guide
+
+For advanced hook setup, custom scripts, and secure event routing, see [hook-configuration.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/hook-configuration.md).
+
 ## License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
