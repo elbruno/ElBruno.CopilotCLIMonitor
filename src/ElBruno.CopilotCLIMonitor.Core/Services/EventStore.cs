@@ -7,7 +7,7 @@ namespace ElBruno.CopilotCLIMonitor.Core.Services;
 /// <summary>Thread-safe in-memory ring buffer of recent monitor events.</summary>
 public sealed class EventStore : IEventStore
 {
-    private readonly List<MonitorEvent> _events = [];
+    private readonly Queue<MonitorEvent> _events;
     private readonly object _lock = new();
     private readonly ILogger<EventStore> _logger;
 
@@ -20,6 +20,7 @@ public sealed class EventStore : IEventStore
     {
         if (capacity <= 0) throw new ArgumentOutOfRangeException(nameof(capacity), "Capacity must be positive.");
         Capacity = capacity;
+        _events = new Queue<MonitorEvent>(capacity);
         _logger = logger ?? Microsoft.Extensions.Logging.Abstractions.NullLogger<EventStore>.Instance;
         _logger.LogInformation("EventStore initialised with capacity {Capacity}.", Capacity);
     }
@@ -29,13 +30,13 @@ public sealed class EventStore : IEventStore
     {
         lock (_lock)
         {
-            _events.Add(monitorEvent);
+            _events.Enqueue(monitorEvent);
             if (_events.Count > Capacity)
             {
                 _logger.LogWarning(
                     "EventStore capacity {Capacity} reached — evicting oldest event (type={EventType}).",
-                    Capacity, _events[0].EventType);
-                _events.RemoveAt(0);
+                    Capacity, _events.Peek().EventType);
+                _events.Dequeue();
             }
         }
     }
@@ -53,6 +54,6 @@ public sealed class EventStore : IEventStore
     /// <inheritdoc/>
     public IReadOnlyList<MonitorEvent> Recent
     {
-        get { lock (_lock) { return [.. _events]; } }
+        get { lock (_lock) { return [.. _events.ToArray()]; } }
     }
 }

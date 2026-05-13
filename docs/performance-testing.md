@@ -9,6 +9,8 @@ Performance validation focuses on responsiveness of event ingestion and filterin
 - Dashboard filtering performance on large event lists
 - Startup path instrumentation for initialization timing
 
+Implementation note: `EventStore` uses a bounded queue to avoid list shifting allocations when capacity is exceeded.
+
 ## Automated tests
 
 Performance-oriented tests are located in:
