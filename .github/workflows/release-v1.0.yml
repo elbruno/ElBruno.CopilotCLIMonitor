@@ -54,6 +54,8 @@ jobs:
     runs-on: windows-latest
     needs: verify-main
     if: needs.verify-main.result == 'success'
+    permissions:
+      contents: write
     outputs:
       commit_hash: ${{ steps.bump.outputs.commit_hash }}
     steps:
@@ -91,6 +93,8 @@ jobs:
     name: Phase 3 - Create Git Tag
     runs-on: windows-latest
     needs: version-bump
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
