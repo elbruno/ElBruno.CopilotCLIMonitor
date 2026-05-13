@@ -159,14 +159,6 @@ jobs:
           Write-Host "✅ NuGet packages packed"
           Get-ChildItem .\artifacts -Filter *.nupkg -File
 
-      - name: Authenticate with NuGet
-        # NOTE: GitHub OIDC support for NuGet requires trusted publisher setup
-        # See: https://learn.microsoft.com/en-us/nuget/nuget-org/nuget-publish-with-github-actions
-        uses: NuGet/login@v1
-        with:
-          user: ${{ github.repository_owner }}
-          # API Key will come from GitHub Secrets - requires manual setup in NuGet.org dashboard
-
       - name: Publish to NuGet
         shell: pwsh
         run: |
@@ -182,6 +174,12 @@ jobs:
           }
           
           Write-Host "✅ All packages published to NuGet"
+
+      - name: Upload NuGet artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages
+          path: .\artifacts\*.nupkg
 
   # Phase 5: Create GitHub Release
   create-release:
