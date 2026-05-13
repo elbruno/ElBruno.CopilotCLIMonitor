@@ -54,6 +54,28 @@ public class IpcServerTests
         }
     }
 
+    [Fact]
+    public async Task SendNotifyAsync_WhenPayloadContainsControlChars_IsRejected()
+    {
+        var port = ReserveFreePort();
+        using var server = new IpcServer(port);
+        var eventRaised = false;
+        server.EventReceived += _ => eventRaised = true;
+        server.Start();
+
+        try
+        {
+            var client = new HttpIpcClient(port);
+            var sent = await client.SendNotifyAsync(new NotifyRequest("task-completed", "line1\nline2"));
+            Assert.False(sent);
+            Assert.False(eventRaised);
+        }
+        finally
+        {
+            server.Stop();
+        }
+    }
+
     private static int ReserveFreePort()
     {
         var listener = new System.Net.Sockets.TcpListener(IPAddress.Loopback, 0);

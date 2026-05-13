@@ -109,4 +109,15 @@ public class NotifyHandlerTests
         Assert.Equal("repo", req.Repository);
         Assert.Equal("main", req.Branch);
     }
+
+    [Fact]
+    public async Task Notify_WithControlCharsInMessage_ReturnsOne()
+    {
+        _ipc.IsRunning = true;
+        var sut = BuildSut();
+        var exit = await sut.RunNotifyAsync(["--event", "task-completed", "--message", "line1\nline2"]);
+
+        Assert.Equal(1, exit);
+        Assert.Empty(_ipc.SentRequests);
+    }
 }
