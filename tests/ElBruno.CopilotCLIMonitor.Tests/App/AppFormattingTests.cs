@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Windows.Forms;
+using System.Globalization;
 using ElBruno.CopilotCLIMonitor.Models;
 using ElBruno.CopilotCLIMonitor.Core.Models;
 
@@ -18,8 +19,22 @@ public class AppFormattingTests
             .GetMethod("FormatEventType", BindingFlags.NonPublic | BindingFlags.Static);
 
         Assert.NotNull(method);
-        var label = method!.Invoke(null, [eventType]) as string;
+        var label = method!.Invoke(null, [eventType, null]) as string;
         Assert.Equal(expected, label);
+    }
+
+    [Fact]
+    public void FormatEventType_UsesCultureTranslations()
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("FormatEventType", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var spanish = method!.Invoke(null, [EventType.TaskCompleted, CultureInfo.GetCultureInfo("es-ES")]) as string;
+        var french = method.Invoke(null, [EventType.Warning, CultureInfo.GetCultureInfo("fr-FR")]) as string;
+
+        Assert.Equal("Tarea completada", spanish);
+        Assert.Equal("Avertissement", french);
     }
 
     [Theory]
