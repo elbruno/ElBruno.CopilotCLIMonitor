@@ -201,6 +201,10 @@ When configured, the monitor accepts only requests containing this token.
 
 See [setup.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/setup.md) for detailed installation and configuration instructions.
 
+## Standalone installer packaging
+
+See [installer.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/installer.md) for standalone Windows package generation.
+
 ## Troubleshooting
 
 See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/troubleshooting.md) for common issues and solutions.
