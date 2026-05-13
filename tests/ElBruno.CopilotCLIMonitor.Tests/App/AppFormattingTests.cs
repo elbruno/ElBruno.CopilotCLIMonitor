@@ -52,4 +52,18 @@ public class AppFormattingTests
         var icon = method!.Invoke(null, [eventType]);
         Assert.Equal(expected, icon);
     }
+
+    [Fact]
+    public void BuildSettingsSummary_ContainsPortAndTokenStatus()
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("BuildSettingsSummary", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var summary = method!.Invoke(null, [41234, true]) as string;
+
+        Assert.NotNull(summary);
+        Assert.Contains("IPC Port: 41234", summary);
+        Assert.Contains("Authentication Token: Configured", summary);
+    }
 }
