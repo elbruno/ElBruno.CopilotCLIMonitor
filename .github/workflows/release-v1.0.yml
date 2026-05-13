@@ -159,6 +159,12 @@ jobs:
           Write-Host "✅ NuGet packages packed"
           Get-ChildItem .\artifacts -Filter *.nupkg -File
 
+      - name: Authenticate with NuGet (OIDC)
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ github.repository_owner }}
+
       - name: Publish to NuGet
         shell: pwsh
         run: |
@@ -168,7 +174,7 @@ jobs:
           foreach ($package in $packages) {
             Write-Host "Publishing: $($package.Name)"
             dotnet nuget push $package.FullName `
-              --api-key "${{ secrets.NUGET_API_KEY }}" `
+              --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" `
               --source https://api.nuget.org/v3/index.json `
               --skip-duplicate
           }
