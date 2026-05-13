@@ -7,6 +7,7 @@ using ElBruno.CopilotCLIMonitor.Core.Models;
 using ElBruno.CopilotCLIMonitor.Models;
 using ElBruno.CopilotCLIMonitor.Core.Services;
 using ElBruno.CopilotCLIMonitor.Services;
+using ElBruno.CopilotCLIMonitor.Views;
 using ElBruno.CopilotCLIMonitor.Telemetry;
 using Microsoft.Extensions.Logging;
 
@@ -65,7 +66,6 @@ public partial class App : System.Windows.Application
         var menu = new ContextMenuStrip();
         menu.Items.Add(UiResources.Get("MenuOpenDashboard"), null, (_, _) => OpenDashboard());
         menu.Items.Add("-");
-        menu.Items.Add(UiResources.Get("MenuRecentEvents"), null, (_, _) => OpenDashboard());
         menu.Items.Add(UiResources.Get("MenuSettings"), null, (_, _) => ShowSettings());
         menu.Items.Add("-");
         _pauseNotificationsMenuItem = new ToolStripMenuItem(UiResources.Get("MenuPauseNotifications"), null, (_, _) => ToggleNotificationsPause());

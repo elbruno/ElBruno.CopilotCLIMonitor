@@ -38,6 +38,7 @@ copilotclimon init
 ```
 
 `init` is interactive by default and lets you choose which Copilot hook triggers to register.
+Generated hook entries include `powershell` and `bash`/`command` fields so they run on Windows-local Copilot CLI and Linux-based Copilot surfaces.
 
 For automation/CI, use:
 
@@ -77,6 +78,8 @@ This command checks:
 - Systray application is running
 - Network connectivity is available
 
+After creating or editing hook files, restart Copilot CLI so it reloads hook configuration.
+
 ### Upgrade repository hook/config templates
 
 After installing a newer version of the tool, refresh managed repository files:
@@ -102,18 +105,15 @@ You should see a Windows toast notification appear.
 Open settings from the Systray context menu:
 
 1. Click the notification icon in the system tray
-2. Select "Settings"
+2. Select "Settings" (menu: Open Dashboard, Settings, About, Exit)
 3. Configure preferences
 
-**Available settings:**
-- Notification type (toast, sound, visual)
-- Toast duration (3–10 seconds)
-- Sound enabled/disabled
-- Quiet hours (e.g., 22:00–08:00)
-- Repository filters
-- Event filtering
-- Startup on Windows boot
-- Logging level (Info, Debug)
+**Suggested settings options:**
+- Notifications: enabled, toast duration, sound on/off
+- Focus mode: quiet hours and priority-only alerts
+- Filters: repository include/exclude and event-type filters
+- Startup: launch at Windows login
+- Data and diagnostics: max recent events, retention period, log level
 
 When sound is enabled, alert tones are event-aware:
 

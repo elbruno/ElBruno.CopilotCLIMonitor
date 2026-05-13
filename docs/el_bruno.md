@@ -403,7 +403,6 @@ Example:
 ### Suggested Menu
 
 - Open Dashboard
-- Recent Events
 - Settings
 - Enable Notifications
 - Quiet Mode

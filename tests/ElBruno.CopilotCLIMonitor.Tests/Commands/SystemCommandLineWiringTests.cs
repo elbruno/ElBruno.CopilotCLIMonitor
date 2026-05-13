@@ -1,6 +1,7 @@
 using System.CommandLine;
 using ElBruno.CopilotCLIMonitor.Commands;
 using ElBruno.CopilotCLIMonitor.Core.Models;
+using ElBruno.CopilotCLIMonitor.Core.Services;
 using ElBruno.CopilotCLIMonitor.Tests.Fakes;
 
 namespace ElBruno.CopilotCLIMonitor.Tests.Commands;
@@ -158,6 +159,82 @@ public class SystemCommandLineWiringTests : IDisposable
         var root = new RootCommand { DoctorCommand.Build(_detector) };
         var exit = await root.Parse(["doctor"]).InvokeAsync();
         Assert.Equal(0, exit);
+    }
+
+    [Fact]
+    public async Task Doctor_WhenHooksConfigured_PrintsSelectedHooksFromInit()
+    {
+        _detector.RootToReturn = _tempDir;
+
+        var hookDir = Path.Combine(_tempDir, ".copilotclimonitor");
+        Directory.CreateDirectory(hookDir);
+        File.WriteAllText(Path.Combine(hookDir, "notify.ps1"), "");
+        File.WriteAllText(Path.Combine(hookDir, "config.json"), "{}");
+
+        var githubHooksDir = Path.Combine(_tempDir, ".github", "hooks");
+        Directory.CreateDirectory(githubHooksDir);
+        File.WriteAllText(
+            Path.Combine(githubHooksDir, "copilotclimon-notify.json"),
+            """
+            {
+              "version": 1,
+              "hooks": {
+                "agentStop": [
+                  { "type": "command", "powershell": ".\\.copilotclimonitor\\notify.ps1 -Event task-completed -Message \"Copilot task completed\"", "cwd": ".", "timeoutSec": 10 }
+                ],
+                "userPromptSubmitted": [
+                  { "type": "command", "powershell": ".\\.copilotclimonitor\\notify.ps1 -Event warning -Message \"Copilot prompt submitted\"", "cwd": ".", "timeoutSec": 10 }
+                ]
+              }
+            }
+            """);
+
+        var originalOut = Console.Out;
+        using var writer = new StringWriter();
+        Console.SetOut(writer);
+
+        try
+        {
+            var root = new RootCommand { DoctorCommand.Build(_detector) };
+            await root.Parse(["doctor"]).InvokeAsync();
+        }
+        finally
+        {
+            Console.SetOut(originalOut);
+        }
+
+        Assert.Contains("Hooks selected in init: agentStop, userPromptSubmitted", writer.ToString());
+    }
+
+    [Fact]
+    public async Task InitThenDoctor_EndToEnd_PrintsDefaultHookSelection()
+    {
+        _detector.RootToReturn = _tempDir;
+
+        var root = new RootCommand
+        {
+            InitCommand.Build(_detector, new HookInstaller()),
+            DoctorCommand.Build(_detector)
+        };
+
+        var originalOut = Console.Out;
+        using var writer = new StringWriter();
+        Console.SetOut(writer);
+
+        try
+        {
+            var initExitCode = await root.Parse(["init", "--default"]).InvokeAsync();
+            var doctorExitCode = await root.Parse(["doctor"]).InvokeAsync();
+
+            Assert.Equal(0, initExitCode);
+            Assert.Equal(0, doctorExitCode);
+        }
+        finally
+        {
+            Console.SetOut(originalOut);
+        }
+
+        Assert.Contains("Hooks selected in init: agentStop, errorOccurred", writer.ToString());
     }
 
     // ── update command ────────────────────────────────────────────────────────

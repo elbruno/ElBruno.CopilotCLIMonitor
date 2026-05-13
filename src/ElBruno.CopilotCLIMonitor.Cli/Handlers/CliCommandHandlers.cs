@@ -165,6 +165,19 @@ public sealed class CliCommandHandlers(
                 await _out.WriteLineAsync(File.Exists(copilotHookFile)
                     ? "✓ .github/hooks/copilotclimon-notify.json present"
                     : "✗ .github/hooks/copilotclimon-notify.json missing — run: copilotclimon init");
+
+                if (File.Exists(copilotHookFile))
+                {
+                    if (HookSelectionReader.TryReadSelectedTriggers(copilotHookFile, out var selectedHooks, out var readError))
+                    {
+                        var selectedHooksText = selectedHooks.Count == 0 ? "(none)" : string.Join(", ", selectedHooks);
+                        await _out.WriteLineAsync($"✓ Hooks selected in init: {selectedHooksText}");
+                    }
+                    else
+                    {
+                        await _out.WriteLineAsync($"⚠ Could not read init hook selections: {readError}");
+                    }
+                }
                 allOk &= File.Exists(script) && File.Exists(config) && File.Exists(copilotHookFile);
             }
             else

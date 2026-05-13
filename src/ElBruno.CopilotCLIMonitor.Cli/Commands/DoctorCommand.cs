@@ -45,6 +45,19 @@ public static class DoctorCommand
                         else
                             Console.WriteLine($"✗ config.json invalid: {configError}");
                     }
+
+                    if (File.Exists(copilotHookFile))
+                    {
+                        if (HookSelectionReader.TryReadSelectedTriggers(copilotHookFile, out var selectedHooks, out var readError))
+                        {
+                            var selectedHooksText = selectedHooks.Count == 0 ? "(none)" : string.Join(", ", selectedHooks);
+                            Console.WriteLine($"✓ Hooks selected in init: {selectedHooksText}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"⚠ Could not read init hook selections: {readError}");
+                        }
+                    }
                 }
                 else
                 {

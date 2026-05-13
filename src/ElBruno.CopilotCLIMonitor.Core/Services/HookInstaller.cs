@@ -123,7 +123,9 @@ public class HookInstaller : IHookInstaller
                 new
                 {
                     type = "command",
+                    bash = $"copilotclimon notify --event {template.EventName} --message \"{template.Message}\"",
                     powershell = $".\\.copilotclimonitor\\notify.ps1 -Event {template.EventName} -Message \"{template.Message}\"",
+                    command = $"copilotclimon notify --event {template.EventName} --message \"{template.Message}\"",
                     cwd = ".",
                     timeoutSec = 10
                 }
