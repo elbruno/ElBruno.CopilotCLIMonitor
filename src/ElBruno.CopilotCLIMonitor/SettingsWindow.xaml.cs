@@ -20,6 +20,7 @@ public partial class SettingsWindow : Window
     }
 
     public UserPreferences? UpdatedPreferences { get; private set; }
+    public string? UpdatedToken { get; private set; }
 
     private void ApplyPreferences(UserPreferences preferences)
     {
@@ -45,6 +46,7 @@ public partial class SettingsWindow : Window
             startWithWindows: StartWithWindowsCheckBox.IsChecked ?? false,
             telemetryOptIn: TelemetryOptInCheckBox.IsChecked ?? false,
             telemetryInstallationId: _initialPreferences.TelemetryInstallationId);
+        UpdatedToken = string.IsNullOrWhiteSpace(IpcTokenPasswordBox.Password) ? null : IpcTokenPasswordBox.Password;
 
         DialogResult = true;
         Close();

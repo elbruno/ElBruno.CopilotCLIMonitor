@@ -70,6 +70,8 @@ $env:COPILOTCLIMON_IPC_TOKEN = "your-shared-secret"
 
 Set the same value in both monitor and CLI execution environments.
 
+You can also set the token in tray **Settings**. When saved there, it is protected with Windows DPAPI and reused on next startup.
+
 ## 8. Quiet hours configuration
 
 Use tray menu **Settings** to configure quiet hours:

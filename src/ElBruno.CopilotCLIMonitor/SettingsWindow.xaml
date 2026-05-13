@@ -38,6 +38,10 @@
 
             <TextBlock Text="Logging Level" FontWeight="SemiBold" Margin="0,0,0,6"/>
             <ComboBox x:Name="LogLevelComboBox" Width="180"/>
+
+            <TextBlock Text="IPC Authentication Token (optional)" FontWeight="SemiBold" Margin="0,12,0,6"/>
+            <PasswordBox x:Name="IpcTokenPasswordBox" Width="280"/>
+            <TextBlock Text="Leave blank to keep current token." Foreground="Gray" FontSize="11" Margin="0,4,0,0"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
