@@ -175,8 +175,16 @@ copilotclimon update --install
 User settings are stored in:
 
 ```text
-%AppData%\ElBruno\CopilotCLIMonitor
+%AppData%\CopilotCliMon\preferences.json
 ```
+
+Optional machine-wide defaults can be stored in:
+
+```text
+%ProgramData%\CopilotCliMon\preferences.system.json
+```
+
+Machine-wide values load first, then per-user values override them.
 
 ### Repository configuration
 
