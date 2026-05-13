@@ -231,6 +231,10 @@ See [coverage.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main
 
 See [accessibility-testing.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/accessibility-testing.md) for keyboard, screen reader, and WCAG-focused validation checklist.
 
+## Performance testing
+
+See [performance-testing.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/performance-testing.md) for memory/CPU/responsiveness guardrail tests.
+
 ## Telemetry (optional)
 
 See [telemetry.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/telemetry.md) for opt-in telemetry behavior and data details.
