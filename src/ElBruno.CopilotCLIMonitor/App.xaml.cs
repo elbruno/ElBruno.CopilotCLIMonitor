@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using ElBruno.CopilotCLIMonitor.Core.Models;
+using ElBruno.CopilotCLIMonitor.Core.Services;
 using ElBruno.CopilotCLIMonitor.Services;
 
 namespace ElBruno.CopilotCLIMonitor;

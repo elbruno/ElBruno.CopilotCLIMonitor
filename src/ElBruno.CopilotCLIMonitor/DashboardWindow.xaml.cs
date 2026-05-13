@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using ElBruno.CopilotCLIMonitor.Core.Models;
-using ElBruno.CopilotCLIMonitor.Services;
+using ElBruno.CopilotCLIMonitor.Core.Services;
 
 namespace ElBruno.CopilotCLIMonitor;
 

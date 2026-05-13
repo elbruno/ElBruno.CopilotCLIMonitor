@@ -15,7 +15,7 @@ public sealed class HttpEventNotifier : IEventNotifier
     public async Task NotifyAsync(MonitorEvent monitorEvent, CancellationToken cancellationToken = default)
     {
         var request = new NotifyRequest(
-            monitorEvent.EventType.ToString().ToLowerInvariant().Replace("unknown", "custom"),
+            monitorEvent.EventType.ToEventString(),
             monitorEvent.Message,
             monitorEvent.Repository,
             monitorEvent.Branch);

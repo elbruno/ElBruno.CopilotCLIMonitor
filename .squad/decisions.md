@@ -125,6 +125,18 @@
 - **`type:infrastructure`** → DevOps and tooling (assigned to Sish)
 - Weekly triage review in team ceremonies ensures accuracy
 
+### Decision 16 — 6-Wave Execution Plan for v1.0 Release
+**Date:** 2026-05-13 | **Agent:** Martin (Lead)
+- Organize 63 GitHub issues into 6 execution waves
+- Wave 1 (infrastructure, 7 issues): Foundation for all downstream work; 2-week sprint
+- Wave 2-4 (22 high-priority issues): Features, testing, docs/security; 6 weeks total
+- Wave 5 (28 medium-priority): Enhancements based on team capacity
+- Wave 6 (6 low-priority): Post-1.0 parking lot
+- Team allocation: Dolph (25 issues), Chevy (15), River (12), Sish (11)
+- Target: v1.0 ready by 2026-06-30 (6 weeks from Wave 1 start)
+- Critical path: #5→#6→#8→#49→#18 (config + IPC) + #29→#64 (release)
+- Feature branches per issue, PR review by River, daily main sync, keep main green
+
 ## Governance
 
 - All meaningful changes require team consensus

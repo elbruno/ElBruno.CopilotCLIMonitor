@@ -9,10 +9,10 @@ public class HttpIpcClient : IIpcClient
     private readonly HttpClient _http;
     private readonly int _port;
 
-    public HttpIpcClient(int port = IpcConstants.DefaultPort)
+    public HttpIpcClient(int port = IpcConstants.DefaultPort, TimeSpan? timeout = null)
     {
         _port = port;
-        _http = new HttpClient { Timeout = TimeSpan.FromSeconds(5) };
+        _http = new HttpClient { Timeout = timeout ?? TimeSpan.FromSeconds(5) };
     }
 
     public async Task<bool> SendNotifyAsync(NotifyRequest request, CancellationToken cancellationToken = default)

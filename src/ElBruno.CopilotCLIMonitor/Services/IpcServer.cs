@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 using ElBruno.CopilotCLIMonitor.Core.Models;
 
 namespace ElBruno.CopilotCLIMonitor.Services;
@@ -9,7 +10,7 @@ namespace ElBruno.CopilotCLIMonitor.Services;
 /// Lightweight HTTP server that listens for events from the copilotclimon CLI.
 /// Binds to localhost only — no elevated privileges required.
 /// </summary>
-public sealed class IpcServer : IDisposable
+public sealed class IpcServer : IIpcServer
 {
     private readonly HttpListener _listener;
     private readonly int _port;
