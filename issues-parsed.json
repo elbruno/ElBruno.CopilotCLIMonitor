@@ -1,0 +1,506 @@
+[
+  {
+    "#": 64,
+    "Title": "Semantic Versioning Strategy",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}; @{id=10941161271; node_id=LA_kwDOSbzlGc8AAAACjCTfNw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad:sish; name=squad:sish; color=1E90FF; default=False; description=Assigned to Sish (DevOps)}; @{id=10941163084; node_id=LA_kwDOSbzlGc8AAAACjCTmTA; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/release; name=release; color=A020F0; default=False; description=Release and versioning}"
+  },
+  {
+    "#": 63,
+    "Title": "Hook Integration Tests",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}; @{id=10941161373; node_id=LA_kwDOSbzlGc8AAAACjCTfnQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad:river; name=squad:river; color=00CD00; default=False; description=Assigned to River (Tester)}; @{id=10941163171; node_id=LA_kwDOSbzlGc8AAAACjCTmow; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/testing; name=testing; color=0366D6; default=False; description=Testing and QA}"
+  },
+  {
+    "#": 62,
+    "Title": "Integration Tests",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}; @{id=10941161373; node_id=LA_kwDOSbzlGc8AAAACjCTfnQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad:river; name=squad:river; color=00CD00; default=False; description=Assigned to River (Tester)}; @{id=10941163171; node_id=LA_kwDOSbzlGc8AAAACjCTmow; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/testing; name=testing; color=0366D6; default=False; description=Testing and QA}"
+  },
+  {
+    "#": 61,
+    "Title": "Unit Tests for WPF Components",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}; @{id=10941161373; node_id=LA_kwDOSbzlGc8AAAACjCTfnQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad:river; name=squad:river; color=00CD00; default=False; description=Assigned to River (Tester)}; @{id=10941163171; node_id=LA_kwDOSbzlGc8AAAACjCTmow; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/testing; name=testing; color=0366D6; default=False; description=Testing and QA}"
+  },
+  {
+    "#": 60,
+    "Title": "Dependency Vulnerabilities",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}; @{id=10941161373; node_id=LA_kwDOSbzlGc8AAAACjCTfnQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad:river; name=squad:river; color=00CD00; default=False; description=Assigned to River (Tester)}; @{id=10941163717; node_id=LA_kwDOSbzlGc8AAAACjCToxQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/security; name=security; color=8B0000; default=False; description=Security}"
+  },
+  {
+    "#": 59,
+    "Title": "Input Validation",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}; @{id=10941161373; node_id=LA_kwDOSbzlGc8AAAACjCTfnQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad:river; name=squad:river; color=00CD00; default=False; description=Assigned to River (Tester)}; @{id=10941163717; node_id=LA_kwDOSbzlGc8AAAACjCToxQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/security; name=security; color=8B0000; default=False; description=Security}"
+  },
+  {
+    "#": 58,
+    "Title": "Authentication & Authorization",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}; @{id=10941161678; node_id=LA_kwDOSbzlGc8AAAACjCTgzg; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad:martin; name=squad:martin; color=FFD700; default=False; description=Assigned to Martin (Lead)}; @{id=10941163717; node_id=LA_kwDOSbzlGc8AAAACjCToxQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/security; name=security; color=8B0000; default=False; description=Security}"
+  },
+  {
+    "#": 57,
+    "Title": "Security Scanning",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}; @{id=10941161373; node_id=LA_kwDOSbzlGc8AAAACjCTfnQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad:river; name=squad:river; color=00CD00; default=False; description=Assigned to River (Tester)}; @{id=10941163717; node_id=LA_kwDOSbzlGc8AAAACjCToxQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/security; name=security; color=8B0000; default=False; description=Security}"
+  },
+  {
+    "#": 56,
+    "Title": "Notification Latency",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}; @{id=10941161373; node_id=LA_kwDOSbzlGc8AAAACjCTfnQ; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad:river; name=squad:river; color=00CD00; default=False; description=Assigned to River (Tester)}; @{id=10941163819; node_id=LA_kwDOSbzlGc8AAAACjCTpKw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/performance; name=performance; color=FF8C00; default=False; description=Performance}"
+  },
+  {
+    "#": 55,
+    "Title": "Structured Logging",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 54,
+    "Title": "Hook Configuration Guide",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 53,
+    "Title": "Developer Guide",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 52,
+    "Title": "User Manual",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 51,
+    "Title": "Automatic Update Mechanism",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 50,
+    "Title": "Standalone Installer",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 49,
+    "Title": "Default Configuration",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 48,
+    "Title": "Product Screenshots",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 47,
+    "Title": "Notification Icon",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 46,
+    "Title": "Logo Variants",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 45,
+    "Title": "Application Icon",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 44,
+    "Title": "Event History/Dashboard",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 43,
+    "Title": "Toast Notification UI",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 42,
+    "Title": "System Tray Context Menu",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 41,
+    "Title": "Settings/Preferences UI",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 40,
+    "Title": "Hotfix Process",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 39,
+    "Title": "Telemetry (Optional)",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 38,
+    "Title": "Event Tracing",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 37,
+    "Title": "RTL Language Support",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 36,
+    "Title": "Multi-Language Support",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 35,
+    "Title": "Resource Strings",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 34,
+    "Title": "Video Tutorials",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 33,
+    "Title": "Portable/ZIP Distribution",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 32,
+    "Title": "Chocolatey Package",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 31,
+    "Title": "Marketing Graphics",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 30,
+    "Title": "Quiet Hours Configuration",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 29,
+    "Title": "Release Branch Strategy",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 28,
+    "Title": "Version Auto-Increment",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 27,
+    "Title": "Release Notes Template",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 26,
+    "Title": "Code Coverage Reports",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 25,
+    "Title": "UI/UX Tests",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 24,
+    "Title": "Privacy Policy",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 23,
+    "Title": "Encrypted Storage",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 22,
+    "Title": "Accessibility Testing",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 21,
+    "Title": "Performance Testing",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 20,
+    "Title": "Linting Rules",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 19,
+    "Title": "Code Quality Metrics",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 18,
+    "Title": "IPC Optimization",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 17,
+    "Title": "Startup Time",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 16,
+    "Title": "Memory Optimization",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 15,
+    "Title": "Diagnostic Mode",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 14,
+    "Title": "Log File Rotation",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 13,
+    "Title": "Windows Defender/Security Notes",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 12,
+    "Title": "FAQ/Troubleshooting",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 11,
+    "Title": "API Documentation",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 10,
+    "Title": "WinGet Package",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 9,
+    "Title": "Windows Store/Microsoft Store",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 8,
+    "Title": "Configuration Validation",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 7,
+    "Title": "Multi-User Support",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 6,
+    "Title": "Environment Variables",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 5,
+    "Title": "Configuration File Format",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 4,
+    "Title": "Multi-Repository Support",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 3,
+    "Title": "Auto-start on Windows Boot",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  },
+  {
+    "#": 2,
+    "Title": "Sound Alerts",
+    "Priority": "unset",
+    "Type": "unset",
+    "Assigned": "unassigned",
+    "Labels": "@{id=10936199975; node_id=LA_kwDOSbzlGc8AAAACi9krJw; url=https://api.github.com/repos/elbruno/ElBruno.CopilotCLIMonitor/labels/squad; name=squad; color=9B8FCC; default=False; description=Squad triage inbox — Lead will assign to a member}"
+  }
+]

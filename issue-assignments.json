@@ -1,0 +1,506 @@
+[
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 1",
+    "reason": "Blocks all config-dependent features",
+    "num": 5,
+    "labels": "squad,squad:dolph,priority:high,Wave 1"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 1",
+    "reason": "Ensures config reliability",
+    "num": 8,
+    "labels": "squad,squad:dolph,priority:high,Wave 1"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 1",
+    "reason": "Needed for CLI configuration",
+    "num": 6,
+    "labels": "squad,squad:dolph,priority:high,Wave 1"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 1",
+    "reason": "Critical CLI-WPF bridge",
+    "num": 18,
+    "labels": "squad,squad:dolph,priority:high,Wave 1"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 1",
+    "reason": "Unblocks Settings UI and testing",
+    "num": 49,
+    "labels": "squad,squad:dolph,priority:high,Wave 1"
+  },
+  {
+    "assigned": "sish",
+    "priority": "high",
+    "wave": "Wave 1",
+    "reason": "Needed before any release work",
+    "num": 29,
+    "labels": "squad,squad:sish,priority:high,Wave 1"
+  },
+  {
+    "assigned": "sish",
+    "priority": "high",
+    "wave": "Wave 1",
+    "reason": "Versioning foundation",
+    "num": 64,
+    "labels": "squad,squad:sish,priority:high,Wave 1"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "high",
+    "wave": "Wave 2",
+    "reason": "Core feature, widely needed",
+    "num": 41,
+    "labels": "squad,squad:chevy,priority:high,Wave 2"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "high",
+    "wave": "Wave 2",
+    "reason": "Core UX for systray app",
+    "num": 42,
+    "labels": "squad,squad:chevy,priority:high,Wave 2"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "high",
+    "wave": "Wave 2",
+    "reason": "Primary notification mechanism",
+    "num": 43,
+    "labels": "squad,squad:chevy,priority:high,Wave 2"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "high",
+    "wave": "Wave 2",
+    "reason": "Event monitoring UI",
+    "num": 44,
+    "labels": "squad,squad:chevy,priority:high,Wave 2"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 2",
+    "reason": "Dev/troubleshooting tool",
+    "num": 15,
+    "labels": "squad,squad:dolph,priority:high,Wave 2"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 2",
+    "reason": "UX requirement",
+    "num": 3,
+    "labels": "squad,squad:dolph,priority:high,Wave 2"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "high",
+    "wave": "Wave 2",
+    "reason": "Notification feature",
+    "num": 2,
+    "labels": "squad,squad:chevy,priority:high,Wave 2"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 2",
+    "reason": "Settings feature",
+    "num": 30,
+    "labels": "squad,squad:dolph,priority:high,Wave 2"
+  },
+  {
+    "assigned": "river",
+    "priority": "high",
+    "wave": "Wave 3",
+    "reason": "WPF test coverage gap",
+    "num": 61,
+    "labels": "squad,squad:river,priority:high,Wave 3"
+  },
+  {
+    "assigned": "river",
+    "priority": "high",
+    "wave": "Wave 3",
+    "reason": "Systray+notifications testing",
+    "num": 25,
+    "labels": "squad,squad:river,priority:high,Wave 3"
+  },
+  {
+    "assigned": "river",
+    "priority": "high",
+    "wave": "Wave 3",
+    "reason": "CLI-WPF bridge testing",
+    "num": 63,
+    "labels": "squad,squad:river,priority:high,Wave 3"
+  },
+  {
+    "assigned": "river",
+    "priority": "high",
+    "wave": "Wave 3",
+    "reason": "Quality metric",
+    "num": 26,
+    "labels": "squad,squad:river,priority:high,Wave 3"
+  },
+  {
+    "assigned": "river",
+    "priority": "high",
+    "wave": "Wave 3",
+    "reason": "Code quality baseline",
+    "num": 20,
+    "labels": "squad,squad:river,priority:high,Wave 3"
+  },
+  {
+    "assigned": "river",
+    "priority": "high",
+    "wave": "Wave 3",
+    "reason": "CI/CD integration",
+    "num": 19,
+    "labels": "squad,squad:river,priority:high,Wave 3"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "high",
+    "wave": "Wave 4",
+    "reason": "End-user docs",
+    "num": 52,
+    "labels": "squad,squad:chevy,priority:high,Wave 4"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 4",
+    "reason": "Contribution docs",
+    "num": 53,
+    "labels": "squad,squad:dolph,priority:high,Wave 4"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 4",
+    "reason": "Public API docs",
+    "num": 11,
+    "labels": "squad,squad:dolph,priority:high,Wave 4"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 4",
+    "reason": "Setup docs",
+    "num": 54,
+    "labels": "squad,squad:dolph,priority:high,Wave 4"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 4",
+    "reason": "Security hardening",
+    "num": 59,
+    "labels": "squad,squad:dolph,priority:high,Wave 4"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "high",
+    "wave": "Wave 4",
+    "reason": "Sensitive data protection",
+    "num": 23,
+    "labels": "squad,squad:dolph,priority:high,Wave 4"
+  },
+  {
+    "assigned": "river",
+    "priority": "high",
+    "wave": "Wave 4",
+    "reason": "Dependency scanning",
+    "num": 57,
+    "labels": "squad,squad:river,priority:high,Wave 4"
+  },
+  {
+    "assigned": "river",
+    "priority": "high",
+    "wave": "Wave 4",
+    "reason": "CVE remediation",
+    "num": 60,
+    "labels": "squad,squad:river,priority:high,Wave 4"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Branding",
+    "num": 45,
+    "labels": "squad,squad:chevy,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Marketing",
+    "num": 46,
+    "labels": "squad,squad:chevy,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Branding",
+    "num": 47,
+    "labels": "squad,squad:chevy,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Documentation",
+    "num": 48,
+    "labels": "squad,squad:chevy,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Promotion",
+    "num": 31,
+    "labels": "squad,squad:chevy,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "User guidance",
+    "num": 34,
+    "labels": "squad,squad:chevy,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Localization foundation",
+    "num": 35,
+    "labels": "squad,squad:dolph,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "i18n",
+    "num": 36,
+    "labels": "squad,squad:dolph,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "i18n",
+    "num": 37,
+    "labels": "squad,squad:dolph,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Monitoring/debugging",
+    "num": 38,
+    "labels": "squad,squad:dolph,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "river",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Usage analytics",
+    "num": 39,
+    "labels": "squad,squad:river,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Operational",
+    "num": 14,
+    "labels": "squad,squad:dolph,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Logging foundation",
+    "num": 55,
+    "labels": "squad,squad:dolph,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Performance",
+    "num": 16,
+    "labels": "squad,squad:dolph,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Performance",
+    "num": 17,
+    "labels": "squad,squad:dolph,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Performance",
+    "num": 56,
+    "labels": "squad,squad:dolph,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "river",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "QA",
+    "num": 21,
+    "labels": "squad,squad:river,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "river",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "QA",
+    "num": 22,
+    "labels": "squad,squad:river,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "river",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "QA",
+    "num": 62,
+    "labels": "squad,squad:river,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Legal",
+    "num": 24,
+    "labels": "squad,squad:chevy,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Support",
+    "num": 12,
+    "labels": "squad,squad:chevy,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "chevy",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Security info",
+    "num": 13,
+    "labels": "squad,squad:chevy,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "sish",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Release prep",
+    "num": 27,
+    "labels": "squad,squad:sish,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "sish",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Release automation",
+    "num": 28,
+    "labels": "squad,squad:sish,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "sish",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Release process",
+    "num": 40,
+    "labels": "squad,squad:sish,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "sish",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Distribution",
+    "num": 50,
+    "labels": "squad,squad:sish,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "sish",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "User experience",
+    "num": 51,
+    "labels": "squad,squad:sish,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "medium",
+    "wave": "Wave 5",
+    "reason": "Feature request",
+    "num": 4,
+    "labels": "squad,squad:dolph,priority:medium,Wave 5"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "low",
+    "wave": "Wave 6",
+    "reason": "Advanced",
+    "num": 7,
+    "labels": "squad,squad:dolph,priority:low,Wave 6"
+  },
+  {
+    "assigned": "sish",
+    "priority": "low",
+    "wave": "Wave 6",
+    "reason": "Distribution channel",
+    "num": 9,
+    "labels": "squad,squad:sish,priority:low,Wave 6"
+  },
+  {
+    "assigned": "sish",
+    "priority": "low",
+    "wave": "Wave 6",
+    "reason": "Distribution",
+    "num": 10,
+    "labels": "squad,squad:sish,priority:low,Wave 6"
+  },
+  {
+    "assigned": "sish",
+    "priority": "low",
+    "wave": "Wave 6",
+    "reason": "Distribution",
+    "num": 32,
+    "labels": "squad,squad:sish,priority:low,Wave 6"
+  },
+  {
+    "assigned": "sish",
+    "priority": "low",
+    "wave": "Wave 6",
+    "reason": "Distribution",
+    "num": 33,
+    "labels": "squad,squad:sish,priority:low,Wave 6"
+  },
+  {
+    "assigned": "dolph",
+    "priority": "low",
+    "wave": "Wave 6",
+    "reason": "Advanced security",
+    "num": 58,
+    "labels": "squad,squad:dolph,priority:low,Wave 6"
+  }
+]

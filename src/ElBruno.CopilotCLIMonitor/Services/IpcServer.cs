@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 using ElBruno.CopilotCLIMonitor.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace ElBruno.CopilotCLIMonitor.Services;
 
@@ -14,16 +15,19 @@ public sealed class IpcServer : IIpcServer
 {
     private readonly HttpListener _listener;
     private readonly int _port;
+    private readonly ILogger<IpcServer> _logger;
     private CancellationTokenSource? _cts;
     private Task? _listenTask;
 
     public event Action<MonitorEvent>? EventReceived;
 
-    public IpcServer(int port = IpcConstants.DefaultPort)
+    public IpcServer(int port = IpcConstants.DefaultPort, ILogger<IpcServer>? logger = null)
     {
         _port = port;
+        _logger = logger ?? Microsoft.Extensions.Logging.Abstractions.NullLogger<IpcServer>.Instance;
         _listener = new HttpListener();
         _listener.Prefixes.Add($"http://localhost:{port}/");
+        _logger.LogInformation("IpcServer initialised on port {Port}.", port);
     }
 
     public void Start()
@@ -31,12 +35,14 @@ public sealed class IpcServer : IIpcServer
         _listener.Start();
         _cts = new CancellationTokenSource();
         _listenTask = Task.Run(() => AcceptLoopAsync(_cts.Token));
+        _logger.LogInformation("IpcServer started, listening on port {Port}.", _port);
     }
 
     public void Stop()
     {
         _cts?.Cancel();
         try { _listener.Stop(); } catch { /* ignore */ }
+        _logger.LogInformation("IpcServer stopped.");
     }
 
     private async Task AcceptLoopAsync(CancellationToken ct)
@@ -48,8 +54,16 @@ public sealed class IpcServer : IIpcServer
             {
                 ctx = await _listener.GetContextAsync().WaitAsync(ct);
             }
-            catch (OperationCanceledException) { break; }
-            catch { break; }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("IPC connection accept loop cancelled.");
+                break;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "IPC accept loop encountered an unexpected error — stopping.");
+                break;
+            }
 
             _ = Task.Run(() => HandleRequestAsync(ctx), ct);
         }
@@ -67,7 +81,10 @@ public sealed class IpcServer : IIpcServer
                 await WriteJsonAsync(resp, new { status = "running", port = _port });
 
                 if (req.Url?.AbsolutePath == "/open")
+                {
+                    _logger.LogInformation("Dashboard open requested via CLI.");
                     EventReceived?.Invoke(MonitorEvent.Parse("workflow-completed", "Dashboard opened via CLI"));
+                }
 
                 return;
             }
@@ -80,6 +97,7 @@ public sealed class IpcServer : IIpcServer
 
                 if (notifyReq is null)
                 {
+                    _logger.LogWarning("Received invalid (null) notify request body.");
                     resp.StatusCode = 400;
                     await WriteJsonAsync(resp, new NotifyResponse(false, "Invalid request body"));
                     return;
@@ -91,6 +109,10 @@ public sealed class IpcServer : IIpcServer
                     notifyReq.Repository,
                     notifyReq.Branch);
 
+                _logger.LogInformation(
+                    "Event received via IPC: type={EventType} repo={Repository} branch={Branch}",
+                    monitorEvent.EventType, monitorEvent.Repository ?? "(none)", monitorEvent.Branch ?? "(none)");
+
                 EventReceived?.Invoke(monitorEvent);
                 await WriteJsonAsync(resp, new NotifyResponse(true));
                 return;
@@ -101,6 +123,8 @@ public sealed class IpcServer : IIpcServer
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Unhandled error while processing IPC request {Method} {Path}.",
+                req.HttpMethod, req.Url?.AbsolutePath);
             try
             {
                 resp.StatusCode = 500;

@@ -1,0 +1,569 @@
+[
+  {
+    "Wave": "Wave 1",
+    "#": 5,
+    "Title": "Configuration File Format",
+    "Type": "infrastructure",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Blocks all config-dependent features"
+  },
+  {
+    "Wave": "Wave 1",
+    "#": 8,
+    "Title": "Configuration Validation",
+    "Type": "infrastructure",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Ensures config reliability"
+  },
+  {
+    "Wave": "Wave 1",
+    "#": 6,
+    "Title": "Environment Variables",
+    "Type": "infrastructure",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Needed for CLI configuration"
+  },
+  {
+    "Wave": "Wave 1",
+    "#": 18,
+    "Title": "IPC Optimization",
+    "Type": "infrastructure",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Critical CLI-WPF bridge"
+  },
+  {
+    "Wave": "Wave 1",
+    "#": 49,
+    "Title": "Default Configuration",
+    "Type": "infrastructure",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Unblocks Settings UI and testing"
+  },
+  {
+    "Wave": "Wave 1",
+    "#": 29,
+    "Title": "Release Branch Strategy",
+    "Type": "infrastructure",
+    "Priority": "high",
+    "Assigned": "sish",
+    "Reason": "Needed before any release work"
+  },
+  {
+    "Wave": "Wave 1",
+    "#": 64,
+    "Title": "Semantic Versioning Strategy",
+    "Type": "infrastructure",
+    "Priority": "high",
+    "Assigned": "sish",
+    "Reason": "Versioning foundation"
+  },
+  {
+    "Wave": "Wave 2",
+    "#": 41,
+    "Title": "Settings/Preferences UI",
+    "Type": "feature",
+    "Priority": "high",
+    "Assigned": "chevy",
+    "Reason": "Core feature, widely needed"
+  },
+  {
+    "Wave": "Wave 2",
+    "#": 42,
+    "Title": "System Tray Context Menu",
+    "Type": "feature",
+    "Priority": "high",
+    "Assigned": "chevy",
+    "Reason": "Core UX for systray app"
+  },
+  {
+    "Wave": "Wave 2",
+    "#": 43,
+    "Title": "Toast Notification UI",
+    "Type": "feature",
+    "Priority": "high",
+    "Assigned": "chevy",
+    "Reason": "Primary notification mechanism"
+  },
+  {
+    "Wave": "Wave 2",
+    "#": 44,
+    "Title": "Event History/Dashboard",
+    "Type": "feature",
+    "Priority": "high",
+    "Assigned": "chevy",
+    "Reason": "Event monitoring UI"
+  },
+  {
+    "Wave": "Wave 2",
+    "#": 15,
+    "Title": "Diagnostic Mode",
+    "Type": "feature",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Dev/troubleshooting tool"
+  },
+  {
+    "Wave": "Wave 2",
+    "#": 3,
+    "Title": "Auto-start on Windows Boot",
+    "Type": "feature",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "UX requirement"
+  },
+  {
+    "Wave": "Wave 2",
+    "#": 2,
+    "Title": "Sound Alerts",
+    "Type": "feature",
+    "Priority": "high",
+    "Assigned": "chevy",
+    "Reason": "Notification feature"
+  },
+  {
+    "Wave": "Wave 2",
+    "#": 30,
+    "Title": "Quiet Hours Configuration",
+    "Type": "feature",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Settings feature"
+  },
+  {
+    "Wave": "Wave 3",
+    "#": 61,
+    "Title": "Unit Tests for WPF Components",
+    "Type": "test",
+    "Priority": "high",
+    "Assigned": "river",
+    "Reason": "WPF test coverage gap"
+  },
+  {
+    "Wave": "Wave 3",
+    "#": 25,
+    "Title": "UI/UX Tests",
+    "Type": "test",
+    "Priority": "high",
+    "Assigned": "river",
+    "Reason": "Systray+notifications testing"
+  },
+  {
+    "Wave": "Wave 3",
+    "#": 63,
+    "Title": "Hook Integration Tests",
+    "Type": "test",
+    "Priority": "high",
+    "Assigned": "river",
+    "Reason": "CLI-WPF bridge testing"
+  },
+  {
+    "Wave": "Wave 3",
+    "#": 26,
+    "Title": "Code Coverage Reports",
+    "Type": "test",
+    "Priority": "high",
+    "Assigned": "river",
+    "Reason": "Quality metric"
+  },
+  {
+    "Wave": "Wave 3",
+    "#": 20,
+    "Title": "Linting Rules",
+    "Type": "test",
+    "Priority": "high",
+    "Assigned": "river",
+    "Reason": "Code quality baseline"
+  },
+  {
+    "Wave": "Wave 3",
+    "#": 19,
+    "Title": "Code Quality Metrics",
+    "Type": "test",
+    "Priority": "high",
+    "Assigned": "river",
+    "Reason": "CI/CD integration"
+  },
+  {
+    "Wave": "Wave 4",
+    "#": 52,
+    "Title": "User Manual",
+    "Type": "docs",
+    "Priority": "high",
+    "Assigned": "chevy",
+    "Reason": "End-user docs"
+  },
+  {
+    "Wave": "Wave 4",
+    "#": 53,
+    "Title": "Developer Guide",
+    "Type": "docs",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Contribution docs"
+  },
+  {
+    "Wave": "Wave 4",
+    "#": 11,
+    "Title": "API Documentation",
+    "Type": "docs",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Public API docs"
+  },
+  {
+    "Wave": "Wave 4",
+    "#": 54,
+    "Title": "Hook Configuration Guide",
+    "Type": "docs",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Setup docs"
+  },
+  {
+    "Wave": "Wave 4",
+    "#": 59,
+    "Title": "Input Validation",
+    "Type": "security",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Security hardening"
+  },
+  {
+    "Wave": "Wave 4",
+    "#": 23,
+    "Title": "Encrypted Storage",
+    "Type": "security",
+    "Priority": "high",
+    "Assigned": "dolph",
+    "Reason": "Sensitive data protection"
+  },
+  {
+    "Wave": "Wave 4",
+    "#": 57,
+    "Title": "Security Scanning",
+    "Type": "security",
+    "Priority": "high",
+    "Assigned": "river",
+    "Reason": "Dependency scanning"
+  },
+  {
+    "Wave": "Wave 4",
+    "#": 60,
+    "Title": "Dependency Vulnerabilities",
+    "Type": "security",
+    "Priority": "high",
+    "Assigned": "river",
+    "Reason": "CVE remediation"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 45,
+    "Title": "Application Icon",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "chevy",
+    "Reason": "Branding"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 46,
+    "Title": "Logo Variants",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "chevy",
+    "Reason": "Marketing"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 47,
+    "Title": "Notification Icon",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "chevy",
+    "Reason": "Branding"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 48,
+    "Title": "Product Screenshots",
+    "Type": "docs",
+    "Priority": "medium",
+    "Assigned": "chevy",
+    "Reason": "Documentation"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 31,
+    "Title": "Marketing Graphics",
+    "Type": "docs",
+    "Priority": "medium",
+    "Assigned": "chevy",
+    "Reason": "Promotion"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 34,
+    "Title": "Video Tutorials",
+    "Type": "docs",
+    "Priority": "medium",
+    "Assigned": "chevy",
+    "Reason": "User guidance"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 35,
+    "Title": "Resource Strings",
+    "Type": "infrastructure",
+    "Priority": "medium",
+    "Assigned": "dolph",
+    "Reason": "Localization foundation"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 36,
+    "Title": "Multi-Language Support",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "dolph",
+    "Reason": "i18n"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 37,
+    "Title": "RTL Language Support",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "dolph",
+    "Reason": "i18n"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 38,
+    "Title": "Event Tracing",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "dolph",
+    "Reason": "Monitoring/debugging"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 39,
+    "Title": "Telemetry (Optional)",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "river",
+    "Reason": "Usage analytics"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 14,
+    "Title": "Log File Rotation",
+    "Type": "infrastructure",
+    "Priority": "medium",
+    "Assigned": "dolph",
+    "Reason": "Operational"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 55,
+    "Title": "Structured Logging",
+    "Type": "infrastructure",
+    "Priority": "medium",
+    "Assigned": "dolph",
+    "Reason": "Logging foundation"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 16,
+    "Title": "Memory Optimization",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "dolph",
+    "Reason": "Performance"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 17,
+    "Title": "Startup Time",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "dolph",
+    "Reason": "Performance"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 56,
+    "Title": "Notification Latency",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "dolph",
+    "Reason": "Performance"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 21,
+    "Title": "Performance Testing",
+    "Type": "test",
+    "Priority": "medium",
+    "Assigned": "river",
+    "Reason": "QA"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 22,
+    "Title": "Accessibility Testing",
+    "Type": "test",
+    "Priority": "medium",
+    "Assigned": "river",
+    "Reason": "QA"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 62,
+    "Title": "Integration Tests",
+    "Type": "test",
+    "Priority": "medium",
+    "Assigned": "river",
+    "Reason": "QA"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 24,
+    "Title": "Privacy Policy",
+    "Type": "docs",
+    "Priority": "medium",
+    "Assigned": "chevy",
+    "Reason": "Legal"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 12,
+    "Title": "FAQ/Troubleshooting",
+    "Type": "docs",
+    "Priority": "medium",
+    "Assigned": "chevy",
+    "Reason": "Support"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 13,
+    "Title": "Windows Defender/Security Notes",
+    "Type": "docs",
+    "Priority": "medium",
+    "Assigned": "chevy",
+    "Reason": "Security info"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 27,
+    "Title": "Release Notes Template",
+    "Type": "docs",
+    "Priority": "medium",
+    "Assigned": "sish",
+    "Reason": "Release prep"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 28,
+    "Title": "Version Auto-Increment",
+    "Type": "infrastructure",
+    "Priority": "medium",
+    "Assigned": "sish",
+    "Reason": "Release automation"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 40,
+    "Title": "Hotfix Process",
+    "Type": "infrastructure",
+    "Priority": "medium",
+    "Assigned": "sish",
+    "Reason": "Release process"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 50,
+    "Title": "Standalone Installer",
+    "Type": "infrastructure",
+    "Priority": "medium",
+    "Assigned": "sish",
+    "Reason": "Distribution"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 51,
+    "Title": "Automatic Update Mechanism",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "sish",
+    "Reason": "User experience"
+  },
+  {
+    "Wave": "Wave 5",
+    "#": 4,
+    "Title": "Multi-Repository Support",
+    "Type": "feature",
+    "Priority": "medium",
+    "Assigned": "dolph",
+    "Reason": "Feature request"
+  },
+  {
+    "Wave": "Wave 6",
+    "#": 7,
+    "Title": "Multi-User Support",
+    "Type": "feature",
+    "Priority": "low",
+    "Assigned": "dolph",
+    "Reason": "Advanced"
+  },
+  {
+    "Wave": "Wave 6",
+    "#": 9,
+    "Title": "Windows Store/Microsoft Store",
+    "Type": "infrastructure",
+    "Priority": "low",
+    "Assigned": "sish",
+    "Reason": "Distribution channel"
+  },
+  {
+    "Wave": "Wave 6",
+    "#": 10,
+    "Title": "WinGet Package",
+    "Type": "infrastructure",
+    "Priority": "low",
+    "Assigned": "sish",
+    "Reason": "Distribution"
+  },
+  {
+    "Wave": "Wave 6",
+    "#": 32,
+    "Title": "Chocolatey Package",
+    "Type": "infrastructure",
+    "Priority": "low",
+    "Assigned": "sish",
+    "Reason": "Distribution"
+  },
+  {
+    "Wave": "Wave 6",
+    "#": 33,
+    "Title": "Portable/ZIP Distribution",
+    "Type": "infrastructure",
+    "Priority": "low",
+    "Assigned": "sish",
+    "Reason": "Distribution"
+  },
+  {
+    "Wave": "Wave 6",
+    "#": 58,
+    "Title": "Authentication & Authorization",
+    "Type": "security",
+    "Priority": "low",
+    "Assigned": "dolph",
+    "Reason": "Advanced security"
+  }
+]

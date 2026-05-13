@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
     ///   <item><see cref="IRepositoryDetector"/> → <see cref="RepositoryDetector"/> (singleton)</item>
     ///   <item><see cref="IHookInstaller"/> → <see cref="HookInstaller"/> (singleton)</item>
     ///   <item><see cref="IIpcClient"/> → <see cref="HttpIpcClient"/> (singleton, port from settings)</item>
+    ///   <item><see cref="IMonitorEventParser"/> → <see cref="MonitorEventParser"/> (singleton)</item>
     ///   <item><see cref="CoreSettings"/> (singleton)</item>
     /// </list>
     /// </remarks>
@@ -30,10 +31,14 @@ public static class ServiceCollectionExtensions
         var resolved = settings ?? CoreSettings.Default;
 
         services.TryAddSingleton(resolved);
-        services.TryAddSingleton<IEventStore>(_ => new EventStore(resolved.EventStoreCapacity));
+        services.TryAddSingleton<IEventStore>(sp =>
+            new EventStore(
+                resolved.EventStoreCapacity,
+                sp.GetService<Microsoft.Extensions.Logging.ILogger<EventStore>>()));
         services.TryAddSingleton<IRepositoryDetector, RepositoryDetector>();
         services.TryAddSingleton<IHookInstaller, HookInstaller>();
         services.TryAddSingleton<IIpcClient>(_ => new HttpIpcClient(resolved.IpcPort, TimeSpan.FromSeconds(resolved.IpcTimeoutSeconds)));
+        services.TryAddSingleton<IMonitorEventParser, MonitorEventParser>();
 
         return services;
     }

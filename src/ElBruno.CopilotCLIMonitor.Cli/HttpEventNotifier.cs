@@ -1,16 +1,25 @@
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 using ElBruno.CopilotCLIMonitor.Core.Models;
 using ElBruno.CopilotCLIMonitor.Core.Services;
+using Microsoft.Extensions.Logging;
 
 namespace ElBruno.CopilotCLIMonitor.Cli;
 
 /// <summary>
 /// Sends notification events to the running systray app via the local HTTP IPC endpoint.
-/// Falls back to console output if the monitor is not running.
+/// Falls back to logging a warning if the monitor is not running.
 /// </summary>
 public sealed class HttpEventNotifier : IEventNotifier
 {
-    private readonly HttpIpcClient _client = new();
+    private readonly HttpIpcClient _client;
+    private readonly ILogger<HttpEventNotifier> _logger;
+
+    public HttpEventNotifier(ILogger<HttpEventNotifier>? logger = null)
+    {
+        _client = new HttpIpcClient();
+        _logger = logger ?? Microsoft.Extensions.Logging.Abstractions.NullLogger<HttpEventNotifier>.Instance;
+        _logger.LogInformation("HttpEventNotifier initialised.");
+    }
 
     public async Task NotifyAsync(MonitorEvent monitorEvent, CancellationToken cancellationToken = default)
     {
@@ -24,12 +33,13 @@ public sealed class HttpEventNotifier : IEventNotifier
 
         if (sent)
         {
-            Console.WriteLine($"✓ Event '{monitorEvent.EventType}' sent to monitor.");
+            _logger.LogInformation("Event '{EventType}' sent to monitor successfully.", monitorEvent.EventType);
         }
         else
         {
-            Console.Error.WriteLine($"✗ Monitor not running. Event: {monitorEvent.EventType} — {monitorEvent.Message}");
-            Console.Error.WriteLine($"  Start the monitor with: copilotclimon");
+            _logger.LogWarning(
+                "Monitor not running. Event '{EventType}' could not be delivered — {Message}. Start the monitor with: copilotclimon",
+                monitorEvent.EventType, monitorEvent.Message);
         }
     }
 }
