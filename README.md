@@ -277,6 +277,10 @@ Screenshot catalog and capture standards are documented in [screenshots.md](http
 
 Logo source variants and export targets are documented in [logo-variants.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/logo-variants.md).
 
+## Marketing graphics
+
+Social cards and feature-promotion assets are documented in [marketing-graphics.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/marketing-graphics.md).
+
 ## Hook configuration guide
 
 For advanced hook setup, custom scripts, and secure event routing, see [hook-configuration.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/hook-configuration.md).
