@@ -223,6 +223,10 @@ See [telemetry.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/mai
 
 See [user-manual.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/user-manual.md) for end-user step-by-step usage.
 
+## Video tutorials
+
+See [video-tutorials.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/video-tutorials.md) for recording plans, standards, and publishing checklist.
+
 ## Architecture documentation
 
 See [architecture.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/architecture.md) for technical design details.
