@@ -250,6 +250,10 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 Screenshot catalog and capture standards are documented in [screenshots.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/screenshots.md).
 
+## Logo variants
+
+Logo source variants and export targets are documented in [logo-variants.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/logo-variants.md).
+
 ## Hook configuration guide
 
 For advanced hook setup, custom scripts, and secure event routing, see [hook-configuration.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/hook-configuration.md).
