@@ -131,6 +131,18 @@ public sealed class CliCommandHandlers(
                 var config = Path.Combine(hookDir, "config.json");
                 await _out.WriteLineAsync(File.Exists(script) ? "✓ notify.ps1 present" : "✗ notify.ps1 missing — run: copilotclimon init");
                 await _out.WriteLineAsync(File.Exists(config) ? "✓ config.json present" : "✗ config.json missing — run: copilotclimon init");
+                if (File.Exists(config))
+                {
+                    if (RepositoryHookConfigValidator.TryValidateFile(config, out var configError))
+                    {
+                        await _out.WriteLineAsync("✓ config.json schema is valid");
+                    }
+                    else
+                    {
+                        await _out.WriteLineAsync($"✗ config.json invalid: {configError}");
+                        allOk = false;
+                    }
+                }
             }
             else
             {
