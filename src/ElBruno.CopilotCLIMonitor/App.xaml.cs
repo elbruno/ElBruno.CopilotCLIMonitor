@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Globalization;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Forms;
 using ElBruno.CopilotCLIMonitor.Core.Models;
@@ -28,6 +29,7 @@ public partial class App : System.Windows.Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        var startupSw = Stopwatch.StartNew();
         base.OnStartup(e);
         _loggerFactory = LoggingFactoryBuilder.Create();
         _logger = _loggerFactory.CreateLogger<App>();
@@ -42,7 +44,9 @@ public partial class App : System.Windows.Application
         _logger.LogInformation("Application startup.");
 
         InitializeTrayIcon();
-        StartIpcServer();
+        Dispatcher.BeginInvoke(StartIpcServer, System.Windows.Threading.DispatcherPriority.Background);
+        startupSw.Stop();
+        _logger.LogInformation("Startup pipeline completed in {ElapsedMs} ms.", startupSw.ElapsedMilliseconds);
     }
 
     private void InitializeTrayIcon()

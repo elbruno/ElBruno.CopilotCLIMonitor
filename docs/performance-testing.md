@@ -7,6 +7,7 @@ Performance validation focuses on responsiveness of event ingestion and filterin
 - High-volume event ingestion in `EventStore`
 - Concurrent event ingestion under parallel load
 - Dashboard filtering performance on large event lists
+- Startup path instrumentation for initialization timing
 
 ## Automated tests
 
