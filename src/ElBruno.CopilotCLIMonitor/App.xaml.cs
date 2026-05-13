@@ -91,17 +91,15 @@ public partial class App : System.Windows.Application
         var title = monitorEvent.Repository is { Length: > 0 } repo
             ? $"[{repo}] {FormatEventType(monitorEvent.EventType)}"
             : FormatEventType(monitorEvent.EventType);
+        var details = monitorEvent.Branch is { Length: > 0 } branch
+            ? $"{monitorEvent.Message} ({branch})"
+            : monitorEvent.Message;
 
         _trayIcon?.ShowBalloonTip(
-            timeout: 5000,
+            timeout: GetNotificationTimeout(monitorEvent.EventType),
             tipTitle: title,
-            tipText: monitorEvent.Message,
-            tipIcon: monitorEvent.EventType switch
-            {
-                EventType.Error or EventType.HookFailed => ToolTipIcon.Error,
-                EventType.ApprovalRequired or EventType.Warning or EventType.LongRunningTaskWarning => ToolTipIcon.Warning,
-                _ => ToolTipIcon.Info
-            });
+            tipText: details,
+            tipIcon: GetNotificationIcon(monitorEvent.EventType));
     }
 
     private static string FormatEventType(EventType t) => t switch
@@ -116,6 +114,20 @@ public partial class App : System.Windows.Application
         EventType.LongRunningTaskWarning => "Long-Running Task",
         EventType.HookFailed => "Hook Failed",
         _ => "Notification"
+    };
+
+    private static int GetNotificationTimeout(EventType t) => t switch
+    {
+        EventType.Error or EventType.HookFailed => 10000,
+        EventType.ApprovalRequired or EventType.Warning or EventType.LongRunningTaskWarning => 8000,
+        _ => 5000
+    };
+
+    private static ToolTipIcon GetNotificationIcon(EventType t) => t switch
+    {
+        EventType.Error or EventType.HookFailed => ToolTipIcon.Error,
+        EventType.ApprovalRequired or EventType.Warning or EventType.LongRunningTaskWarning => ToolTipIcon.Warning,
+        _ => ToolTipIcon.Info
     };
 
     private void OpenDashboard()

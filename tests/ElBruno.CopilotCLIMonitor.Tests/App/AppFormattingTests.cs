@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Windows.Forms;
 using ElBruno.CopilotCLIMonitor.Core.Models;
 
 namespace ElBruno.CopilotCLIMonitor.Tests.App;
@@ -18,5 +19,37 @@ public class AppFormattingTests
         Assert.NotNull(method);
         var label = method!.Invoke(null, [eventType]) as string;
         Assert.Equal(expected, label);
+    }
+
+    [Theory]
+    [InlineData(EventType.Error, 10000)]
+    [InlineData(EventType.HookFailed, 10000)]
+    [InlineData(EventType.Warning, 8000)]
+    [InlineData(EventType.ApprovalRequired, 8000)]
+    [InlineData(EventType.TaskCompleted, 5000)]
+    public void GetNotificationTimeout_ReturnsExpectedDuration(EventType eventType, int expected)
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("GetNotificationTimeout", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var timeout = method!.Invoke(null, [eventType]);
+        Assert.Equal(expected, timeout);
+    }
+
+    [Theory]
+    [InlineData(EventType.Error, ToolTipIcon.Error)]
+    [InlineData(EventType.HookFailed, ToolTipIcon.Error)]
+    [InlineData(EventType.Warning, ToolTipIcon.Warning)]
+    [InlineData(EventType.ApprovalRequired, ToolTipIcon.Warning)]
+    [InlineData(EventType.TaskCompleted, ToolTipIcon.Info)]
+    public void GetNotificationIcon_ReturnsExpectedIcon(EventType eventType, ToolTipIcon expected)
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("GetNotificationIcon", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var icon = method!.Invoke(null, [eventType]);
+        Assert.Equal(expected, icon);
     }
 }
