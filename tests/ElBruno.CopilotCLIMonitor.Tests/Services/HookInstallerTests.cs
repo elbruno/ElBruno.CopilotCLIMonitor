@@ -1,4 +1,5 @@
 using ElBruno.CopilotCLIMonitor.Core.Services;
+using System.Diagnostics;
 
 namespace ElBruno.CopilotCLIMonitor.Tests.Services;
 
@@ -94,5 +95,39 @@ public class HookInstallerTests : IDisposable
 
         var secondWriteTime = File.GetLastWriteTimeUtc(configPath);
         Assert.Equal(firstWriteTime, secondWriteTime);
+    }
+
+    [Fact]
+    public void Install_NotifyScript_WhenExecuted_ForwardsEventAndMessageToCli()
+    {
+        _sut.Install(_tempDir);
+
+        var scriptPath = Path.Combine(_tempDir, ".copilotclimonitor", "notify.ps1");
+        var argsFile = Path.Combine(_tempDir, "captured-args.txt");
+        var fakeCliPath = Path.Combine(_tempDir, "copilotclimon.cmd");
+
+        File.WriteAllText(fakeCliPath, $"@echo off{Environment.NewLine}echo %* > \"{argsFile}\"{Environment.NewLine}");
+
+        var psi = new ProcessStartInfo
+        {
+            FileName = "pwsh",
+            Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{scriptPath}\" -Event \"error\" -Message \"Build failed\"",
+            WorkingDirectory = _tempDir,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false
+        };
+        psi.Environment["PATH"] = $"{_tempDir};{Environment.GetEnvironmentVariable("PATH")}";
+
+        using var process = Process.Start(psi);
+        Assert.NotNull(process);
+        process!.WaitForExit();
+
+        var stdErr = process.StandardError.ReadToEnd();
+        Assert.Equal(0, process.ExitCode);
+        Assert.True(File.Exists(argsFile), $"Expected captured args file to exist. stderr: {stdErr}");
+
+        var captured = File.ReadAllText(argsFile);
+        Assert.Contains("notify --event error --message \"Build failed\"", captured);
     }
 }
