@@ -247,6 +247,10 @@ See [code-quality-metrics.md](https://github.com/elbruno/ElBruno.CopilotCLIMonit
 
 See [diagnostic-mode.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/diagnostic-mode.md) for enabling verbose troubleshooting logs.
 
+## Log file rotation
+
+See [log-rotation.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/log-rotation.md) for daily/size-based log rotation settings.
+
 ## Telemetry (optional)
 
 See [telemetry.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/telemetry.md) for opt-in telemetry behavior and data details.
