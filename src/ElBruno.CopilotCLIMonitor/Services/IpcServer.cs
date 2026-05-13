@@ -130,7 +130,7 @@ public sealed class IpcServer : IIpcServer
                     "Event received via IPC: type={EventType} repo={Repository} branch={Branch}",
                     monitorEvent.EventType, monitorEvent.Repository ?? "(none)", monitorEvent.Branch ?? "(none)");
 
-                EventReceived?.Invoke(monitorEvent);
+                DispatchEventAsync(monitorEvent);
                 await WriteJsonAsync(resp, new NotifyResponse(true));
                 return;
             }
@@ -185,6 +185,27 @@ public sealed class IpcServer : IIpcServer
     }
 
     private static readonly JsonSerializerOptions _jsonOpts = new(JsonSerializerDefaults.Web);
+
+    private void DispatchEventAsync(MonitorEvent monitorEvent)
+    {
+        var handlers = EventReceived;
+        if (handlers is null)
+        {
+            return;
+        }
+
+        _ = Task.Run(() =>
+        {
+            try
+            {
+                handlers.Invoke(monitorEvent);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Event handler failed while processing IPC event.");
+            }
+        });
+    }
 
     public void Dispose()
     {

@@ -1,4 +1,5 @@
 using System.Net;
+using System.Diagnostics;
 using ElBruno.CopilotCLIMonitor.Core.Models;
 using ElBruno.CopilotCLIMonitor.Core.Services;
 using ElBruno.CopilotCLIMonitor.Services;
@@ -129,6 +130,30 @@ public class IpcServerTests
         finally
         {
             Environment.SetEnvironmentVariable(IpcConstants.AuthTokenEnvVar, previousToken);
+        }
+    }
+
+    [Fact]
+    public async Task SendNotifyAsync_DoesNotBlockOnSlowEventHandlers()
+    {
+        var port = ReserveFreePort();
+        using var server = new IpcServer(port);
+        server.EventReceived += _ => Thread.Sleep(500);
+        server.Start();
+
+        try
+        {
+            var client = new HttpIpcClient(port);
+            var sw = Stopwatch.StartNew();
+            var sent = await client.SendNotifyAsync(new NotifyRequest("task-completed", "Done"));
+            sw.Stop();
+
+            Assert.True(sent);
+            Assert.True(sw.ElapsedMilliseconds < 400, $"Expected fast response, got {sw.ElapsedMilliseconds}ms.");
+        }
+        finally
+        {
+            server.Stop();
         }
     }
 
