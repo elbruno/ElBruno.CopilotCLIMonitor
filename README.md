@@ -223,6 +223,10 @@ See [chocolatey.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/ma
 
 See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/troubleshooting.md) for common issues and solutions.
 
+## Code coverage
+
+See [coverage.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/coverage.md) for local and CI coverage report generation.
+
 ## Telemetry (optional)
 
 See [telemetry.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/telemetry.md) for opt-in telemetry behavior and data details.
