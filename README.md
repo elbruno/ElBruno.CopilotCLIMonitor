@@ -211,6 +211,10 @@ See [setup.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/do
 
 See [installer.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/installer.md) for standalone Windows package generation.
 
+## Portable ZIP distribution
+
+See [portable-distribution.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/portable-distribution.md) for no-installation packaging and usage.
+
 ## Troubleshooting
 
 See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/troubleshooting.md) for common issues and solutions.
