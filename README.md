@@ -193,6 +193,10 @@ See [setup.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/do
 
 See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/troubleshooting.md) for common issues and solutions.
 
+## User manual
+
+See [user-manual.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/user-manual.md) for end-user step-by-step usage.
+
 ## Architecture documentation
 
 See [architecture.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/architecture.md) for technical design details.
