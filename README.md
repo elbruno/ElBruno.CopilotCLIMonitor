@@ -96,6 +96,7 @@ Configure:
 
 - Automatic RTL layout support based on UI culture
 - Dashboard and settings windows adapt to right-to-left languages
+- Event labels localized for English, Spanish, and French
 
 ## Architecture
 

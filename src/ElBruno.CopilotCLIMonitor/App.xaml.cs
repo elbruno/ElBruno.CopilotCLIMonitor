@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Forms;
 using ElBruno.CopilotCLIMonitor.Core.Models;
@@ -133,19 +134,8 @@ public partial class App : System.Windows.Application
         CopilotCliMonitorEventSource.Log.NotificationShown(monitorEvent.EventType.ToString());
     }
 
-    private static string FormatEventType(EventType t) => t switch
-    {
-        EventType.TaskCompleted => "Task Completed",
-        EventType.ApprovalRequired => "Approval Required",
-        EventType.Error => "Error",
-        EventType.Warning => "Warning",
-        EventType.BuildCompleted => "Build Completed",
-        EventType.TestCompleted => "Test Completed",
-        EventType.WorkflowCompleted => "Workflow Completed",
-        EventType.LongRunningTaskWarning => "Long-Running Task",
-        EventType.HookFailed => "Hook Failed",
-        _ => "Notification"
-    };
+    private static string FormatEventType(EventType t, CultureInfo? culture = null) =>
+        t == EventType.Unknown ? LocalizedText.Get("Notification", culture) : LocalizedText.GetEventTypeLabel(t, culture);
 
     private static int GetNotificationTimeout(EventType t) => t switch
     {
