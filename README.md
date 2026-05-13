@@ -150,6 +150,18 @@ Opens the events dashboard window.
 copilotclimon --version
 ```
 
+### Check for updates
+
+```bash
+copilotclimon update
+```
+
+Install latest version directly:
+
+```bash
+copilotclimon update --install
+```
+
 ## Configuration
 
 ### Global configuration
