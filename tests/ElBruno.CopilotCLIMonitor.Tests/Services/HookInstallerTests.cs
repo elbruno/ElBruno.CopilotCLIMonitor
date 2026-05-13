@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 using ElBruno.CopilotCLIMonitor.Core.Services;
+using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 
 namespace ElBruno.CopilotCLIMonitor.Tests.Services;
 
