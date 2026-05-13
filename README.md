@@ -187,6 +187,11 @@ See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/bl
 
 See [architecture.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/architecture.md) for technical design details.
 
+## Versioning and release strategy
+
+This project uses Semantic Versioning (`MAJOR.MINOR.PATCH`) with an automated release pipeline.
+See [versioning.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/versioning.md) for bump rules and release flow.
+
 ## Examples
 
 ### Hook integration example
