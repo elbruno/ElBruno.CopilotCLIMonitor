@@ -5,6 +5,7 @@ using ElBruno.CopilotCLIMonitor.Core.Models;
 using ElBruno.CopilotCLIMonitor.Models;
 using ElBruno.CopilotCLIMonitor.Core.Services;
 using ElBruno.CopilotCLIMonitor.Services;
+using ElBruno.CopilotCLIMonitor.Telemetry;
 using Microsoft.Extensions.Logging;
 
 namespace ElBruno.CopilotCLIMonitor;
@@ -29,6 +30,7 @@ public partial class App : System.Windows.Application
         _loggerFactory = LoggingFactoryBuilder.Create();
         _logger = _loggerFactory.CreateLogger<App>();
         _preferences = _preferencesStore.Load();
+        CopilotCliMonitorEventSource.Log.AppStartup();
         if (_preferences.TelemetryOptIn && !string.IsNullOrWhiteSpace(_preferences.TelemetryInstallationId))
         {
             _telemetryClient = new UserTelemetryClient(_preferences.TelemetryInstallationId);
@@ -93,6 +95,7 @@ public partial class App : System.Windows.Application
             "Dispatching notification event type={EventType} repository={Repository} branch={Branch}.",
             monitorEvent.EventType, monitorEvent.Repository, monitorEvent.Branch);
         _telemetryClient?.TrackEvent("event_received", monitorEvent.EventType.ToString(), monitorEvent.Repository);
+        CopilotCliMonitorEventSource.Log.EventReceived(monitorEvent.EventType.ToString());
 
         Dispatcher.BeginInvoke(() =>
         {
@@ -104,6 +107,10 @@ public partial class App : System.Windows.Application
                 {
                     System.Media.SystemSounds.Asterisk.Play();
                 }
+            }
+            else
+            {
+                CopilotCliMonitorEventSource.Log.NotificationSuppressed(_notificationsPaused ? "Paused" : "Preferences");
             }
             _dashboard?.RefreshEvents(_eventStore.Recent);
         });
@@ -123,6 +130,7 @@ public partial class App : System.Windows.Application
             tipTitle: title,
             tipText: details,
             tipIcon: GetNotificationIcon(monitorEvent.EventType));
+        CopilotCliMonitorEventSource.Log.NotificationShown(monitorEvent.EventType.ToString());
     }
 
     private static string FormatEventType(EventType t) => t switch
