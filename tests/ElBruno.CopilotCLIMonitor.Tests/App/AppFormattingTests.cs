@@ -126,4 +126,28 @@ public class AppFormattingTests
         Assert.False((bool)method.Invoke(null, [quiet, new DateTime(2026, 1, 1, 23, 0, 0)])!);
         Assert.True((bool)method.Invoke(null, [normal, new DateTime(2026, 1, 1, 23, 0, 0)])!);
     }
+
+    [Fact]
+    public void BuildNotificationTitleAndDetails_IncludeRepositoryAndBranchContext()
+    {
+        var titleMethod = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("BuildNotificationTitle", BindingFlags.NonPublic | BindingFlags.Static);
+        var detailsMethod = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("BuildNotificationDetails", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(titleMethod);
+        Assert.NotNull(detailsMethod);
+
+        var monitorEvent = new MonitorEvent(
+            EventType.TaskCompleted,
+            "Build done",
+            "sample-repo",
+            "main");
+
+        var title = titleMethod!.Invoke(null, [monitorEvent]) as string;
+        var details = detailsMethod!.Invoke(null, [monitorEvent]) as string;
+
+        Assert.Equal("[sample-repo] Task Completed", title);
+        Assert.Equal("Build done (main)", details);
+    }
 }

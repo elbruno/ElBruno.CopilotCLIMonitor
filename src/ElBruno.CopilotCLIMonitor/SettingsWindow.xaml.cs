@@ -35,22 +35,43 @@ public partial class SettingsWindow : Window
 
     private void Save_Click(object sender, RoutedEventArgs e)
     {
-        UpdatedPreferences = new UserPreferences
-        {
-            NotificationsEnabled = NotificationsEnabledCheckBox.IsChecked ?? true,
-            SoundEnabled = SoundEnabledCheckBox.IsChecked ?? false,
-            QuietHoursEnabled = QuietHoursEnabledCheckBox.IsChecked ?? false,
-            QuietHoursStart = QuietHoursStartComboBox.SelectedItem is int start ? start : 22,
-            QuietHoursEnd = QuietHoursEndComboBox.SelectedItem is int end ? end : 7,
-            LogLevel = LogLevelComboBox.SelectedItem as string ?? "Information",
-            StartWithWindows = StartWithWindowsCheckBox.IsChecked ?? false,
-            TelemetryOptIn = TelemetryOptInCheckBox.IsChecked ?? false,
-            TelemetryInstallationId = _initialPreferences.TelemetryInstallationId
-        };
+        UpdatedPreferences = BuildUpdatedPreferences(
+            notificationsEnabled: NotificationsEnabledCheckBox.IsChecked ?? true,
+            soundEnabled: SoundEnabledCheckBox.IsChecked ?? false,
+            quietHoursEnabled: QuietHoursEnabledCheckBox.IsChecked ?? false,
+            quietHoursStart: QuietHoursStartComboBox.SelectedItem as int?,
+            quietHoursEnd: QuietHoursEndComboBox.SelectedItem as int?,
+            logLevel: LogLevelComboBox.SelectedItem as string,
+            startWithWindows: StartWithWindowsCheckBox.IsChecked ?? false,
+            telemetryOptIn: TelemetryOptInCheckBox.IsChecked ?? false,
+            telemetryInstallationId: _initialPreferences.TelemetryInstallationId);
 
         DialogResult = true;
         Close();
     }
+
+    public static UserPreferences BuildUpdatedPreferences(
+        bool notificationsEnabled,
+        bool soundEnabled,
+        bool quietHoursEnabled,
+        int? quietHoursStart,
+        int? quietHoursEnd,
+        string? logLevel,
+        bool startWithWindows,
+        bool telemetryOptIn,
+        string? telemetryInstallationId) =>
+        new()
+        {
+            NotificationsEnabled = notificationsEnabled,
+            SoundEnabled = soundEnabled,
+            QuietHoursEnabled = quietHoursEnabled,
+            QuietHoursStart = quietHoursStart ?? 22,
+            QuietHoursEnd = quietHoursEnd ?? 7,
+            LogLevel = logLevel ?? "Information",
+            StartWithWindows = startWithWindows,
+            TelemetryOptIn = telemetryOptIn,
+            TelemetryInstallationId = telemetryInstallationId
+        };
 
     private void Cancel_Click(object sender, RoutedEventArgs e)
     {

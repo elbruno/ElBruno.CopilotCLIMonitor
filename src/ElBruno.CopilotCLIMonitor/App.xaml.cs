@@ -119,12 +119,8 @@ public partial class App : System.Windows.Application
 
     private void ShowNotification(MonitorEvent monitorEvent)
     {
-        var title = monitorEvent.Repository is { Length: > 0 } repo
-            ? $"[{repo}] {FormatEventType(monitorEvent.EventType)}"
-            : FormatEventType(monitorEvent.EventType);
-        var details = monitorEvent.Branch is { Length: > 0 } branch
-            ? $"{monitorEvent.Message} ({branch})"
-            : monitorEvent.Message;
+        var title = BuildNotificationTitle(monitorEvent);
+        var details = BuildNotificationDetails(monitorEvent);
 
         _trayIcon?.ShowBalloonTip(
             timeout: GetNotificationTimeout(monitorEvent.EventType),
@@ -133,6 +129,16 @@ public partial class App : System.Windows.Application
             tipIcon: GetNotificationIcon(monitorEvent.EventType));
         CopilotCliMonitorEventSource.Log.NotificationShown(monitorEvent.EventType.ToString());
     }
+
+    private static string BuildNotificationTitle(MonitorEvent monitorEvent) =>
+        monitorEvent.Repository is { Length: > 0 } repo
+            ? $"[{repo}] {FormatEventType(monitorEvent.EventType)}"
+            : FormatEventType(monitorEvent.EventType);
+
+    private static string BuildNotificationDetails(MonitorEvent monitorEvent) =>
+        monitorEvent.Branch is { Length: > 0 } branch
+            ? $"{monitorEvent.Message} ({branch})"
+            : monitorEvent.Message;
 
     private static string FormatEventType(EventType t, CultureInfo? culture = null) =>
         t == EventType.Unknown ? LocalizedText.Get("Notification", culture) : LocalizedText.GetEventTypeLabel(t, culture);
