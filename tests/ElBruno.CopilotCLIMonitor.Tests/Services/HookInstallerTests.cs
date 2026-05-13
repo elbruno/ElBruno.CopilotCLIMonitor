@@ -67,6 +67,20 @@ public class HookInstallerTests : IDisposable
     }
 
     [Fact]
+    public void Install_ValidRepo_ConfigJsonContainsSensibleDefaults()
+    {
+        _sut.Install(_tempDir);
+        var configPath = Path.Combine(_tempDir, ".copilotclimonitor", "config.json");
+        var content = File.ReadAllText(configPath);
+
+        Assert.Contains("\"version\": \"1.0\"", content);
+        Assert.Contains("\"enabled\": true", content);
+        Assert.Contains("\"quietHours\"", content);
+        Assert.Contains("\"build-completed\"", content);
+        Assert.Contains("\"sourceTagging\": true", content);
+    }
+
+    [Fact]
     public void Install_ValidRepo_ReturnsInstalledFilePaths()
     {
         var result = _sut.Install(_tempDir);

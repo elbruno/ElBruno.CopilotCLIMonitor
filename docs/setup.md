@@ -127,6 +127,8 @@ Edit `.copilotclimonitor/config.json` to customize behavior per repository:
 }
 ```
 
+By default, first-time initialization enables core event notifications, includes build/test/workflow events, and sets quiet hours to disabled.
+
 ## Upgrading
 
 Update to the latest version:
