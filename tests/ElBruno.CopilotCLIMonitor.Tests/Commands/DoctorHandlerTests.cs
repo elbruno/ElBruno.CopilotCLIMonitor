@@ -38,6 +38,9 @@ public class DoctorHandlerTests : IDisposable
         Directory.CreateDirectory(hookDir);
         File.WriteAllText(Path.Combine(hookDir, "notify.ps1"), "");
         File.WriteAllText(Path.Combine(hookDir, "config.json"), "{}");
+        var githubHooksDir = Path.Combine(_tempDir, ".github", "hooks");
+        Directory.CreateDirectory(githubHooksDir);
+        File.WriteAllText(Path.Combine(githubHooksDir, "copilotclimon-notify.json"), "{}");
 
         var exit = await BuildSut().RunDoctorAsync([]);
         Assert.Equal(0, exit);

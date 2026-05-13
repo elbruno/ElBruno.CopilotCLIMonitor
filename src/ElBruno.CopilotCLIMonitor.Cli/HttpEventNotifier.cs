@@ -11,12 +11,12 @@ namespace ElBruno.CopilotCLIMonitor.Cli;
 /// </summary>
 public sealed class HttpEventNotifier : IEventNotifier
 {
-    private readonly HttpIpcClient _client;
+    private readonly IIpcClient _client;
     private readonly ILogger<HttpEventNotifier> _logger;
 
-    public HttpEventNotifier(ILogger<HttpEventNotifier>? logger = null)
+    public HttpEventNotifier(IIpcClient? client = null, ILogger<HttpEventNotifier>? logger = null)
     {
-        _client = new HttpIpcClient();
+        _client = client ?? new HttpIpcClient();
         _logger = logger ?? Microsoft.Extensions.Logging.Abstractions.NullLogger<HttpEventNotifier>.Instance;
         _logger.LogInformation("HttpEventNotifier initialised.");
     }

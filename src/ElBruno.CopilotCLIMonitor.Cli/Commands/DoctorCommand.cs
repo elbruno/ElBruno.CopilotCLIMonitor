@@ -30,7 +30,13 @@ public static class DoctorCommand
                 {
                     Console.WriteLine("✓ Hook directory: .copilotclimonitor");
                     var script = Path.Combine(hookDir, "notify.ps1");
+                    var config = Path.Combine(hookDir, "config.json");
+                    var copilotHookFile = Path.Combine(repoRoot, ".github", "hooks", "copilotclimon-notify.json");
                     Console.WriteLine(File.Exists(script) ? "✓ notify.ps1 present" : "✗ notify.ps1 missing — run: copilotclimon init");
+                    Console.WriteLine(File.Exists(config) ? "✓ config.json present" : "✗ config.json missing — run: copilotclimon init");
+                    Console.WriteLine(File.Exists(copilotHookFile)
+                        ? "✓ .github/hooks/copilotclimon-notify.json present"
+                        : "✗ .github/hooks/copilotclimon-notify.json missing — run: copilotclimon init or copilotclimon upgrade");
                 }
                 else
                 {

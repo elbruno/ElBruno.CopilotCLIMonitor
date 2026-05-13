@@ -37,6 +37,20 @@ cd your-repository
 copilotclimon init
 ```
 
+`init` is interactive by default and lets you choose which Copilot hook triggers to register.
+
+For automation/CI, use:
+
+```bash
+copilotclimon init --default
+```
+
+To overwrite managed files (`.copilotclimonitor/*` and `.github/hooks/copilotclimon-notify.json`), use:
+
+```bash
+copilotclimon init --default --force
+```
+
 Expected output:
 
 ```
@@ -61,6 +75,14 @@ This command checks:
 - Hook configuration is valid
 - Systray application is running
 - Network connectivity is available
+
+### Upgrade repository hook/config templates
+
+After installing a newer version of the tool, refresh managed repository files:
+
+```bash
+copilotclimon upgrade
+```
 
 ### Step 5: Test a notification
 
@@ -99,11 +121,10 @@ Repository configuration is stored in `.copilotclimonitor`:
 ```text
 .copilotclimonitor/
 ├── config.json
-└── hooks/
-    ├── on-task-completed.sh
-    ├── on-approval-required.sh
-    ├── on-error.sh
-    └── on-agent-waiting.sh
+└── notify.ps1
+
+.github/hooks/
+└── copilotclimon-notify.json
 ```
 
 Edit `.copilotclimonitor/config.json` to customize behavior per repository:

@@ -108,6 +108,48 @@ public class SystemCommandLineWiringTests : IDisposable
         Assert.Equal(1, exit);
     }
 
+    [Fact]
+    public async Task Init_WithDefaultFlag_SetsUseDefaultSelection()
+    {
+        _detector.RootToReturn = _tempDir;
+        var root = new RootCommand { InitCommand.Build(_detector, _installer) };
+        var exit = await root.Parse(["init", "--default"]).InvokeAsync();
+        Assert.Equal(0, exit);
+        Assert.True(_installer.LastOptions?.UseDefaultSelection);
+    }
+
+    [Fact]
+    public async Task Init_WithForceFlag_SetsForce()
+    {
+        _detector.RootToReturn = _tempDir;
+        var root = new RootCommand { InitCommand.Build(_detector, _installer) };
+        var exit = await root.Parse(["init", "--force", "--default"]).InvokeAsync();
+        Assert.Equal(0, exit);
+        Assert.True(_installer.LastOptions?.Force);
+    }
+
+    // ── upgrade command ────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task Upgrade_WhenRepoFound_ReturnsZeroAndForcesInstall()
+    {
+        _detector.RootToReturn = _tempDir;
+        var root = new RootCommand { UpgradeCommand.Build(_detector, _installer) };
+        var exit = await root.Parse(["upgrade"]).InvokeAsync();
+        Assert.Equal(0, exit);
+        Assert.True(_installer.LastOptions?.Force);
+        Assert.True(_installer.LastOptions?.UseDefaultSelection);
+    }
+
+    [Fact]
+    public async Task Upgrade_WhenNoRepo_ReturnsOne()
+    {
+        _detector.RootToReturn = null;
+        var root = new RootCommand { UpgradeCommand.Build(_detector, _installer) };
+        var exit = await root.Parse(["upgrade"]).InvokeAsync();
+        Assert.Equal(1, exit);
+    }
+
     // ── doctor command ────────────────────────────────────────────────────────
 
     [Fact]
