@@ -1,5 +1,6 @@
 using System.CommandLine;
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
+using ElBruno.CopilotCLIMonitor.Core.Services;
 
 namespace ElBruno.CopilotCLIMonitor.Commands;
 
@@ -30,7 +31,16 @@ public static class DoctorCommand
                 {
                     Console.WriteLine("✓ Hook directory: .copilotclimonitor");
                     var script = Path.Combine(hookDir, "notify.ps1");
+                    var config = Path.Combine(hookDir, "config.json");
                     Console.WriteLine(File.Exists(script) ? "✓ notify.ps1 present" : "✗ notify.ps1 missing — run: copilotclimon init");
+                    Console.WriteLine(File.Exists(config) ? "✓ config.json present" : "✗ config.json missing — run: copilotclimon init");
+                    if (File.Exists(config))
+                    {
+                        if (RepositoryHookConfigValidator.TryValidateFile(config, out var configError))
+                            Console.WriteLine("✓ config.json schema is valid");
+                        else
+                            Console.WriteLine($"✗ config.json invalid: {configError}");
+                    }
                 }
                 else
                 {

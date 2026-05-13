@@ -21,6 +21,7 @@ public partial class App : System.Windows.Application
     private readonly EventStore _eventStore = new();
     private readonly UserPreferencesStore _preferencesStore = new();
     private readonly ProtectedTokenStore _tokenStore = new();
+    private readonly WindowsStartupManager _startupManager = new();
     private ILoggerFactory? _loggerFactory;
     private ILogger<App>? _logger;
     private bool _notificationsPaused;
@@ -34,6 +35,7 @@ public partial class App : System.Windows.Application
         _loggerFactory = LoggingFactoryBuilder.Create();
         _logger = _loggerFactory.CreateLogger<App>();
         _preferences = _preferencesStore.Load();
+        ApplyStartupPreference();
         LoadStoredTokenIfMissing();
         CopilotCliMonitorEventSource.Log.AppStartup();
         if (_preferences.TelemetryOptIn && !string.IsNullOrWhiteSpace(_preferences.TelemetryInstallationId))
@@ -112,7 +114,7 @@ public partial class App : System.Windows.Application
                 ShowNotification(monitorEvent);
                 if (_preferences.SoundEnabled)
                 {
-                    System.Media.SystemSounds.Asterisk.Play();
+                    GetNotificationSound(monitorEvent.EventType).Play();
                 }
             }
             else
@@ -161,6 +163,14 @@ public partial class App : System.Windows.Application
         EventType.Error or EventType.HookFailed => ToolTipIcon.Error,
         EventType.ApprovalRequired or EventType.Warning or EventType.LongRunningTaskWarning => ToolTipIcon.Warning,
         _ => ToolTipIcon.Info
+    };
+
+    private static System.Media.SystemSound GetNotificationSound(EventType t) => t switch
+    {
+        EventType.Error or EventType.HookFailed => System.Media.SystemSounds.Hand,
+        EventType.ApprovalRequired or EventType.Warning or EventType.LongRunningTaskWarning => System.Media.SystemSounds.Exclamation,
+        EventType.TaskCompleted or EventType.BuildCompleted or EventType.TestCompleted or EventType.WorkflowCompleted => System.Media.SystemSounds.Asterisk,
+        _ => System.Media.SystemSounds.Beep
     };
 
     private void OpenDashboard()
@@ -213,6 +223,7 @@ public partial class App : System.Windows.Application
         }
         _preferencesStore.Save(_preferences);
         Environment.SetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL", _preferences.LogLevel);
+        ApplyStartupPreference();
 
         var tokenConfigured = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(IpcConstants.AuthTokenEnvVar));
         System.Windows.MessageBox.Show(
@@ -299,5 +310,16 @@ public partial class App : System.Windows.Application
         _ipcServer?.Stop();
         _loggerFactory?.Dispose();
         base.OnExit(e);
+    }
+
+    private void ApplyStartupPreference()
+    {
+        var processPath = Environment.ProcessPath;
+        if (string.IsNullOrWhiteSpace(processPath))
+        {
+            return;
+        }
+
+        _startupManager.SetEnabled(_preferences.StartWithWindows, processPath);
     }
 }

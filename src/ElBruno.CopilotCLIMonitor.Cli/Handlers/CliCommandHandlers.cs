@@ -1,6 +1,7 @@
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 using ElBruno.CopilotCLIMonitor.Core.Models;
 using ElBruno.CopilotCLIMonitor.Core.Services;
+using System.Text.Json;
 
 namespace ElBruno.CopilotCLIMonitor.Cli.Handlers;
 
@@ -56,6 +57,23 @@ public sealed class CliCommandHandlers(
         var cwd = Directory.GetCurrentDirectory();
         repository ??= detector.GetRepositoryName(cwd);
         branch ??= detector.GetCurrentBranch(cwd);
+
+        var repoRoot = detector.DetectRepositoryRoot(cwd);
+        if (repoRoot is not null)
+        {
+            var filterResult = TryApplyRepositoryConfigFilters(repoRoot, eventName, repository, out repository, out var skipReason, out var filterError);
+            if (!filterResult)
+            {
+                await _err.WriteLineAsync($"Error: {filterError}");
+                return 1;
+            }
+
+            if (!string.IsNullOrWhiteSpace(skipReason))
+            {
+                await _out.WriteLineAsync($"ℹ Event skipped by repository config: {skipReason}");
+                return 0;
+            }
+        }
 
         var request = new NotifyRequest(eventName, message, repository, branch, source);
         if (!NotifyRequestValidator.TryValidate(request, out var validationError))
@@ -131,6 +149,18 @@ public sealed class CliCommandHandlers(
                 var config = Path.Combine(hookDir, "config.json");
                 await _out.WriteLineAsync(File.Exists(script) ? "✓ notify.ps1 present" : "✗ notify.ps1 missing — run: copilotclimon init");
                 await _out.WriteLineAsync(File.Exists(config) ? "✓ config.json present" : "✗ config.json missing — run: copilotclimon init");
+                if (File.Exists(config))
+                {
+                    if (RepositoryHookConfigValidator.TryValidateFile(config, out var configError))
+                    {
+                        await _out.WriteLineAsync("✓ config.json schema is valid");
+                    }
+                    else
+                    {
+                        await _out.WriteLineAsync($"✗ config.json invalid: {configError}");
+                        allOk = false;
+                    }
+                }
             }
             else
             {
@@ -169,5 +199,91 @@ public sealed class CliCommandHandlers(
 
         await _out.WriteLineAsync("Opening monitor dashboard…");
         return 0;
+    }
+
+    private static bool TryApplyRepositoryConfigFilters(
+        string repositoryRoot,
+        string eventName,
+        string? currentRepository,
+        out string? resolvedRepository,
+        out string? skipReason,
+        out string? error)
+    {
+        resolvedRepository = currentRepository;
+        skipReason = null;
+        error = null;
+
+        var configPath = Path.Combine(repositoryRoot, ".copilotclimonitor", "config.json");
+        if (!File.Exists(configPath))
+        {
+            return true;
+        }
+
+        if (!RepositoryHookConfigValidator.TryValidateFile(configPath, out error))
+        {
+            return false;
+        }
+
+        using var stream = File.OpenRead(configPath);
+        using var document = JsonDocument.Parse(stream);
+        var root = document.RootElement;
+
+        if (TryGetBoolean(root, "enabled", out var enabled) && !enabled)
+        {
+            skipReason = "'enabled' is set to false";
+            return true;
+        }
+
+        if (TryGetBoolean(root, "notificationsEnabled", out var notificationsEnabled) && !notificationsEnabled)
+        {
+            skipReason = "'notificationsEnabled' is set to false";
+            return true;
+        }
+
+        if (root.TryGetProperty("repository", out var repositoryElement) && repositoryElement.ValueKind == JsonValueKind.String)
+        {
+            var configuredRepository = repositoryElement.GetString();
+            if (!string.IsNullOrWhiteSpace(configuredRepository))
+            {
+                resolvedRepository = configuredRepository;
+            }
+        }
+
+        if (!root.TryGetProperty("events", out var eventsElement) || eventsElement.ValueKind != JsonValueKind.Array)
+        {
+            skipReason = "no events are configured";
+            return true;
+        }
+
+        var eventAllowed = eventsElement
+            .EnumerateArray()
+            .Where(item => item.ValueKind == JsonValueKind.String)
+            .Select(item => item.GetString())
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Any(value => string.Equals(value, eventName, StringComparison.OrdinalIgnoreCase));
+
+        if (!eventAllowed)
+        {
+            skipReason = $"event '{eventName}' is not enabled for this repository";
+        }
+
+        return true;
+    }
+
+    private static bool TryGetBoolean(JsonElement root, string propertyName, out bool value)
+    {
+        value = false;
+        if (!root.TryGetProperty(propertyName, out var element))
+        {
+            return false;
+        }
+
+        if (element.ValueKind is not JsonValueKind.True and not JsonValueKind.False)
+        {
+            return false;
+        }
+
+        value = element.GetBoolean();
+        return true;
     }
 }

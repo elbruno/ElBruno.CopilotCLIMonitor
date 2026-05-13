@@ -37,7 +37,25 @@ public class DoctorHandlerTests : IDisposable
         var hookDir = Path.Combine(_tempDir, ".copilotclimonitor");
         Directory.CreateDirectory(hookDir);
         File.WriteAllText(Path.Combine(hookDir, "notify.ps1"), "");
-        File.WriteAllText(Path.Combine(hookDir, "config.json"), "{}");
+        File.WriteAllText(
+            Path.Combine(hookDir, "config.json"),
+            """
+            {
+              "version": "1.0",
+              "repository": "test-repo",
+              "enabled": true,
+              "notificationsEnabled": true,
+              "events": ["task-completed"],
+              "quietHours": {
+                "enabled": false,
+                "start": "22:00",
+                "end": "08:00"
+              },
+              "routing": {
+                "sourceTagging": true
+              }
+            }
+            """);
 
         var exit = await BuildSut().RunDoctorAsync([]);
         Assert.Equal(0, exit);
@@ -98,5 +116,21 @@ public class DoctorHandlerTests : IDisposable
         _ipc.IsRunning = false;
         await BuildSut().RunDoctorAsync([]);
         Assert.Contains("copilotclimon doctor", _out.ToString());
+    }
+
+    [Fact]
+    public async Task Doctor_WhenConfigSchemaInvalid_ReturnsOne()
+    {
+        _ipc.IsRunning = true;
+        _detector.RootToReturn = _tempDir;
+
+        var hookDir = Path.Combine(_tempDir, ".copilotclimonitor");
+        Directory.CreateDirectory(hookDir);
+        File.WriteAllText(Path.Combine(hookDir, "notify.ps1"), "");
+        File.WriteAllText(Path.Combine(hookDir, "config.json"), """{ "version": "1.0", "events": [] }""");
+
+        var exit = await BuildSut().RunDoctorAsync([]);
+        Assert.Equal(1, exit);
+        Assert.Contains("config.json invalid", _out.ToString());
     }
 }

@@ -175,8 +175,17 @@ copilotclimon update --install
 User settings are stored in:
 
 ```text
-%AppData%\ElBruno\CopilotCLIMonitor
+%AppData%\CopilotCliMon\preferences.json
 ```
+
+Optional machine-wide defaults can be stored in:
+
+```text
+%ProgramData%\CopilotCliMon\preferences.system.json
+```
+
+Machine-wide values load first, then per-user values override them.
+Environment variables can override both file-based layers; see [setup.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/setup.md#environment-variable-overrides).
 
 ### Repository configuration
 
@@ -218,6 +227,10 @@ See [portable-distribution.md](https://github.com/elbruno/ElBruno.CopilotCLIMoni
 ## Chocolatey packaging
 
 See [chocolatey.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/chocolatey.md) for creating and publishing Chocolatey packages.
+
+## Windows Store packaging
+
+See [microsoft-store.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/microsoft-store.md) for generating MSIX artifacts and Partner Center submission steps.
 
 ## Troubleshooting
 
