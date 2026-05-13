@@ -18,6 +18,12 @@
             <TextBlock Text="CopilotCLI Monitor" FontSize="18" FontWeight="Bold"/>
             <TextBlock Text="Recent notification events from GitHub Copilot CLI hooks"
                        Foreground="Gray" FontSize="11" Margin="0,2,0,0"/>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <TextBlock Text="Filter:" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBox x:Name="FilterTextBox" Width="220" Height="26" TextChanged="FilterTextBox_TextChanged"/>
+                <TextBlock Text="Event:" VerticalAlignment="Center" Margin="12,0,6,0"/>
+                <ComboBox x:Name="EventTypeFilterComboBox" Width="180" Height="26" SelectionChanged="EventTypeFilterComboBox_SelectionChanged"/>
+            </StackPanel>
             <Separator Margin="0,8,0,0"/>
         </StackPanel>
 
