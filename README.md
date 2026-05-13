@@ -1,7 +1,7 @@
 # ElBruno.CopilotCLIMonitor
 
 ![license](https://img.shields.io/github/license/elbruno/ElBruno.CopilotCLIMonitor)
-![NuGet](https://img.shields.io/nuget/v/ElBruno.CopilotCLIMonitor)
+[![NuGet](https://img.shields.io/nuget/v/ElBruno.CopilotCLIMonitor)](https://www.nuget.org/packages/ElBruno.CopilotCLIMonitor)
 ![.NET](https://img.shields.io/badge/.NET-10+-512BD4)
 ![Build](https://img.shields.io/github/actions/workflow/status/elbruno/ElBruno.CopilotCLIMonitor/dotnet.yml)
 
