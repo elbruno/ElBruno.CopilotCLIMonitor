@@ -15,5 +15,6 @@ root.Add(NotifyCommand.Build(notifier));
 root.Add(InitCommand.Build(detector, installer));
 root.Add(DoctorCommand.Build(detector));
 root.Add(UpdateCommand.Build());
+root.Add(DiagnosticCommand.Build());
 
 return await root.Parse(args).InvokeAsync();

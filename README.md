@@ -243,6 +243,10 @@ See [performance-testing.md](https://github.com/elbruno/ElBruno.CopilotCLIMonito
 
 See [code-quality-metrics.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/code-quality-metrics.md) for CodeQL and SonarQube integration details.
 
+## Diagnostic mode
+
+See [diagnostic-mode.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/diagnostic-mode.md) for enabling verbose troubleshooting logs.
+
 ## Telemetry (optional)
 
 See [telemetry.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/telemetry.md) for opt-in telemetry behavior and data details.
