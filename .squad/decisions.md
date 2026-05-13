@@ -137,6 +137,110 @@
 - Critical path: #5→#6→#8→#49→#18 (config + IPC) + #29→#64 (release)
 - Feature branches per issue, PR review by River, daily main sync, keep main green
 
+### Decision 17 — Execution Plan & Wave Strategy
+**Date:** 2026-05-13 | **Agent:** Martin (Lead)
+- 63 issues → 6 waves → v1.0 by 2026-06-30
+- Wave 1 (Weeks 1-2): Infrastructure (#5 config, #6 env vars, #8 validation, #18 IPC, #49 defaults, #29 release strategy, #64 versioning)
+- Wave 2 (Weeks 3-4): Core features (systray UI, context menu, notifications, dashboard)
+- Wave 3 (Weeks 5-6): Testing & QA (#61-#26, >85% coverage target)
+- Wave 4 (Weeks 6-7): Docs, security, polish
+- Wave 5 (Ongoing): Medium-priority enhancements (branding, i18n, logging, performance)
+- Wave 6 (Post-1.0): Low-priority (distribution channels, advanced features)
+- **Critical path:** #5→#6→#8→#49→#18 unblocks Wave 2 UI; #29→#64 unblocks all releases
+- **Exit criteria:** Config tested, IPC stable, release process documented, main is green
+- Team: Dolph (25 issues), Chevy (15), River (12), Sish (11)
+
+### Decision 18 — UI Design System (GitHub-Blue)
+**Date:** 2026-05-13 | **Agent:** Chevy (UI/Frontend)
+- **Colors:** GitHub-blue accent (#0969DA), dark text (#1F2328), light surface (#F3F4F6), severity color-coding (green/yellow/red)
+- **Typography:** Segoe UI body (13px), Cascadia Code mono (11px), titles 14–18px bold
+- **Spacing:** 8px base unit; controls 28px tall, 4px corner radius
+- **Components:** WPF-native buttons, inputs, lists with GitHub-inspired styling
+- **Settings UI:** Modal dialog with Notifications + General sections (awaiting Dolph's API)
+- **Dashboard:** Color-coded rows (severity), expandable for full messages, event-type filter, 200-item cap
+- **Notifications:** Windows native balloons for Wave 1; WinRT toasts upgrade in Wave 2
+- **Rationale:** Familiar to target users (Copilot CLI devs); reduces cognitive load; matches Microsoft ecosystem
+
+### Decision 19 — Test Strategy & Coverage Targets
+**Date:** 2026-05-13 | **Agent:** River (QA/Testing)
+- **Baseline:** 83.5% overall (Core 91.5%, CLI 78.5%, WPF 0% due to TFM mismatch)
+- **Wave 1 P0 tests:**
+  - `HttpEventNotifier` happy path + connection-refused fallback
+  - `RunOpenAsync` tests (monitor running/not running)
+  - `IpcServer` ↔ `HttpIpcClient` round-trip integration test
+- **Wave 1 P1 tests:** Hook install verification, full hook→IPC→EventStore flow, `DoctorCommand` branch coverage
+- **WPF strategy:** Option A (Wave 1) extract logic to Core; Option B (Wave 2) add WPF-specific test project
+- **Wave 1 target:** Core ≥92%, CLI ≥85%, Overall ≥85%
+- **1.0 target:** Core ≥90%, CLI ≥85%, WPF extracted ≥50%, Overall ≥80%
+- **CI gate:** Add `--collect:"XPlat Code Coverage"` to dotnet.yml; upload artifacts; threshold enforcement post-Wave 1
+
+### Decision 20 — Release Checklist (9 Phases)
+**Date:** 2026-05-13 | **Agent:** Sish (DevOps/Release)
+- **Phase 1:** Feature completeness, final QA (Chevy), docs finalization (River), security audit
+- **Phase 2:** Version bump (SemVer) in .csproj, CHANGELOG.md update
+- **Phase 3:** Local package build, contents verification, tool install test, CLI commands test
+- **Phase 4:** Git commit + annotated tag, push to GitHub
+- **Phase 5:** Create GitHub Release (triggers publish-nuget.yml), monitor workflow, verify NuGet.org publication
+- **Phase 6:** Chocolatey (deferred to 1.1+), WinGet (deferred to 1.1+)
+- **Phase 7:** Auto-update infrastructure (deferred to 1.1+)
+- **Phase 8:** Release announcement and comms
+- **Phase 9:** Post-release verification (real-world install, docs check, issue triage for 1.1)
+- **Success:** v1.0.0 on NuGet.org, GitHub Release published, `copilotclimon --version` confirms 1.0.0
+
+### Decision 21 — NuGet Icon & Branding
+**Date:** 2026-05-13 | **Agent:** Bender (DevOps)
+- Generated NuGet icon (GPT-Image-2) stays at `images\nuget-icon.png` (packed path preserved)
+- Icon includes monitor/notification overlay for readability at 256px and below
+- Satisfies branding request; keeps existing package metadata untouched
+- Deterministic asset generation; no external dependencies required
+
+### Decision 22 — Dedicated NuGet Publish Workflow
+**Date:** 2026-05-13 | **Agent:** Bender (DevOps)
+- Keep `.github/workflows/dotnet.yml` as CI only (restore, build, test, pack, upload artifacts)
+- Publish exclusively from `.github/workflows/publish-nuget.yml` via NuGet Trusted Publisher (OIDC)
+- Mark WPF and Core projects as `IsPackable=false` so solution-level pack emits only CLI tool package
+- Fallback icon: `images\nuget-icon.png` (repo-local, no external image generation required)
+- Rationale: Eliminates workflow failures on push CI; keeps package publish on deliberate release path; zero long-lived API keys
+
+### Decision 23 — Workflows Separated: CI vs. Release
+**Date:** 2026-05-13 | **Agent:** Bender (DevOps)
+- `.github/workflows/dotnet.yml` handles CI (restore, build, test, pack, upload artifacts)
+- `.github/workflows/publish-nuget.yml` (or `release.yml`) handles NuGet publishing (OIDC Trusted Publisher)
+- Remove publish logic from push CI to eliminate secret-based gate and prevent accidental publishes
+- Release workflow matches repo decision: GitHub Release creates tag → workflow publishes
+- Maintains audit trail; explicit version control; industry best practice
+
+### Decision 24 — v1.0 Release Readiness
+**Date:** 2026-05-13 | **Agent:** Sish (DevOps/Release)
+- **Infrastructure: 90% ready** (NuGet OIDC, CI/CD, packaging, version strategy all production-ready)
+- **Blockers for v1.0 core:** None (MSI installer and auto-update deferred to v1.1)
+- **v1.1 roadmap:** MSI installer (WiX recommended), auto-update mechanism (NuGet API check), WinGet submission
+- **Workarounds:** .NET Tool installation for v1.0 (ship now); MSI 2-4 weeks post-1.0
+- **Distribution:** NuGet (primary, OIDC-secured), GitHub Releases (artifacts), MSI/WinGet/Chocolatey (post-1.0)
+- **Success criteria:** Semantic versioning adopted, features complete, QA sign-off, docs finalized, v1.0.0 published
+
+### Decision 25 — Semantic Versioning Strategy
+**Date:** 2026-05-13 | **Agent:** Sish (DevOps/Release)
+- **Format:** MAJOR.MINOR.PATCH (e.g., 1.0.0, 1.1.0-rc1)
+- **MAJOR:** Breaking changes (v2.0.0)
+- **MINOR:** New features, backward-compatible (v1.1.0 = MSI + auto-update + WinGet)
+- **PATCH:** Bug fixes, hotfixes (v1.0.1)
+- **Pre-release:** Only for major releases (1.0.0-rc1); SemVer complete rules apply
+- **Version source:** Single source of truth = `.csproj` `<Version>` property
+- **Workflow:** Commit version bump + CHANGELOG → tag (vX.Y.Z) → GitHub Release → auto-publish
+- **Phases:** 1.0.0 (core features, 2026-05), 1.1.0 (MSI + auto-update, 2026-06), 1.2.0 (Chocolatey + Store, 2026-07), 2.0.0 (breaking/cross-platform, TBD)
+- **Decision points:** Skip 1.0.0-rc1? (recommended: yes, go straight to GA); bump Core/WPF versions? (recommended: keep in sync with CLI)
+
+### Decision 26 — Wave 1 Kickoff (Infrastructure Sprint)
+**Date:** 2026-05-13 | **Agent:** Martin (Lead)
+- **Duration:** 2026-05-13 → 2026-05-27 (2 weeks)
+- **Team:** Dolph (config + IPC), Sish (release + version), River (prep WPF tests), Chevy (review specs)
+- **Issues:** #5, #6, #8, #18, #49 (Dolph config stream), #29, #64 (Sish release stream)
+- **Key decisions locked in:** JSON config format, IPC on localhost:54321, release branch strategy, SemVer
+- **Execution rules:** Feature branch per issue, River PR review before merge, daily main sync (keep green), all code tested
+- **Exit criteria:** Config system tested, IPC stable, defaults working, env vars functional, release process dry-run passed, v0.2.0 tagged
+- **Success:** Infrastructure solid; Wave 2 (UI features) unblocked; team moves to features 2026-05-30
+
 ## Governance
 
 - All meaningful changes require team consensus
