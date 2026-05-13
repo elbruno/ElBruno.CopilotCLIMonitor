@@ -274,6 +274,7 @@ See [video-tutorials.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/bl
 ## Architecture documentation
 
 See [architecture.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/architecture.md) for technical design details.
+See [api-documentation.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/api-documentation.md) for method signatures and class relationship diagrams.
 
 ## Developer guide
 
