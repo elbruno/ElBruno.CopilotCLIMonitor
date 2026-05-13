@@ -157,6 +157,32 @@ public class IpcServerTests
         }
     }
 
+    [Fact]
+    public async Task SendNotifyAsync_BurstRequests_CompletesWithinPerformanceBudget()
+    {
+        var port = ReserveFreePort();
+        using var server = new IpcServer(port);
+        server.Start();
+
+        try
+        {
+            var client = new HttpIpcClient(port);
+            var sw = Stopwatch.StartNew();
+            for (var i = 0; i < 50; i++)
+            {
+                var sent = await client.SendNotifyAsync(new NotifyRequest("task-completed", $"Done-{i}"));
+                Assert.True(sent);
+            }
+
+            sw.Stop();
+            Assert.True(sw.ElapsedMilliseconds < 3000, $"Expected burst request processing under 3000ms, got {sw.ElapsedMilliseconds}ms.");
+        }
+        finally
+        {
+            server.Stop();
+        }
+    }
+
     private static int ReserveFreePort()
     {
         var listener = new System.Net.Sockets.TcpListener(IPAddress.Loopback, 0);
