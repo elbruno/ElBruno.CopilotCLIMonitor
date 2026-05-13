@@ -199,6 +199,12 @@ rm -r .copilotclimonitor
 
 Enable from Systray settings → "Startup on boot"
 
+When enabled, the app writes a per-user startup entry in:
+
+```text
+HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+```
+
 Or manually add to Windows Startup:
 
 1. Press `Win + R`
