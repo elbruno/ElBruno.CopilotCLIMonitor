@@ -1,0 +1,53 @@
+name: Security Scan
+
+on:
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  nuget-vulnerability-scan:
+    name: NuGet Vulnerability Scan
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore solution
+        run: dotnet restore ElBruno.CopilotCLIMonitor.sln
+
+      - name: Check NuGet vulnerabilities
+        shell: pwsh
+        run: |
+          dotnet list ElBruno.CopilotCLIMonitor.sln package --vulnerable --include-transitive
+
+  owasp-dependency-check:
+    name: OWASP Dependency Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: "ElBruno.CopilotCLIMonitor"
+          path: "."
+          format: "SARIF"
+          out: "reports"
+
+      - name: Upload SARIF report
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: reports/dependency-check-report.sarif

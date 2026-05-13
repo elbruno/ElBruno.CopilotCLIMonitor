@@ -1,0 +1,181 @@
+using System.Reflection;
+using System.Media;
+using System.Windows.Forms;
+using System.Globalization;
+using ElBruno.CopilotCLIMonitor.Models;
+using ElBruno.CopilotCLIMonitor.Core.Models;
+
+namespace ElBruno.CopilotCLIMonitor.Tests.App;
+
+public class AppFormattingTests
+{
+    [Theory]
+    [InlineData(EventType.TaskCompleted, "Task Completed")]
+    [InlineData(EventType.Error, "Error")]
+    [InlineData(EventType.LongRunningTaskWarning, "Long-Running Task")]
+    [InlineData(EventType.Unknown, "Notification")]
+    public void FormatEventType_ReturnsExpectedLabel(EventType eventType, string expected)
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("FormatEventType", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var label = method!.Invoke(null, [eventType, null]) as string;
+        Assert.Equal(expected, label);
+    }
+
+    [Fact]
+    public void FormatEventType_UsesCultureTranslations()
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("FormatEventType", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var spanish = method!.Invoke(null, [EventType.TaskCompleted, CultureInfo.GetCultureInfo("es-ES")]) as string;
+        var french = method.Invoke(null, [EventType.Warning, CultureInfo.GetCultureInfo("fr-FR")]) as string;
+
+        Assert.Equal("Tarea completada", spanish);
+        Assert.Equal("Avertissement", french);
+    }
+
+    [Theory]
+    [InlineData(EventType.Error, 10000)]
+    [InlineData(EventType.HookFailed, 10000)]
+    [InlineData(EventType.Warning, 8000)]
+    [InlineData(EventType.ApprovalRequired, 8000)]
+    [InlineData(EventType.TaskCompleted, 5000)]
+    public void GetNotificationTimeout_ReturnsExpectedDuration(EventType eventType, int expected)
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("GetNotificationTimeout", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var timeout = method!.Invoke(null, [eventType]);
+        Assert.Equal(expected, timeout);
+    }
+
+    [Theory]
+    [InlineData(EventType.Error, ToolTipIcon.Error)]
+    [InlineData(EventType.HookFailed, ToolTipIcon.Error)]
+    [InlineData(EventType.Warning, ToolTipIcon.Warning)]
+    [InlineData(EventType.ApprovalRequired, ToolTipIcon.Warning)]
+    [InlineData(EventType.TaskCompleted, ToolTipIcon.Info)]
+    public void GetNotificationIcon_ReturnsExpectedIcon(EventType eventType, ToolTipIcon expected)
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("GetNotificationIcon", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var icon = method!.Invoke(null, [eventType]);
+        Assert.Equal(expected, icon);
+    }
+
+    [Theory]
+    [InlineData(EventType.Error, "Hand")]
+    [InlineData(EventType.HookFailed, "Hand")]
+    [InlineData(EventType.Warning, "Exclamation")]
+    [InlineData(EventType.ApprovalRequired, "Exclamation")]
+    [InlineData(EventType.TaskCompleted, "Asterisk")]
+    [InlineData(EventType.Unknown, "Beep")]
+    public void GetNotificationSound_ReturnsExpectedSystemSound(EventType eventType, string expectedName)
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("GetNotificationSound", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var sound = method!.Invoke(null, [eventType]) as SystemSound;
+        Assert.NotNull(sound);
+
+        var expected = expectedName switch
+        {
+            "Hand" => SystemSounds.Hand,
+            "Exclamation" => SystemSounds.Exclamation,
+            "Asterisk" => SystemSounds.Asterisk,
+            _ => SystemSounds.Beep
+        };
+
+        Assert.Same(expected, sound);
+    }
+
+    [Fact]
+    public void BuildSettingsSummary_ContainsPortAndTokenStatus()
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("BuildSettingsSummary", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var preferences = new UserPreferences
+        {
+            NotificationsEnabled = true,
+            QuietHoursEnabled = true,
+            QuietHoursStart = 22,
+            QuietHoursEnd = 7,
+            LogLevel = "Debug",
+            TelemetryOptIn = true
+        };
+        var summary = method!.Invoke(null, [41234, true, preferences]) as string;
+
+        Assert.NotNull(summary);
+        Assert.Contains("IPC Port: 41234", summary);
+        Assert.Contains("Authentication Token: Configured", summary);
+        Assert.Contains("Notifications Enabled: True", summary);
+        Assert.Contains("Quiet Hours: 22:00-7:00", summary);
+        Assert.Contains("Telemetry: Enabled (Anonymous)", summary);
+    }
+
+    [Theory]
+    [InlineData(23, 22, 7, true)]
+    [InlineData(6, 22, 7, true)]
+    [InlineData(12, 22, 7, false)]
+    [InlineData(9, 9, 17, true)]
+    [InlineData(18, 9, 17, false)]
+    public void IsWithinQuietHours_ReturnsExpectedValue(int current, int start, int end, bool expected)
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("IsWithinQuietHours", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var isQuiet = method!.Invoke(null, [current, start, end]);
+        Assert.Equal(expected, isQuiet);
+    }
+
+    [Fact]
+    public void ShouldDisplayNotification_RespectsQuietHoursAndToggle()
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("ShouldDisplayNotification", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var disabled = new UserPreferences { NotificationsEnabled = false };
+        var quiet = new UserPreferences { NotificationsEnabled = true, QuietHoursEnabled = true, QuietHoursStart = 22, QuietHoursEnd = 7 };
+        var normal = new UserPreferences { NotificationsEnabled = true, QuietHoursEnabled = false };
+
+        Assert.False((bool)method!.Invoke(null, [disabled, new DateTime(2026, 1, 1, 10, 0, 0)])!);
+        Assert.False((bool)method.Invoke(null, [quiet, new DateTime(2026, 1, 1, 23, 0, 0)])!);
+        Assert.True((bool)method.Invoke(null, [normal, new DateTime(2026, 1, 1, 23, 0, 0)])!);
+    }
+
+    [Fact]
+    public void BuildNotificationTitleAndDetails_IncludeRepositoryAndBranchContext()
+    {
+        var titleMethod = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("BuildNotificationTitle", BindingFlags.NonPublic | BindingFlags.Static);
+        var detailsMethod = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("BuildNotificationDetails", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(titleMethod);
+        Assert.NotNull(detailsMethod);
+
+        var monitorEvent = new MonitorEvent(
+            EventType.TaskCompleted,
+            "Build done",
+            "sample-repo",
+            "main");
+
+        var title = titleMethod!.Invoke(null, [monitorEvent]) as string;
+        var details = detailsMethod!.Invoke(null, [monitorEvent]) as string;
+
+        Assert.Equal("[sample-repo] Task Completed", title);
+        Assert.Equal("Build done (main)", details);
+    }
+}

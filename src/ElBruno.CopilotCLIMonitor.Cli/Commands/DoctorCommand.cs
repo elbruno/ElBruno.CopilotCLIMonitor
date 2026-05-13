@@ -38,6 +38,13 @@ public static class DoctorCommand
                     Console.WriteLine(File.Exists(copilotHookFile)
                         ? "✓ .github/hooks/copilotclimon-notify.json present"
                         : "✗ .github/hooks/copilotclimon-notify.json missing — run: copilotclimon init or copilotclimon upgrade");
+                    if (File.Exists(config))
+                    {
+                        if (RepositoryHookConfigValidator.TryValidateFile(config, out var configError))
+                            Console.WriteLine("✓ config.json schema is valid");
+                        else
+                            Console.WriteLine($"✗ config.json invalid: {configError}");
+                    }
 
                     if (File.Exists(copilotHookFile))
                     {

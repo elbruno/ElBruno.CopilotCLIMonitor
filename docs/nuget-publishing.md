@@ -46,12 +46,22 @@ ElBruno.CopilotCLIMonitor is configured as a NuGet Trusted Publisher. This allow
 
 ## Release process
 
+Version selection must follow the repository Semantic Versioning strategy in [versioning.md](versioning.md).
+
 ### 1. Update version
 
-Edit `.csproj` files to update version:
+Use the repository script to update all project versions consistently:
+
+```powershell
+.\scripts\version-bump.ps1 -Version 1.0.1
+```
+
+The script validates semantic version format and updates all required `.csproj` files.
+
+Equivalent project file value:
 
 ```xml
-<Version>1.0.0</Version>
+<Version>1.0.1</Version>
 ```
 
 ### 2. Update CHANGELOG

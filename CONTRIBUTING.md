@@ -76,6 +76,11 @@ Follow conventional commit format: `type(scope): subject`
 
 Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
+### Versioning
+
+Releases follow Semantic Versioning (`MAJOR.MINOR.PATCH`).
+Use the versioning guide for bump decisions and release flow: [docs/versioning.md](docs/versioning.md).
+
 ### 5. Push and create a Pull Request
 
 ```bash

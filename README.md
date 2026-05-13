@@ -106,6 +106,12 @@ Configure:
 - Startup behavior
 - Logging level
 
+### Localization
+
+- Automatic RTL layout support based on UI culture
+- Dashboard and settings windows adapt to right-to-left languages
+- Event labels localized for English, Spanish, and French
+
 ## Architecture
 
 The solution has two main components:
@@ -182,6 +188,18 @@ Opens the events dashboard window.
 copilotclimon --version
 ```
 
+### Check for updates
+
+```bash
+copilotclimon update
+```
+
+Install latest version directly:
+
+```bash
+copilotclimon update --install
+```
+
 ## Configuration
 
 ### Global configuration
@@ -189,8 +207,17 @@ copilotclimon --version
 User settings are stored in:
 
 ```text
-%AppData%\ElBruno\CopilotCLIMonitor
+%AppData%\CopilotCliMon\preferences.json
 ```
+
+Optional machine-wide defaults can be stored in:
+
+```text
+%ProgramData%\CopilotCliMon\preferences.system.json
+```
+
+Machine-wide values load first, then per-user values override them.
+Environment variables can override both file-based layers; see [setup.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/setup.md#environment-variable-overrides).
 
 ### Repository configuration
 
@@ -199,6 +226,16 @@ Local hook configuration:
 ```text
 .copilotclimonitor
 ```
+
+### IPC authentication (optional)
+
+To require authentication between CLI and monitor IPC calls, set the same token in both processes:
+
+```powershell
+$env:COPILOTCLIMON_IPC_TOKEN = "your-shared-secret"
+```
+
+When configured, the monitor accepts only requests containing this token.
 
 ## Technology
 
@@ -211,13 +248,91 @@ Local hook configuration:
 
 See [setup.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/setup.md) for detailed installation and configuration instructions.
 
+## Standalone installer packaging
+
+See [installer.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/installer.md) for standalone Windows package generation.
+
+## Portable ZIP distribution
+
+See [portable-distribution.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/portable-distribution.md) for no-installation packaging and usage.
+
+## Chocolatey packaging
+
+See [chocolatey.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/chocolatey.md) for creating and publishing Chocolatey packages.
+
+## Windows Store packaging
+
+See [microsoft-store.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/microsoft-store.md) for generating MSIX artifacts and Partner Center submission steps.
+
 ## Troubleshooting
 
 See [troubleshooting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/troubleshooting.md) for common issues and solutions.
 
+## Windows security notes
+
+See [windows-security-notes.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/windows-security-notes.md) for Defender/SmartScreen and antivirus compatibility guidance.
+
+## Code coverage
+
+See [coverage.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/coverage.md) for local and CI coverage report generation.
+
+## Linting rules
+
+See [linting.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/linting.md) for `.editorconfig` and StyleCop analyzer configuration.
+
+## Accessibility testing
+
+See [accessibility-testing.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/accessibility-testing.md) for keyboard, screen reader, and WCAG-focused validation checklist.
+
+## Performance testing
+
+See [performance-testing.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/performance-testing.md) for memory/CPU/responsiveness guardrail tests.
+
+## Code quality metrics
+
+See [code-quality-metrics.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/code-quality-metrics.md) for CodeQL and SonarQube integration details.
+
+## Diagnostic mode
+
+See [diagnostic-mode.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/diagnostic-mode.md) for enabling verbose troubleshooting logs.
+
+## Log file rotation
+
+See [log-rotation.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/log-rotation.md) for daily/size-based log rotation settings.
+
+## Telemetry (optional)
+
+See [telemetry.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/telemetry.md) for opt-in telemetry behavior and data details.
+
+## Privacy policy
+
+See [privacy-policy.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/privacy-policy.md) for data handling practices and user controls.
+
+## User manual
+
+See [user-manual.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/user-manual.md) for end-user step-by-step usage.
+
+## Video tutorials
+
+See [video-tutorials.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/video-tutorials.md) for recording plans, standards, and publishing checklist.
+
 ## Architecture documentation
 
 See [architecture.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/architecture.md) for technical design details.
+See [api-documentation.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/api-documentation.md) for method signatures and class relationship diagrams.
+
+## Developer guide
+
+See [developer-guide.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/developer-guide.md) for contributing workflow, setup, and architecture references.
+
+## Versioning and release strategy
+
+This project uses Semantic Versioning (`MAJOR.MINOR.PATCH`) with an automated release pipeline.
+See [versioning.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/versioning.md) for bump rules and release flow.
+See [release-branch-strategy.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/release-branch-strategy.md) for `main`/`develop`/`release/*` branch responsibilities.
+Use `scripts/version-auto-increment.ps1` to auto-calculate next patch/minor/major before applying version bump updates.
+Use `.github/release-notes-template.md` to keep release notes format consistent across versions.
+For emergency patch releases, follow [hotfix-process.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/hotfix-process.md).
 
 ## Examples
 
@@ -238,6 +353,22 @@ copilotclimon notify \
 ## Contributing
 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Product screenshots
+
+Screenshot catalog and capture standards are documented in [screenshots.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/screenshots.md).
+
+## Logo variants
+
+Logo source variants and export targets are documented in [logo-variants.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/logo-variants.md).
+
+## Marketing graphics
+
+Social cards and feature-promotion assets are documented in [marketing-graphics.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/marketing-graphics.md).
+
+## Hook configuration guide
+
+For advanced hook setup, custom scripts, and secure event routing, see [hook-configuration.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/hook-configuration.md).
 
 ## License
 

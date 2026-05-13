@@ -54,7 +54,7 @@ copilotclimon notify \
   --message "✓ $TASK_NAME completed successfully" \
   --repository "$REPO" \
   --branch "$BRANCH" \
-  --priority "normal"
+  --source "hook:on-task-completed"
 ```
 
 ### on-error.sh
@@ -74,7 +74,7 @@ copilotclimon notify \
   --message "Error: $ERROR_MESSAGE" \
   --repository "$REPO" \
   --branch "$BRANCH" \
-  --priority "high"
+  --source "hook:on-error"
 ```
 
 ### on-approval-required.sh
@@ -93,7 +93,7 @@ copilotclimon notify \
   --message "Approval required for task execution" \
   --repository "$REPO" \
   --branch "$BRANCH" \
-  --priority "high"
+  --source "hook:on-approval-required"
 ```
 
 ### on-agent-waiting.sh
@@ -112,7 +112,7 @@ copilotclimon notify \
   --message "Agent is waiting for your input" \
   --repository "$REPO" \
   --branch "$BRANCH" \
-  --priority "low"
+  --source "hook:on-agent-waiting"
 ```
 
 ## Customizing hooks
@@ -134,8 +134,7 @@ copilotclimon notify \
   --message "[$ERROR_CODE] $ERROR_MESSAGE" \
   --repository "$REPO" \
   --branch "$BRANCH" \
-  --priority "high" \
-  --metadata "timestamp=$TIMESTAMP"
+  --source "hook:on-error:$TIMESTAMP"
 ```
 
 ### Example 2: Slack integration
@@ -197,6 +196,23 @@ Hooks have access to these environment variables:
 | `USER` | Current username |
 | `GIT_DIR` | Git directory path |
 | `COPILOT_TASK_ID` | Current Copilot CLI task ID (if available) |
+
+## Secure event routing
+
+Use `--source` to tag where events originate and optionally require an IPC token.
+
+```bash
+export COPILOTCLIMON_IPC_TOKEN="your-shared-secret"
+
+copilotclimon notify \
+  --event task-completed \
+  --message "Task completed successfully" \
+  --repository "$REPO" \
+  --branch "$BRANCH" \
+  --source "hook:on-task-completed"
+```
+
+When `COPILOTCLIMON_IPC_TOKEN` is set in the monitor process, only requests with the same token are accepted.
 
 ## Configuration file
 
@@ -365,7 +381,7 @@ else
   MSG="✗ Tests failed"
 fi
 
-copilotclimon notify --event test-complete --message "$MSG"
+copilotclimon notify --event test-completed --message "$MSG"
 ```
 
 ### Pattern 3: Rate limiting

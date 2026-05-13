@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 using ElBruno.CopilotCLIMonitor.Core.Services;
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 
@@ -67,6 +69,20 @@ public class HookInstallerTests : IDisposable
     }
 
     [Fact]
+    public void Install_ValidRepo_ConfigJsonContainsSensibleDefaults()
+    {
+        _sut.Install(_tempDir);
+        var configPath = Path.Combine(_tempDir, ".copilotclimonitor", "config.json");
+        var content = File.ReadAllText(configPath);
+
+        Assert.Contains("\"version\": \"1.0\"", content);
+        Assert.Contains("\"enabled\": true", content);
+        Assert.Contains("\"quietHours\"", content);
+        Assert.Contains("\"build-completed\"", content);
+        Assert.Contains("\"sourceTagging\": true", content);
+    }
+
+    [Fact]
     public void Install_ValidRepo_CreatesCopilotHookConfig()
     {
         _sut.Install(_tempDir);
@@ -120,7 +136,6 @@ public class HookInstallerTests : IDisposable
         var configPath = Path.Combine(_tempDir, ".copilotclimonitor", "config.json");
         var firstWriteTime = File.GetLastWriteTimeUtc(configPath);
 
-        // Short sleep ensures file timestamps differ if overwritten
         Thread.Sleep(10);
         _sut.Install(_tempDir);
 
@@ -160,5 +175,39 @@ public class HookInstallerTests : IDisposable
         var content = File.ReadAllText(hookConfigPath);
         Assert.True(secondWriteTime > firstWriteTime);
         Assert.Contains("\"agentStop\"", content);
+    }
+
+    [Fact]
+    public void Install_NotifyScript_WhenExecuted_ForwardsEventAndMessageToCli()
+    {
+        _sut.Install(_tempDir);
+
+        var scriptPath = Path.Combine(_tempDir, ".copilotclimonitor", "notify.ps1");
+        var argsFile = Path.Combine(_tempDir, "captured-args.txt");
+        var fakeCliPath = Path.Combine(_tempDir, "copilotclimon.cmd");
+
+        File.WriteAllText(fakeCliPath, $"@echo off{Environment.NewLine}echo %* > \"{argsFile}\"{Environment.NewLine}");
+
+        var psi = new ProcessStartInfo
+        {
+            FileName = "pwsh",
+            Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{scriptPath}\" -Event \"error\" -Message \"Build failed\"",
+            WorkingDirectory = _tempDir,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false
+        };
+        psi.Environment["PATH"] = $"{_tempDir};{Environment.GetEnvironmentVariable("PATH")}";
+
+        using var process = Process.Start(psi);
+        Assert.NotNull(process);
+        process!.WaitForExit();
+
+        var stdErr = process.StandardError.ReadToEnd();
+        Assert.Equal(0, process.ExitCode);
+        Assert.True(File.Exists(argsFile), $"Expected captured args file to exist. stderr: {stdErr}");
+
+        var captured = File.ReadAllText(argsFile);
+        Assert.Contains("notify --event error --message \"Build failed\"", captured);
     }
 }
