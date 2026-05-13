@@ -68,7 +68,7 @@ public partial class App : System.Windows.Application
 
     private void OnEventReceived(MonitorEvent monitorEvent)
     {
-        Dispatcher.Invoke(() =>
+        Dispatcher.BeginInvoke(() =>
         {
             _eventStore.Add(monitorEvent);
             ShowNotification(monitorEvent);
