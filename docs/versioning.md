@@ -33,7 +33,7 @@ Example: `2.0.0-rc.1`
 1. Update version via `scripts/version-bump.ps1 -Version X.Y.Z` (or `X.Y.Z-suffix` for pre-release).
    - Or auto-increment from current version via `scripts/version-auto-increment.ps1 -Increment patch|minor|major`.
    - Use `-DryRun` first to preview the computed next version.
-2. Update `CHANGELOG.md`.
+2. Update `CHANGELOG.md` and draft release notes from `.github/release-notes-template.md`.
 3. Run build/test validation.
 4. Trigger release pipeline (`.github/workflows/release-v1.0.yml`) with the same version.
 5. Publish NuGet package(s) for the new version.

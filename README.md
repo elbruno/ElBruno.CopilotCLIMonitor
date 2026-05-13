@@ -249,6 +249,7 @@ This project uses Semantic Versioning (`MAJOR.MINOR.PATCH`) with an automated re
 See [versioning.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/versioning.md) for bump rules and release flow.
 See [release-branch-strategy.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/release-branch-strategy.md) for `main`/`develop`/`release/*` branch responsibilities.
 Use `scripts/version-auto-increment.ps1` to auto-calculate next patch/minor/major before applying version bump updates.
+Use `.github/release-notes-template.md` to keep release notes format consistent across versions.
 For emergency patch releases, follow [hotfix-process.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/hotfix-process.md).
 
 ## Examples
