@@ -117,81 +117,11 @@ jobs:
           git push origin $tag
           Write-Host "✅ Tag created and pushed: $tag"
 
-  # Phase 4: Pack and publish NuGet packages
-  publish-nuget:
-    name: Phase 4 - Publish NuGet Packages
+  # Phase 4: Create GitHub Release (publish workflow handles NuGet push)
+  create-release:
+    name: Phase 4 - Create GitHub Release
     runs-on: windows-latest
     needs: [version-bump, create-tag]
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: "v${{ github.event.inputs.version }}"
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      - name: Restore dependencies
-        run: dotnet restore ${{ env.SOLUTION_FILE }}
-
-      - name: Build Release
-        run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Release --no-restore /p:Version=${{ github.event.inputs.version }}
-
-      - name: Run tests
-        run: dotnet test ${{ env.SOLUTION_FILE }} --configuration Release --no-build --verbosity normal
-
-      - name: Pack NuGet packages
-        shell: pwsh
-        run: |
-          # Pack CLI tool
-          dotnet pack .\src\ElBruno.CopilotCLIMonitor.Cli\ElBruno.CopilotCLIMonitor.Cli.csproj `
-            --configuration Release `
-            --no-build `
-            --output .\artifacts `
-            /p:Version=${{ github.event.inputs.version }}
-          
-          Write-Host "✅ NuGet packages packed"
-          Get-ChildItem .\artifacts -Filter *.nupkg -File
-
-      - name: Authenticate with NuGet (OIDC)
-        id: login
-        uses: NuGet/login@v1
-        with:
-          user: ${{ github.repository_owner }}
-
-      - name: Publish to NuGet
-        shell: pwsh
-        run: |
-          $packages = Get-ChildItem .\artifacts -Filter *.nupkg -File | Where-Object { $_.Name -notlike '*.snupkg' }
-          Write-Host "Publishing $($packages.Count) package(s)..."
-          
-          foreach ($package in $packages) {
-            Write-Host "Publishing: $($package.Name)"
-            dotnet nuget push $package.FullName `
-              --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" `
-              --source https://api.nuget.org/v3/index.json `
-              --skip-duplicate
-          }
-          
-          Write-Host "✅ All packages published to NuGet"
-
-      - name: Upload NuGet artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: nuget-packages
-          path: .\artifacts\*.nupkg
-
-  # Phase 5: Create GitHub Release
-  create-release:
-    name: Phase 5 - Create GitHub Release
-    runs-on: windows-latest
-    needs: [version-bump, create-tag, publish-nuget]
     permissions:
       contents: write
     steps:
@@ -200,12 +130,6 @@ jobs:
         with:
           fetch-depth: 0
           ref: "v${{ github.event.inputs.version }}"
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: nuget-packages
-          path: ./artifacts
 
       - name: Generate changelog
         id: changelog
@@ -244,7 +168,6 @@ jobs:
           body: ${{ steps.changelog.outputs.changelog }}
           draft: ${{ github.event.inputs.draft }}
           prerelease: false
-          files: ./artifacts/**/*.nupkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -252,7 +175,7 @@ jobs:
   release-summary:
     name: Release Summary
     runs-on: windows-latest
-    needs: [verify-main, version-bump, create-tag, publish-nuget, create-release]
+    needs: [verify-main, version-bump, create-tag, create-release]
     if: always()
     steps:
       - name: Print Summary
@@ -266,8 +189,7 @@ jobs:
           Write-Host "  ✅ Phase 1 (Verify Main): ${{ needs.verify-main.result }}"
           Write-Host "  ✅ Phase 2 (Version Bump): ${{ needs.version-bump.result }}"
           Write-Host "  ✅ Phase 3 (Create Tag): ${{ needs.create-tag.result }}"
-          Write-Host "  ✅ Phase 4 (Publish NuGet): ${{ needs.publish-nuget.result }}"
-          Write-Host "  ✅ Phase 5 (GitHub Release): ${{ needs.create-release.result }}"
+          Write-Host "  ✅ Phase 4 (GitHub Release): ${{ needs.create-release.result }}"
           
           Write-Host "`nRelease Information:" -ForegroundColor Yellow
           Write-Host "  Version: v${{ github.event.inputs.version }}"
