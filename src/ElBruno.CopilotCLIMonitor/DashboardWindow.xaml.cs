@@ -38,7 +38,7 @@ public partial class DashboardWindow : Window
             _items.Add(new EventViewModel(e));
         }
 
-        StatusText.Text = $"{_items.Count} event(s)   |   Listening on port {IpcConstants.DefaultPort}";
+        StatusText.Text = UiResources.Get("StatusListeningTemplate", _items.Count, IpcConstants.DefaultPort);
     }
 
     private void ClearHistory_Click(object sender, RoutedEventArgs e)
@@ -46,7 +46,7 @@ public partial class DashboardWindow : Window
         _store.Clear();
         _allEvents.Clear();
         _items.Clear();
-        StatusText.Text = "History cleared.";
+        StatusText.Text = UiResources.Get("StatusHistoryCleared");
     }
 
     private void Close_Click(object sender, RoutedEventArgs e) => Hide();

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value></resheader>
+  <data name="TrayAppName" xml:space="preserve"><value>Moniteur CopilotCLI</value></data>
+  <data name="MenuOpenDashboard" xml:space="preserve"><value>Ouvrir le tableau de bord</value></data>
+  <data name="MenuRecentEvents" xml:space="preserve"><value>Événements récents</value></data>
+  <data name="MenuSettings" xml:space="preserve"><value>Paramètres</value></data>
+  <data name="MenuPauseNotifications" xml:space="preserve"><value>Mettre en pause les notifications</value></data>
+  <data name="MenuResumeNotifications" xml:space="preserve"><value>Reprendre les notifications</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>À propos</value></data>
+  <data name="MenuExit" xml:space="preserve"><value>Quitter</value></data>
+  <data name="SettingsTitle" xml:space="preserve"><value>Paramètres CopilotCLI Monitor</value></data>
+  <data name="TokenConfigured" xml:space="preserve"><value>Configuré</value></data>
+  <data name="TokenNotConfigured" xml:space="preserve"><value>Non configuré</value></data>
+  <data name="QuietHoursDisabled" xml:space="preserve"><value>Désactivé</value></data>
+  <data name="TelemetryEnabled" xml:space="preserve"><value>Activé (anonyme)</value></data>
+  <data name="TelemetryDisabled" xml:space="preserve"><value>Désactivé</value></data>
+</root>
