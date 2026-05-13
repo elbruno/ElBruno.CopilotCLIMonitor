@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 using ElBruno.CopilotCLIMonitor.Core.Models;
+using ElBruno.CopilotCLIMonitor.Core.Services;
 using Microsoft.Extensions.Logging;
 
 namespace ElBruno.CopilotCLIMonitor.Services;
@@ -100,6 +101,14 @@ public sealed class IpcServer : IIpcServer
                     _logger.LogWarning("Received invalid (null) notify request body.");
                     resp.StatusCode = 400;
                     await WriteJsonAsync(resp, new NotifyResponse(false, "Invalid request body"));
+                    return;
+                }
+
+                if (!NotifyRequestValidator.TryValidate(notifyReq, out var validationError))
+                {
+                    _logger.LogWarning("Rejected invalid notify request: {Reason}", validationError);
+                    resp.StatusCode = 400;
+                    await WriteJsonAsync(resp, new NotifyResponse(false, validationError));
                     return;
                 }
 

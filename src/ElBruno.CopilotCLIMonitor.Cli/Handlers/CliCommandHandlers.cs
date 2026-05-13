@@ -1,5 +1,6 @@
 using ElBruno.CopilotCLIMonitor.Core.Interfaces;
 using ElBruno.CopilotCLIMonitor.Core.Models;
+using ElBruno.CopilotCLIMonitor.Core.Services;
 
 namespace ElBruno.CopilotCLIMonitor.Cli.Handlers;
 
@@ -57,6 +58,12 @@ public sealed class CliCommandHandlers(
         branch ??= detector.GetCurrentBranch(cwd);
 
         var request = new NotifyRequest(eventName, message, repository, branch, source);
+        if (!NotifyRequestValidator.TryValidate(request, out var validationError))
+        {
+            await _err.WriteLineAsync($"Error: {validationError}");
+            return 1;
+        }
+
         var sent = await ipcClient.SendNotifyAsync(request);
 
         if (sent)
