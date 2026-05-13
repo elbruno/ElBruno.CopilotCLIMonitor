@@ -37,8 +37,8 @@
         </Border>
 
         <!-- Settings Sections -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel Padding="20">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20">
+            <StackPanel>
                 
                 <!-- IPC Configuration Section -->
                 <TextBlock Style="{StaticResource Heading3TextBlockStyle}" 
