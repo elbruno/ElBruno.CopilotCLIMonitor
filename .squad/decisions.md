@@ -102,6 +102,29 @@
 - Professional code quality; maintainable long-term
 - Enforced via code review guidelines in CONTRIBUTING.md
 
+### Decision 13 — GitHub Issues as Primary Work Tracking SSOT
+**Date:** 2026-05-13 | **Agent:** Squad (Team Initialization)
+- GitHub Issues is the single source of truth for all work items
+- All tasks, bugs, features, and documentation tracked as issues
+- Replaces ad-hoc task tracking; centralizes visibility
+- Team members review and pull work from issue queue
+
+### Decision 14 — Ralph Auto-Triage and Routing
+**Date:** 2026-05-13 | **Agent:** Squad (Team Initialization)
+- Ralph agent activated for continuous work monitoring and auto-triage
+- Automatically routes issues by category and priority
+- Prevents bottlenecks; ensures work reaches right team member
+- Monitoring dashboards track issue lifecycle and team velocity
+
+### Decision 15 — Triage Routing Rules by Category
+**Date:** 2026-05-13 | **Agent:** Squad (Team Initialization)
+- **`type:feature`** → Feature backlog (prioritized by roadmap, assigned to Martin/Dolph)
+- **`type:bug`** → Bug triage (assessed for severity/impact, routed to affected domain)
+- **`type:docs`** → Documentation (assigned to River)
+- **`type:test`** → Testing and QA (assigned to Chevy)
+- **`type:infrastructure`** → DevOps and tooling (assigned to Sish)
+- Weekly triage review in team ceremonies ensures accuracy
+
 ## Governance
 
 - All meaningful changes require team consensus
