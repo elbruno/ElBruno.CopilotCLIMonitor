@@ -9,7 +9,9 @@ public class LoggingFactoryBuilderTests
     public void Create_DefaultLevel_IsInformation()
     {
         var previous = Environment.GetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL");
+        var previousDiagnostic = Environment.GetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE");
         Environment.SetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL", null);
+        Environment.SetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE", null);
 
         try
         {
@@ -22,6 +24,7 @@ public class LoggingFactoryBuilderTests
         finally
         {
             Environment.SetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL", previous);
+            Environment.SetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE", previousDiagnostic);
         }
     }
 
@@ -29,6 +32,8 @@ public class LoggingFactoryBuilderTests
     public void Create_WithDebugLevelEnv_EnablesDebugLogs()
     {
         var previous = Environment.GetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL");
+        var previousDiagnostic = Environment.GetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE");
+        Environment.SetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE", null);
         Environment.SetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL", "Debug");
 
         try
@@ -40,6 +45,28 @@ public class LoggingFactoryBuilderTests
         finally
         {
             Environment.SetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL", previous);
+            Environment.SetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE", previousDiagnostic);
+        }
+    }
+
+    [Fact]
+    public void Create_WhenDiagnosticModeEnabled_EnablesDebugLogs()
+    {
+        var previous = Environment.GetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL");
+        var previousDiagnostic = Environment.GetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE");
+        Environment.SetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL", "Information");
+        Environment.SetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE", "true");
+
+        try
+        {
+            using var factory = LoggingFactoryBuilder.Create();
+            var logger = factory.CreateLogger("test");
+            Assert.True(logger.IsEnabled(LogLevel.Debug));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("COPILOTCLIMON_LOG_LEVEL", previous);
+            Environment.SetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE", previousDiagnostic);
         }
     }
 }

@@ -128,6 +128,31 @@ public class SystemCommandLineWiringTests : IDisposable
         Assert.Equal(0, exit);
     }
 
+    [Fact]
+    public async Task Diagnostic_Enable_ReturnsZero()
+    {
+        var previous = Environment.GetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE");
+        try
+        {
+            var root = new RootCommand { DiagnosticCommand.Build() };
+            var exit = await root.Parse(["diagnostic", "--enable"]).InvokeAsync();
+            Assert.Equal(0, exit);
+            Assert.Equal("true", Environment.GetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE"));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("COPILOTCLIMON_DIAGNOSTIC_MODE", previous);
+        }
+    }
+
+    [Fact]
+    public async Task Diagnostic_EnableAndDisableTogether_ReturnsOne()
+    {
+        var root = new RootCommand { DiagnosticCommand.Build() };
+        var exit = await root.Parse(["diagnostic", "--enable", "--disable"]).InvokeAsync();
+        Assert.Equal(1, exit);
+    }
+
     // ── command metadata ─────────────────────────────────────────────────────
 
     [Fact]
@@ -156,5 +181,12 @@ public class SystemCommandLineWiringTests : IDisposable
     {
         var cmd = UpdateCommand.Build();
         Assert.Contains("update", cmd.Description, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void DiagnosticCommand_Description_ContainsDiagnostic()
+    {
+        var cmd = DiagnosticCommand.Build();
+        Assert.Contains("diagnostic", cmd.Description, StringComparison.OrdinalIgnoreCase);
     }
 }
