@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Media;
 using System.Windows.Forms;
 using System.Globalization;
 using ElBruno.CopilotCLIMonitor.Models;
@@ -67,6 +68,33 @@ public class AppFormattingTests
         Assert.NotNull(method);
         var icon = method!.Invoke(null, [eventType]);
         Assert.Equal(expected, icon);
+    }
+
+    [Theory]
+    [InlineData(EventType.Error, "Hand")]
+    [InlineData(EventType.HookFailed, "Hand")]
+    [InlineData(EventType.Warning, "Exclamation")]
+    [InlineData(EventType.ApprovalRequired, "Exclamation")]
+    [InlineData(EventType.TaskCompleted, "Asterisk")]
+    [InlineData(EventType.Unknown, "Beep")]
+    public void GetNotificationSound_ReturnsExpectedSystemSound(EventType eventType, string expectedName)
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("GetNotificationSound", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var sound = method!.Invoke(null, [eventType]) as SystemSound;
+        Assert.NotNull(sound);
+
+        var expected = expectedName switch
+        {
+            "Hand" => SystemSounds.Hand,
+            "Exclamation" => SystemSounds.Exclamation,
+            "Asterisk" => SystemSounds.Asterisk,
+            _ => SystemSounds.Beep
+        };
+
+        Assert.Same(expected, sound);
     }
 
     [Fact]
