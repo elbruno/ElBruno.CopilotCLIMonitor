@@ -118,6 +118,16 @@ public class SystemCommandLineWiringTests : IDisposable
         Assert.Equal(0, exit);
     }
 
+    // ── update command ────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task Update_WhenLatestIsNewer_ReturnsZero()
+    {
+        var root = new RootCommand { UpdateCommand.Build() };
+        var exit = await root.Parse(["update", "--current-version", "1.0.0", "--latest-version", "1.1.0"]).InvokeAsync();
+        Assert.Equal(0, exit);
+    }
+
     // ── command metadata ─────────────────────────────────────────────────────
 
     [Fact]
@@ -139,5 +149,12 @@ public class SystemCommandLineWiringTests : IDisposable
     {
         var cmd = DoctorCommand.Build(_detector);
         Assert.Contains("copilotclimon", cmd.Description);
+    }
+
+    [Fact]
+    public void UpdateCommand_Description_ContainsUpdate()
+    {
+        var cmd = UpdateCommand.Build();
+        Assert.Contains("update", cmd.Description, StringComparison.OrdinalIgnoreCase);
     }
 }

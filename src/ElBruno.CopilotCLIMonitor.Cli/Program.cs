@@ -14,5 +14,6 @@ var root = new RootCommand("copilotclimon — GitHub Copilot CLI task monitor");
 root.Add(NotifyCommand.Build(notifier));
 root.Add(InitCommand.Build(detector, installer));
 root.Add(DoctorCommand.Build(detector));
+root.Add(UpdateCommand.Build());
 
 return await root.Parse(args).InvokeAsync();
