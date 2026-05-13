@@ -1,5 +1,6 @@
 using System.Windows;
 using ElBruno.CopilotCLIMonitor.Models;
+using ElBruno.CopilotCLIMonitor.Services;
 
 namespace ElBruno.CopilotCLIMonitor;
 
@@ -11,6 +12,7 @@ public partial class SettingsWindow : Window
     {
         _initialPreferences = preferences;
         InitializeComponent();
+        UiCultureSupport.ApplyFlowDirection(this);
         QuietHoursStartComboBox.ItemsSource = Enumerable.Range(0, 24).ToList();
         QuietHoursEndComboBox.ItemsSource = Enumerable.Range(0, 24).ToList();
         LogLevelComboBox.ItemsSource = new[] { "Trace", "Debug", "Information", "Warning", "Error", "Critical" };
