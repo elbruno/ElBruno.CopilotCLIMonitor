@@ -2,10 +2,12 @@ using System.CommandLine;
 using ElBruno.CopilotCLIMonitor.Cli;
 using ElBruno.CopilotCLIMonitor.Commands;
 using ElBruno.CopilotCLIMonitor.Core.Services;
+using Microsoft.Extensions.Logging;
 
 var detector = new RepositoryDetector();
 var installer = new HookInstaller();
-var notifier = new HttpEventNotifier();
+using var loggerFactory = LoggingFactoryBuilder.Create();
+var notifier = new HttpEventNotifier(loggerFactory.CreateLogger<HttpEventNotifier>());
 
 var root = new RootCommand("copilotclimon — GitHub Copilot CLI task monitor");
 
