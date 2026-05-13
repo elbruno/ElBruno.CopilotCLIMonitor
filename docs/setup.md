@@ -93,6 +93,11 @@ Open settings from the Systray context menu:
 - Startup on Windows boot
 - Logging level (Info, Debug)
 
+Preferences are loaded in this order:
+
+1. `%ProgramData%\CopilotCliMon\preferences.system.json` (machine-wide defaults)
+2. `%AppData%\CopilotCliMon\preferences.json` (per-user overrides)
+
 ### Repository-specific configuration
 
 Repository configuration is stored in `.copilotclimonitor`:
