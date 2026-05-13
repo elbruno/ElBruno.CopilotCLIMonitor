@@ -225,6 +225,7 @@ See [developer-guide.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/bl
 
 This project uses Semantic Versioning (`MAJOR.MINOR.PATCH`) with an automated release pipeline.
 See [versioning.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/versioning.md) for bump rules and release flow.
+For emergency patch releases, follow [hotfix-process.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/hotfix-process.md).
 
 ## Examples
 
