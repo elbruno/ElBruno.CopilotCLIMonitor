@@ -157,6 +157,12 @@ Edit `.copilotclimonitor/config.json` to customize behavior per repository:
 }
 ```
 
+Repository-level filtering is applied by `copilotclimon notify`:
+
+- If `enabled` is `false`, notifications for that repository are skipped.
+- If `notificationsEnabled` is `false`, notifications are skipped.
+- Only event names listed in `events` are forwarded to the monitor.
+
 By default, first-time initialization enables core event notifications, includes build/test/workflow events, and sets quiet hours to disabled.
 
 ## Upgrading
