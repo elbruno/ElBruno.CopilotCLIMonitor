@@ -67,7 +67,8 @@ public class AppFormattingTests
             QuietHoursEnabled = true,
             QuietHoursStart = 22,
             QuietHoursEnd = 7,
-            LogLevel = "Debug"
+            LogLevel = "Debug",
+            TelemetryOptIn = true
         };
         var summary = method!.Invoke(null, [41234, true, preferences]) as string;
 
@@ -76,6 +77,7 @@ public class AppFormattingTests
         Assert.Contains("Authentication Token: Configured", summary);
         Assert.Contains("Notifications Enabled: True", summary);
         Assert.Contains("Quiet Hours: 22:00-7:00", summary);
+        Assert.Contains("Telemetry: Enabled (Anonymous)", summary);
     }
 
     [Theory]

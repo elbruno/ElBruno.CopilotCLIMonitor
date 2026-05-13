@@ -23,6 +23,8 @@
                       Content="Play sound for notifications" Margin="0,0,0,8"/>
             <CheckBox x:Name="StartWithWindowsCheckBox"
                       Content="Start with Windows" Margin="0,0,0,12"/>
+            <CheckBox x:Name="TelemetryOptInCheckBox"
+                      Content="Share anonymous telemetry (opt-in)" Margin="0,0,0,12"/>
 
             <TextBlock Text="Quiet Hours" FontWeight="SemiBold" Margin="0,0,0,6"/>
             <CheckBox x:Name="QuietHoursEnabledCheckBox"
