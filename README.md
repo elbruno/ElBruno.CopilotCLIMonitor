@@ -231,6 +231,10 @@ See [coverage.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main
 
 See [telemetry.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/telemetry.md) for opt-in telemetry behavior and data details.
 
+## Privacy policy
+
+See [privacy-policy.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/privacy-policy.md) for data handling practices and user controls.
+
 ## User manual
 
 See [user-manual.md](https://github.com/elbruno/ElBruno.CopilotCLIMonitor/blob/main/docs/user-manual.md) for end-user step-by-step usage.
