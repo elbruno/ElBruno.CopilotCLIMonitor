@@ -110,4 +110,20 @@ public class AppFormattingTests
         var isQuiet = method!.Invoke(null, [current, start, end]);
         Assert.Equal(expected, isQuiet);
     }
+
+    [Fact]
+    public void ShouldDisplayNotification_RespectsQuietHoursAndToggle()
+    {
+        var method = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("ShouldDisplayNotification", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(method);
+        var disabled = new UserPreferences { NotificationsEnabled = false };
+        var quiet = new UserPreferences { NotificationsEnabled = true, QuietHoursEnabled = true, QuietHoursStart = 22, QuietHoursEnd = 7 };
+        var normal = new UserPreferences { NotificationsEnabled = true, QuietHoursEnabled = false };
+
+        Assert.False((bool)method!.Invoke(null, [disabled, new DateTime(2026, 1, 1, 10, 0, 0)])!);
+        Assert.False((bool)method.Invoke(null, [quiet, new DateTime(2026, 1, 1, 23, 0, 0)])!);
+        Assert.True((bool)method.Invoke(null, [normal, new DateTime(2026, 1, 1, 23, 0, 0)])!);
+    }
 }

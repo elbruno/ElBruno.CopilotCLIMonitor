@@ -70,7 +70,17 @@ $env:COPILOTCLIMON_IPC_TOKEN = "your-shared-secret"
 
 Set the same value in both monitor and CLI execution environments.
 
-## 8. Troubleshooting quick checks
+## 8. Quiet hours configuration
+
+Use tray menu **Settings** to configure quiet hours:
+
+1. Enable **Quiet hours**.
+2. Choose start and end hour (24-hour format).
+3. Save settings.
+
+During quiet hours, notifications are muted but events are still stored in dashboard history.
+
+## 9. Troubleshooting quick checks
 
 - Re-run `copilotclimon doctor`
 - Verify repository has `.copilotclimonitor\notify.ps1`
