@@ -92,6 +92,11 @@ Configure:
 - Startup behavior
 - Logging level
 
+### Localization
+
+- Automatic RTL layout support based on UI culture
+- Dashboard and settings windows adapt to right-to-left languages
+
 ## Architecture
 
 The solution has two main components:

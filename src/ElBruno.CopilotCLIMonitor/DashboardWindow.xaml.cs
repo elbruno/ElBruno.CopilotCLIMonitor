@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using ElBruno.CopilotCLIMonitor.Core.Models;
 using ElBruno.CopilotCLIMonitor.Core.Services;
+using ElBruno.CopilotCLIMonitor.Services;
 
 namespace ElBruno.CopilotCLIMonitor;
 
@@ -16,6 +17,7 @@ public partial class DashboardWindow : Window
     {
         _store = store;
         InitializeComponent();
+        UiCultureSupport.ApplyFlowDirection(this);
         EventList.ItemsSource = _items;
         EventTypeFilterComboBox.ItemsSource = new[] { AllEventTypes }.Concat(Enum.GetNames<EventType>());
         EventTypeFilterComboBox.SelectedIndex = 0;
