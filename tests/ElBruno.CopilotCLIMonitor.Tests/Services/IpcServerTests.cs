@@ -76,6 +76,62 @@ public class IpcServerTests
         }
     }
 
+    [Fact]
+    public async Task SendNotifyAsync_WhenAuthTokenRequiredAndMismatched_IsRejected()
+    {
+        var previousToken = Environment.GetEnvironmentVariable(IpcConstants.AuthTokenEnvVar);
+        Environment.SetEnvironmentVariable(IpcConstants.AuthTokenEnvVar, "server-secret");
+        try
+        {
+            var port = ReserveFreePort();
+            using var server = new IpcServer(port);
+            server.Start();
+
+            try
+            {
+                var client = new HttpIpcClient(port, authToken: "wrong-secret");
+                var sent = await client.SendNotifyAsync(new NotifyRequest("task-completed", "Done"));
+                Assert.False(sent);
+            }
+            finally
+            {
+                server.Stop();
+            }
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(IpcConstants.AuthTokenEnvVar, previousToken);
+        }
+    }
+
+    [Fact]
+    public async Task SendNotifyAsync_WhenAuthTokenMatches_IsAccepted()
+    {
+        var previousToken = Environment.GetEnvironmentVariable(IpcConstants.AuthTokenEnvVar);
+        Environment.SetEnvironmentVariable(IpcConstants.AuthTokenEnvVar, "shared-secret");
+        try
+        {
+            var port = ReserveFreePort();
+            using var server = new IpcServer(port);
+            server.Start();
+
+            try
+            {
+                var client = new HttpIpcClient(port, authToken: "shared-secret");
+                var sent = await client.SendNotifyAsync(new NotifyRequest("task-completed", "Done"));
+                Assert.True(sent);
+            }
+            finally
+            {
+                server.Stop();
+            }
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(IpcConstants.AuthTokenEnvVar, previousToken);
+        }
+    }
+
     private static int ReserveFreePort()
     {
         var listener = new System.Net.Sockets.TcpListener(IPAddress.Loopback, 0);

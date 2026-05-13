@@ -168,6 +168,16 @@ Local hook configuration:
 .copilotclimonitor
 ```
 
+### IPC authentication (optional)
+
+To require authentication between CLI and monitor IPC calls, set the same token in both processes:
+
+```powershell
+$env:COPILOTCLIMON_IPC_TOKEN = "your-shared-secret"
+```
+
+When configured, the monitor accepts only requests containing this token.
+
 ## Technology
 
 - **.NET 10** – Modern .NET runtime
