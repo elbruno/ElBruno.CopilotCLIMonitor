@@ -59,6 +59,19 @@ public class MonitorEventTests
     }
 
     [Fact]
+    public void Parse_PreservesOriginRepository()
+    {
+        var evt = MonitorEvent.Parse(
+            "task-completed",
+            "done",
+            repository: "myrepo",
+            branch: "main",
+            originRepository: "https://github.com/elbruno/myrepo.git");
+
+        Assert.Equal("https://github.com/elbruno/myrepo.git", evt.OriginRepository);
+    }
+
+    [Fact]
     public void Parse_NullRepositoryAndBranch_AreNullByDefault()
     {
         var evt = MonitorEvent.Parse("warning", "msg");

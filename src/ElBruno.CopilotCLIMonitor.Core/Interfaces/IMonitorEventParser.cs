@@ -8,5 +8,11 @@ namespace ElBruno.CopilotCLIMonitor.Core.Interfaces;
 public interface IMonitorEventParser
 {
     /// <summary>Converts a raw event-type name and message into a <see cref="MonitorEvent"/>.</summary>
-    MonitorEvent Parse(string eventTypeName, string message, string? repository = null, string? branch = null);
+    MonitorEvent Parse(
+        string eventTypeName,
+        string message,
+        string? repository = null,
+        string? branch = null,
+        string? source = null,
+        string? originRepository = null);
 }

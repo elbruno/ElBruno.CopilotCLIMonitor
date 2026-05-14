@@ -101,8 +101,8 @@ public partial class App : System.Windows.Application
     private void OnEventReceived(MonitorEvent monitorEvent)
     {
         _logger?.LogDebug(
-            "Dispatching notification event type={EventType} repository={Repository} branch={Branch}.",
-            monitorEvent.EventType, monitorEvent.Repository, monitorEvent.Branch);
+            "Dispatching notification event type={EventType} repository={Repository} branch={Branch} origin={Origin}.",
+            monitorEvent.EventType, monitorEvent.Repository, monitorEvent.Branch, monitorEvent.OriginRepository);
         _telemetryClient?.TrackEvent("event_received", monitorEvent.EventType.ToString(), monitorEvent.Repository);
         CopilotCliMonitorEventSource.Log.EventReceived(monitorEvent.EventType.ToString());
 
@@ -143,10 +143,19 @@ public partial class App : System.Windows.Application
             ? $"[{repo}] {FormatEventType(monitorEvent.EventType)}"
             : FormatEventType(monitorEvent.EventType);
 
-    private static string BuildNotificationDetails(MonitorEvent monitorEvent) =>
-        monitorEvent.Branch is { Length: > 0 } branch
+    private static string BuildNotificationDetails(MonitorEvent monitorEvent)
+    {
+        var details = monitorEvent.Branch is { Length: > 0 } branch
             ? $"{monitorEvent.Message} ({branch})"
             : monitorEvent.Message;
+
+        if (monitorEvent.OriginRepository is { Length: > 0 } originRepository)
+        {
+            details = $"{details}{Environment.NewLine}Origin: {originRepository}";
+        }
+
+        return details;
+    }
 
     private static string FormatEventType(EventType t, CultureInfo? culture = null) =>
         t == EventType.Unknown ? LocalizedText.Get("Notification", culture) : LocalizedText.GetEventTypeLabel(t, culture);
@@ -158,12 +167,7 @@ public partial class App : System.Windows.Application
         _ => 5000
     };
 
-    private static ToolTipIcon GetNotificationIcon(EventType t) => t switch
-    {
-        EventType.Error or EventType.HookFailed => ToolTipIcon.Error,
-        EventType.ApprovalRequired or EventType.Warning or EventType.LongRunningTaskWarning => ToolTipIcon.Warning,
-        _ => ToolTipIcon.Info
-    };
+    private static ToolTipIcon GetNotificationIcon(EventType t) => ToolTipIcon.Info;
 
     private static System.Media.SystemSound GetNotificationSound(EventType t) => t switch
     {

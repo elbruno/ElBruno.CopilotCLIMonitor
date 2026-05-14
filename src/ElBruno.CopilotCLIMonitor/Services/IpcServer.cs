@@ -122,11 +122,17 @@ public sealed class IpcServer : IIpcServer
                     notifyReq.Event,
                     notifyReq.Message,
                     notifyReq.Repository,
-                    notifyReq.Branch);
+                    notifyReq.Branch,
+                    notifyReq.Source,
+                    notifyReq.OriginRepository);
 
                 _logger.LogInformation(
-                    "Event received via IPC: type={EventType} repo={Repository} branch={Branch}",
-                    monitorEvent.EventType, monitorEvent.Repository ?? "(none)", monitorEvent.Branch ?? "(none)");
+                    "Event received via IPC: type={EventType} repo={Repository} branch={Branch} source={Source} origin={Origin}",
+                    monitorEvent.EventType,
+                    monitorEvent.Repository ?? "(none)",
+                    monitorEvent.Branch ?? "(none)",
+                    monitorEvent.Source ?? "(none)",
+                    monitorEvent.OriginRepository ?? "(none)");
 
                 DispatchEventAsync(monitorEvent);
                 await WriteJsonAsync(resp, new NotifyResponse(true));

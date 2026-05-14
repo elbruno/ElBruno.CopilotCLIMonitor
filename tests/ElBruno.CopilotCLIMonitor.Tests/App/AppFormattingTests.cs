@@ -55,10 +55,10 @@ public class AppFormattingTests
     }
 
     [Theory]
-    [InlineData(EventType.Error, ToolTipIcon.Error)]
-    [InlineData(EventType.HookFailed, ToolTipIcon.Error)]
-    [InlineData(EventType.Warning, ToolTipIcon.Warning)]
-    [InlineData(EventType.ApprovalRequired, ToolTipIcon.Warning)]
+    [InlineData(EventType.Error, ToolTipIcon.Info)]
+    [InlineData(EventType.HookFailed, ToolTipIcon.Info)]
+    [InlineData(EventType.Warning, ToolTipIcon.Info)]
+    [InlineData(EventType.ApprovalRequired, ToolTipIcon.Info)]
     [InlineData(EventType.TaskCompleted, ToolTipIcon.Info)]
     public void GetNotificationIcon_ReturnsExpectedIcon(EventType eventType, ToolTipIcon expected)
     {
@@ -177,5 +177,27 @@ public class AppFormattingTests
 
         Assert.Equal("[sample-repo] Task Completed", title);
         Assert.Equal("Build done (main)", details);
+    }
+
+    [Fact]
+    public void BuildNotificationDetails_IncludeOriginRepository_WhenPresent()
+    {
+        var detailsMethod = typeof(ElBruno.CopilotCLIMonitor.App)
+            .GetMethod("BuildNotificationDetails", BindingFlags.NonPublic | BindingFlags.Static);
+
+        Assert.NotNull(detailsMethod);
+
+        var monitorEvent = new MonitorEvent(
+            EventType.TaskCompleted,
+            "Build done",
+            "sample-repo",
+            "main",
+            OriginRepository: "https://github.com/elbruno/sample-repo.git");
+
+        var details = detailsMethod!.Invoke(null, [monitorEvent]) as string;
+
+        Assert.Equal(
+            $"Build done (main){Environment.NewLine}Origin: https://github.com/elbruno/sample-repo.git",
+            details);
     }
 }

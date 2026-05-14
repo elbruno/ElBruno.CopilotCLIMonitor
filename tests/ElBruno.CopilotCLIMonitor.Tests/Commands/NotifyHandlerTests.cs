@@ -107,13 +107,27 @@ public class NotifyHandlerTests : IDisposable
     {
         _ipc.IsRunning = true;
         var sut = BuildSut();
-        await sut.RunNotifyAsync(["-e", "task-completed", "-m", "Done", "-r", "repo", "-b", "main"]);
+        await sut.RunNotifyAsync(["-e", "task-completed", "-m", "Done", "-r", "repo", "-b", "main", "-o", "https://github.com/elbruno/demo.git"]);
 
         var req = Assert.Single(_ipc.SentRequests);
         Assert.Equal("task-completed", req.Event);
         Assert.Equal("Done", req.Message);
         Assert.Equal("repo", req.Repository);
         Assert.Equal("main", req.Branch);
+        Assert.Equal("https://github.com/elbruno/demo.git", req.OriginRepository);
+    }
+
+    [Fact]
+    public async Task Notify_WithoutOriginRepository_UsesDetectorOrigin()
+    {
+        _ipc.IsRunning = true;
+        _detector.OriginToReturn = "https://github.com/elbruno/detected.git";
+        var sut = BuildSut();
+
+        await sut.RunNotifyAsync(["--event", "task-completed", "--message", "Done"]);
+
+        var req = Assert.Single(_ipc.SentRequests);
+        Assert.Equal("https://github.com/elbruno/detected.git", req.OriginRepository);
     }
 
     [Fact]

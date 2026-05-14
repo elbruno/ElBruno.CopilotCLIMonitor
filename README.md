@@ -29,60 +29,23 @@ ElBruno.CopilotCLIMonitor bridges GitHub Copilot CLI hooks and Windows desktop n
 dotnet tool install -g ElBruno.CopilotCLIMonitor
 ```
 
-The NuGet tool package includes the monitor desktop binaries and `copilotclimon` will launch them by default.
+The NuGet tool package includes the monitor desktop binaries and `copilotclimon` launches the app by default.
 
-### Optional: install desktop app separately
+For setup, initialization, automation (`init --default`), upgrade (`copilotclimon upgrade`), and alternative install methods, use:
+- [`docs/setup.md`](docs/setup.md)
+- [`docs/installer.md`](docs/installer.md)
+- [`docs/chocolatey.md`](docs/chocolatey.md)
+- [`docs/portable-distribution.md`](docs/portable-distribution.md)
 
-You can still install the tray app via portable ZIP, installer, or Chocolatey.
+## Using with Copilot CLI
 
-If your executable is in a custom path, set:
+Start the monitor app with `copilotclimon`, then use GitHub Copilot CLI normally in your terminal. Notifications appear in Windows while the app is running in the tray.
 
-```powershell
-$env:COPILOTCLIMON_APP_PATH="C:\path\to\ElBruno.CopilotCLIMonitor.exe"
-```
-
-### Start the app
-
-```powershell
-copilotclimon
-```
-
-The application runs in the Windows Systray. Look for the notification icon in your system tray.
-
-### Initialize your repository
-
-```bash
-cd your-repository
-copilotclimon init
-```
-
-This runs interactive setup (hook trigger selection), then installs repository hooks and configures event forwarding.
+### Repository init example
 
 Example interactive hook selection during `copilotclimon init --force`:
 
 ![Interactive repository init options](images/repo%20init%20options.png)
-
-Use non-interactive defaults for automation:
-
-```bash
-copilotclimon init --default
-```
-
-Refresh managed files with latest templates:
-
-```bash
-copilotclimon upgrade
-# or force a reinstall during init
-copilotclimon init --default --force
-```
-
-### Run your Copilot CLI tasks
-
-```bash
-copilot -p "Using BYOK, answer in one sentence with the wire model/deployment name you are using."
-```
-
-When your task completes, you'll receive a Windows toast notification—no terminal watching required.
 
 ## Features
 
@@ -96,7 +59,7 @@ When your task completes, you'll receive a Windows toast notification—no termi
 
 - Configurable notification behavior
 - Optional sound alerts
-- Priority levels (Info, Warning, Error)
+- Consistent Info icon for all notifications
 - Action buttons for quick responses
 
 ### Event history
@@ -159,18 +122,7 @@ copilotclimon init
 ```
 
 Detects the current repository, prompts for hook trigger selection, installs hooks, and registers event forwarding.
-
-Automation mode:
-
-```bash
-copilotclimon init --default
-```
-
-Force overwrite managed files:
-
-```bash
-copilotclimon init --default --force
-```
+For automation (`init --default`) and force refresh options, see [docs/setup.md](docs/setup.md).
 
 ### Upgrade managed hook/config files
 

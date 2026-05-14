@@ -28,6 +28,7 @@ public sealed class CliCommandHandlers(
         string? repository = null;
         string? branch = null;
         string? source = null;
+        string? originRepository = null;
 
         for (int i = 0; i < args.Length; i++)
         {
@@ -43,6 +44,8 @@ public sealed class CliCommandHandlers(
                     branch = args[++i]; break;
                 case "--source" or "-s" when i + 1 < args.Length:
                     source = args[++i]; break;
+                case "--origin-repository" or "--origin" or "-o" when i + 1 < args.Length:
+                    originRepository = args[++i]; break;
             }
         }
 
@@ -57,6 +60,7 @@ public sealed class CliCommandHandlers(
         var cwd = Directory.GetCurrentDirectory();
         repository ??= detector.GetRepositoryName(cwd);
         branch ??= detector.GetCurrentBranch(cwd);
+        originRepository ??= detector.GetOriginRepository(cwd);
 
         var repoRoot = detector.DetectRepositoryRoot(cwd);
         if (repoRoot is not null)
@@ -75,7 +79,7 @@ public sealed class CliCommandHandlers(
             }
         }
 
-        var request = new NotifyRequest(eventName, message, repository, branch, source);
+        var request = new NotifyRequest(eventName, message, repository, branch, source, originRepository);
         if (!NotifyRequestValidator.TryValidate(request, out var validationError))
         {
             await _err.WriteLineAsync($"Error: {validationError}");

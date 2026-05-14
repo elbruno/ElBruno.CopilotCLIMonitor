@@ -5,13 +5,21 @@ public record MonitorEvent(
     string Message,
     string? Repository = null,
     string? Branch = null,
-    DateTimeOffset? Timestamp = null)
+    DateTimeOffset? Timestamp = null,
+    string? Source = null,
+    string? OriginRepository = null)
 {
     // Capture UtcNow at construction so repeated access is stable.
     private readonly DateTimeOffset _capturedAt = DateTimeOffset.UtcNow;
     public DateTimeOffset OccurredAt => Timestamp ?? _capturedAt;
 
-    public static MonitorEvent Parse(string eventTypeName, string message, string? repository = null, string? branch = null)
+    public static MonitorEvent Parse(
+        string eventTypeName,
+        string message,
+        string? repository = null,
+        string? branch = null,
+        string? source = null,
+        string? originRepository = null)
     {
         var eventType = eventTypeName.ToLowerInvariant() switch
         {
@@ -27,6 +35,12 @@ public record MonitorEvent(
             _                     => EventType.Unknown
         };
 
-        return new MonitorEvent(eventType, message, repository, branch);
+        return new MonitorEvent(
+            eventType,
+            message,
+            repository,
+            branch,
+            Source: source,
+            OriginRepository: originRepository);
     }
 }

@@ -79,4 +79,19 @@ public class RepositoryDetectorTests
             Directory.Delete(tempDir, recursive: true);
         }
     }
+
+    [Fact]
+    public void GetOriginRepository_WhenDirectoryDoesNotExist_ReturnsNull()
+    {
+        var result = _sut.GetOriginRepository(@"C:\this-path-does-not-exist-8f3a2b9c");
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public void GetOriginRepository_WhenInsideGitRepo_ReturnsNullOrNonEmptyString()
+    {
+        var origin = _sut.GetOriginRepository(Directory.GetCurrentDirectory());
+        if (origin is not null)
+            Assert.NotEmpty(origin);
+    }
 }

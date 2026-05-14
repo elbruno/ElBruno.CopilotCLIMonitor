@@ -11,7 +11,7 @@
     <IsPackable>true</IsPackable>
     <ToolCommandName>copilotclimon</ToolCommandName>
     <PackageId>ElBruno.CopilotCLIMonitor</PackageId>
-    <Version>0.2.2</Version>
+    <Version>0.2.3</Version>
     <Title>GitHub Copilot CLI Monitor</Title>
     <Authors>El Bruno</Authors>
     <Description>Windows-first .NET tool that forwards GitHub Copilot CLI events to the ElBruno.CopilotCLIMonitor systray app.</Description>

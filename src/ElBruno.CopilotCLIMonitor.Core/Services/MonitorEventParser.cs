@@ -20,13 +20,23 @@ public sealed class MonitorEventParser : IMonitorEventParser
     }
 
     /// <inheritdoc/>
-    public MonitorEvent Parse(string eventTypeName, string message, string? repository = null, string? branch = null)
+    public MonitorEvent Parse(
+        string eventTypeName,
+        string message,
+        string? repository = null,
+        string? branch = null,
+        string? source = null,
+        string? originRepository = null)
     {
         _logger.LogInformation(
-            "Parsing event: type={EventType} repo={Repository} branch={Branch}",
-            eventTypeName, repository ?? "(none)", branch ?? "(none)");
+            "Parsing event: type={EventType} repo={Repository} branch={Branch} source={Source} origin={Origin}",
+            eventTypeName,
+            repository ?? "(none)",
+            branch ?? "(none)",
+            source ?? "(none)",
+            originRepository ?? "(none)");
 
-        var evt = MonitorEvent.Parse(eventTypeName, message, repository, branch);
+        var evt = MonitorEvent.Parse(eventTypeName, message, repository, branch, source, originRepository);
 
         if (evt.EventType == EventType.Unknown)
             _logger.LogWarning("Unrecognised event type '{EventType}' — mapped to Unknown.", eventTypeName);

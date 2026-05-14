@@ -34,4 +34,29 @@ public class DashboardFilteringTests
         Assert.Single(byRepo);
         Assert.Equal("repo-b", byRepo[0].Repository);
     }
+
+    [Fact]
+    public void FilterEvents_ByText_MatchesOriginRepository()
+    {
+        var events = new[]
+        {
+            new MonitorEvent(
+                EventType.TaskCompleted,
+                "migration complete",
+                "repo-a",
+                "main",
+                OriginRepository: "https://github.com/elbruno/repo-a.git"),
+            new MonitorEvent(
+                EventType.Warning,
+                "slow build",
+                "repo-b",
+                "feature/test",
+                OriginRepository: "https://github.com/elbruno/repo-b.git")
+        };
+
+        var filtered = DashboardWindow.FilterEvents(events, "repo-b.git", "All");
+
+        Assert.Single(filtered);
+        Assert.Equal("repo-b", filtered[0].Repository);
+    }
 }

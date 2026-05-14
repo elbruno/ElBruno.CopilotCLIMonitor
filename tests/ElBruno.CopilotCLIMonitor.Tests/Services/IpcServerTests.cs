@@ -21,7 +21,12 @@ public class IpcServerTests
             server.EventReceived += evt => received.TrySetResult(evt);
 
             var client = new HttpIpcClient(port);
-            var sent = await client.SendNotifyAsync(new NotifyRequest("task-completed", "Done", "repo", "main"));
+            var sent = await client.SendNotifyAsync(new NotifyRequest(
+                "task-completed",
+                "Done",
+                "repo",
+                "main",
+                OriginRepository: "https://github.com/elbruno/repo.git"));
             var monitorEvent = await received.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
             Assert.True(sent);
@@ -29,6 +34,7 @@ public class IpcServerTests
             Assert.Equal("Done", monitorEvent.Message);
             Assert.Equal("repo", monitorEvent.Repository);
             Assert.Equal("main", monitorEvent.Branch);
+            Assert.Equal("https://github.com/elbruno/repo.git", monitorEvent.OriginRepository);
         }
         finally
         {

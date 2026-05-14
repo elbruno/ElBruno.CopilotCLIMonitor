@@ -27,7 +27,9 @@ public sealed class HttpEventNotifier : IEventNotifier
             monitorEvent.EventType.ToEventString(),
             monitorEvent.Message,
             monitorEvent.Repository,
-            monitorEvent.Branch);
+            monitorEvent.Branch,
+            monitorEvent.Source,
+            monitorEvent.OriginRepository);
 
         var sent = await _client.SendNotifyAsync(request, cancellationToken);
 

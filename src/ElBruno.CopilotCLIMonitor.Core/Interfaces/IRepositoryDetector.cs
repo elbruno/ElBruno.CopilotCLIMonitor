@@ -10,4 +10,7 @@ public interface IRepositoryDetector
 
     /// <summary>Returns the current branch name, or null if unavailable.</summary>
     string? GetCurrentBranch(string workingDirectory);
+
+    /// <summary>Returns the git origin remote URL, or null if unavailable.</summary>
+    string? GetOriginRepository(string workingDirectory);
 }

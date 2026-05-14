@@ -51,6 +51,23 @@ public class RepositoryDetector : IRepositoryDetector
         }
     }
 
+    public string? GetOriginRepository(string workingDirectory)
+    {
+        if (!Directory.Exists(workingDirectory))
+            return null;
+
+        try
+        {
+            var result = RunGit(workingDirectory, "remote get-url origin");
+            var origin = result?.Trim();
+            return string.IsNullOrWhiteSpace(origin) ? null : origin;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     private static string? RunGit(string workingDirectory, string arguments)
     {
         var psi = new ProcessStartInfo("git", arguments)

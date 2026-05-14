@@ -62,6 +62,21 @@ public class SystemCommandLineWiringTests : IDisposable
     }
 
     [Fact]
+    public async Task Notify_WithOriginRepository_PassesOriginToNotifier()
+    {
+        var root = new RootCommand { NotifyCommand.Build(_notifier) };
+        await root.Parse([
+            "notify",
+            "--event", "task-completed",
+            "--message", "Done",
+            "--origin-repository", "https://github.com/elbruno/myrepo.git"
+        ]).InvokeAsync();
+
+        var evt = Assert.Single(_notifier.ReceivedEvents);
+        Assert.Equal("https://github.com/elbruno/myrepo.git", evt.OriginRepository);
+    }
+
+    [Fact]
     public async Task Notify_UnknownEvent_ForwardsAsUnknownEventType()
     {
         var root = new RootCommand { NotifyCommand.Build(_notifier) };

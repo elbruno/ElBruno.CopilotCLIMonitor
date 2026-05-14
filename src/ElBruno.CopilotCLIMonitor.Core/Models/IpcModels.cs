@@ -6,7 +6,8 @@ public record NotifyRequest(
     string Message,
     string? Repository = null,
     string? Branch = null,
-    string? Source = null);
+    string? Source = null,
+    string? OriginRepository = null);
 
 /// <summary>Response from the systray app's HTTP endpoint.</summary>
 public record NotifyResponse(bool Accepted, string? Error = null);

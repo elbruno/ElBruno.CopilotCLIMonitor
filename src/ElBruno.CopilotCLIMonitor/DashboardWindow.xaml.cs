@@ -76,7 +76,8 @@ public partial class DashboardWindow : Window
             query = query.Where(e =>
                 e.Message.Contains(needle, StringComparison.OrdinalIgnoreCase) ||
                 (e.Repository?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                (e.Branch?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false));
+                (e.Branch?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                (e.OriginRepository?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false));
         }
 
         return query.ToList();

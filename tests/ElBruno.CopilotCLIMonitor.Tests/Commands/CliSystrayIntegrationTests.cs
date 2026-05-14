@@ -54,7 +54,12 @@ public sealed class CliSystrayIntegrationTests : IDisposable
             return string.Empty;
         });
 
-        var detector = new FakeRepositoryDetector { NameToReturn = "demo-repo", BranchToReturn = "main" };
+        var detector = new FakeRepositoryDetector
+        {
+            NameToReturn = "demo-repo",
+            BranchToReturn = "main",
+            OriginToReturn = "https://github.com/elbruno/demo-repo.git"
+        };
         var handlers = new CliCommandHandlers(
             detector,
             new FakeHookInstaller(),
@@ -72,6 +77,7 @@ public sealed class CliSystrayIntegrationTests : IDisposable
         Assert.Equal("Done", payload.Message);
         Assert.Equal("demo-repo", payload.Repository);
         Assert.Equal("main", payload.Branch);
+        Assert.Equal("https://github.com/elbruno/demo-repo.git", payload.OriginRepository);
     }
 
     [Fact]

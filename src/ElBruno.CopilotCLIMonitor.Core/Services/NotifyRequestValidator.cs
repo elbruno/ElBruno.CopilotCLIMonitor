@@ -41,6 +41,12 @@ public static partial class NotifyRequestValidator
             return false;
         }
 
+        if (!IsValidOptionalText(request.OriginRepository, MaxContextLength))
+        {
+            error = "Invalid origin repository value.";
+            return false;
+        }
+
         error = null;
         return true;
     }
