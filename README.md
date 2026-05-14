@@ -1,5 +1,7 @@
 # ElBruno.CopilotCLIMonitor
 
+![30-second demo of ElBruno.CopilotCLIMonitor](images/Copilot%20CLI%20Monitor%20-%20demo01.gif)
+
 ![license](https://img.shields.io/github/license/elbruno/ElBruno.CopilotCLIMonitor)
 [![NuGet](https://img.shields.io/nuget/v/ElBruno.CopilotCLIMonitor)](https://www.nuget.org/packages/ElBruno.CopilotCLIMonitor)
 ![.NET](https://img.shields.io/badge/.NET-10+-512BD4)
