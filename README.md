@@ -58,6 +58,10 @@ copilotclimon init
 
 This runs interactive setup (hook trigger selection), then installs repository hooks and configures event forwarding.
 
+Example interactive hook selection during `copilotclimon init --force`:
+
+![Interactive repository init options](images/repo%20init%20options.png)
+
 Use non-interactive defaults for automation:
 
 ```bash
