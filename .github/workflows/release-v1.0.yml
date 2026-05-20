@@ -161,7 +161,7 @@ jobs:
           "changelog<<EOF`n$changelog`nEOF" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: "v${{ github.event.inputs.version }}"
           name: "Release ${{ github.event.inputs.version }}"
