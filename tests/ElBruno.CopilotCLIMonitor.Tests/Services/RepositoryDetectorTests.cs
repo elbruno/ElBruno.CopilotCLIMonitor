@@ -28,7 +28,9 @@ public class RepositoryDetectorTests
         var root = _sut.DetectRepositoryRoot(Directory.GetCurrentDirectory());
         Assert.NotNull(root);
         var gitDir = Path.Combine(root, ".git");
-        Assert.True(Directory.Exists(gitDir), $".git directory expected at: {gitDir}");
+        Assert.True(
+            Directory.Exists(gitDir) || File.Exists(gitDir),
+            $".git entry (directory in normal clones, file in worktrees) expected at: {gitDir}");
     }
 
     [Fact]
