@@ -144,7 +144,9 @@ public class IpcServerTests
     {
         var port = ReserveFreePort();
         using var server = new IpcServer(port);
-        server.EventReceived += _ => Thread.Sleep(500);
+        // Use a long handler sleep so the assertion budget is clearly below handler duration
+        // even on a loaded CI runner. The test proves the server dispatches fire-and-forget.
+        server.EventReceived += _ => Thread.Sleep(2000);
         server.Start();
 
         try
@@ -155,7 +157,7 @@ public class IpcServerTests
             sw.Stop();
 
             Assert.True(sent);
-            Assert.True(sw.ElapsedMilliseconds < 400, $"Expected fast response, got {sw.ElapsedMilliseconds}ms.");
+            Assert.True(sw.ElapsedMilliseconds < 1000, $"Expected fast response, got {sw.ElapsedMilliseconds}ms.");
         }
         finally
         {
