@@ -28,6 +28,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - (No security updates yet)
 
+## [0.2.6] - 2026-07-30
+
+### Fixed
+- Stabilized IPC timing test for CI runners with proper synchronization (#113)
+- Fixed race condition in UserPreferencesStore env var isolation for parallel test execution (#112)
+- Updated actions/setup-dotnet from v5 to v6 for latest runtime fixes (#110)
+
+### Security
+- Updated Microsoft.Extensions.Logging.Console from 10.0.8 to 10.0.10 for security and reliability (#111)
+
 ## [1.0.0] - 2026-05-12
 
 ### Added

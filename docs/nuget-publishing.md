@@ -141,7 +141,7 @@ This workflow is CI-only. It never publishes to NuGet.org.
 
 ### Publish NuGet workflow
 
-**File:** `.github/workflows/publish-nuget.yml`
+**File:** `.github/workflows/publish.yml`
 
 Triggers on:
 - GitHub Release published
