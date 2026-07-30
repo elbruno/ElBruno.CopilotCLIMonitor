@@ -22,6 +22,16 @@ public sealed class UserPreferencesStoreTests : IDisposable
         "COPILOTCLIMON_TELEMETRY_INSTALLATION_ID"
     ];
 
+    public UserPreferencesStoreTests()
+    {
+        // Clear all env vars at construction time so parallel test classes (e.g.
+        // LoggingFactoryBuilderTests) cannot leak values into these tests.
+        foreach (var envVar in EnvironmentVariablesToReset)
+        {
+            Environment.SetEnvironmentVariable(envVar, null);
+        }
+    }
+
     [Fact]
     public void Load_WhenFileDoesNotExist_ReturnsDefaults()
     {
