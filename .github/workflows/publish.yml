@@ -50,6 +50,9 @@ jobs:
     - name: Run tests
       run: dotnet test .\ElBruno.CopilotCLIMonitor.sln --configuration Release --no-build --nologo --filter "FullyQualifiedName!=ElBruno.CopilotCLIMonitor.Tests.Services.IpcServerTests.SendNotifyAsync_DoesNotBlockOnSlowEventHandlers"
 
+    - name: Pack Core package
+      run: dotnet pack .\src\ElBruno.CopilotCLIMonitor.Core\ElBruno.CopilotCLIMonitor.Core.csproj --configuration Release --no-build --output .\artifacts /p:Version=${{ steps.tag.outputs.VERSION }}
+
     - name: Pack CLI package
       run: dotnet pack .\src\ElBruno.CopilotCLIMonitor.Cli\ElBruno.CopilotCLIMonitor.Cli.csproj --configuration Release --no-build --output .\artifacts /p:Version=${{ steps.tag.outputs.VERSION }}
 
@@ -66,8 +69,7 @@ jobs:
         foreach ($package in $packages) {
           dotnet nuget push $package.FullName `
             --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" `
-            --source https://api.nuget.org/v3/index.json `
-            --skip-duplicate
+            --source https://api.nuget.org/v3/index.json
         }
 
     - name: Upload package to release
