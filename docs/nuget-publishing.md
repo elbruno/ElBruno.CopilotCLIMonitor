@@ -109,14 +109,14 @@ git push origin v1.0.0
 
 ### 7. Automated publishing
 
-When a GitHub Release is published, the `publish-nuget.yml` workflow automatically:
+When a GitHub Release is published, the `publish.yml` workflow automatically:
 
 1. Extracts version from tag
 2. Builds the project
 3. Runs tests
-4. Creates NuGet package
+4. Creates the CLI package
 5. Exchanges the GitHub OIDC token for a short-lived NuGet API key
-6. Publishes to NuGet.org
+6. Publishes the CLI package to NuGet.org
 7. Uploads artifacts to release
 
 ## Publishing workflows
@@ -134,7 +134,7 @@ Steps:
 2. Restore dependencies
 3. Build (Release configuration)
 4. Run tests
-5. Create NuGet package
+5. Create the CLI package
 6. Upload artifacts
 
 This workflow is CI-only. It never publishes to NuGet.org.
@@ -151,16 +151,18 @@ Steps:
 2. Setup .NET 10
 3. Restore and build
 4. Run tests
-5. Create NuGet package
+5. Create the CLI package
 6. Use `NuGet/login@v1` with GitHub OIDC to get a short-lived API key
-7. Publish to NuGet.org using Trusted Publisher
+7. Publish the CLI package to NuGet.org using Trusted Publisher
 8. Upload package to GitHub Release
 
-The NuGet Trusted Publishing policy must allow the `.github/workflows/publish-nuget.yml` workflow file for this repository. The workflow uses `github.repository_owner` as the NuGet username, so the repository owner must also be a package owner on NuGet.org.
+The NuGet Trusted Publishing policy must allow the `.github/workflows/publish.yml` workflow file for this repository. The workflow uses `github.repository_owner` as the NuGet username, so the repository owner must also be a package owner on NuGet.org.
 
 ## Project file configuration
 
 ### NuGet metadata in the CLI .csproj
+
+Only the CLI project is packable and publishable. The Core and WPF projects are explicitly excluded from NuGet packaging.
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">

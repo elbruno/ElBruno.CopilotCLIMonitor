@@ -36,7 +36,7 @@ Example: `2.0.0-rc.1`
 2. Update `CHANGELOG.md` and draft release notes from `.github/release-notes-template.md`.
 3. Run build/test validation.
 4. Trigger release pipeline (`.github/workflows/release-v1.0.yml`) with the same version.
-5. Publish NuGet package(s) for the new version.
+5. Publish the CLI NuGet package for the new version.
 
 ## Validation
 
