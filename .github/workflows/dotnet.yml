@@ -29,8 +29,8 @@ jobs:
     - name: Run tests with coverage
       run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory .\artifacts\coverage-results
 
-    - name: Pack NuGet package
-      run: dotnet pack --configuration Release --no-build --output .\artifacts
+    - name: Pack CLI package
+      run: dotnet pack .\src\ElBruno.CopilotCLIMonitor.Cli\ElBruno.CopilotCLIMonitor.Cli.csproj --configuration Release --no-build --output .\artifacts
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v7

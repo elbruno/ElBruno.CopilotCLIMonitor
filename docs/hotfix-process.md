@@ -30,7 +30,7 @@ A hotfix is appropriate when all of the following are true:
 1. Bump **PATCH** version using `scripts/version-bump.ps1 -Version X.Y.Z`.
 2. Update `CHANGELOG.md` with hotfix details.
 3. Trigger release workflow (`.github/workflows/release-v1.0.yml`) with the same version.
-4. Publish all NuGet packages/libraries for the new version.
+4. Publish the CLI NuGet package for the new version.
 
 ## Post-release follow-up
 

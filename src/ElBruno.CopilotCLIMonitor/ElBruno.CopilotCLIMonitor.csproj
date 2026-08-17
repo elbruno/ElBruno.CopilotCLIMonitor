@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>0.2.6</Version>
+    <Version>0.3.1</Version>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -12,6 +12,7 @@
     <AssemblyName>ElBruno.CopilotCLIMonitor</AssemblyName>
     <RootNamespace>ElBruno.CopilotCLIMonitor</RootNamespace>
     <IsPackable>false</IsPackable>
+    <IsPublishable>false</IsPublishable>
   </PropertyGroup>
 
   <ItemGroup>

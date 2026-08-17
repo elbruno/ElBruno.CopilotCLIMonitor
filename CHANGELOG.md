@@ -28,6 +28,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - (No security updates yet)
 
+## [0.3.1] - 2026-08-17
+
+### Changed
+- Standardized NuGet packaging on the CLI tool only.
+- Marked Core and WPF projects non-packable/non-publishable.
+- Updated release docs and workflows to describe the CLI package only.
+
 ## [0.2.6] - 2026-07-30
 
 ### Fixed
@@ -83,5 +90,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/elbruno/ElBruno.CopilotCLIMonitor/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/elbruno/ElBruno.CopilotCLIMonitor/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/elbruno/ElBruno.CopilotCLIMonitor/compare/v0.2.6...v0.3.1
 [1.0.0]: https://github.com/elbruno/ElBruno.CopilotCLIMonitor/releases/tag/v1.0.0
