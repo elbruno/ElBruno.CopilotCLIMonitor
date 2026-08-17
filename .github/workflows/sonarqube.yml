@@ -6,17 +6,36 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  sonar:
+  sonar-gate:
     runs-on: windows-latest
-    if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_HOST_URL != '' }}
+    outputs:
+      enabled: ${{ steps.gate.outputs.enabled }}
+    steps:
+      - name: Evaluate SonarQube secret availability
+        id: gate
+        shell: pwsh
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          $enabled = (-not [string]::IsNullOrWhiteSpace($env:SONAR_TOKEN)) -and (-not [string]::IsNullOrWhiteSpace($env:SONAR_HOST_URL))
+          "enabled=$($enabled.ToString().ToLowerInvariant())" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+  sonar:
+    needs: sonar-gate
+    runs-on: windows-latest
+    if: ${{ needs['sonar-gate'].outputs.enabled == 'true' }}
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v6
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
 
@@ -27,8 +46,8 @@ jobs:
         run: >
           dotnet sonarscanner begin
           /k:"elbruno_ElBruno.CopilotCLIMonitor"
-          /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
-          /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          /d:sonar.host.url="${{ env.SONAR_HOST_URL }}"
+          /d:sonar.token="${{ env.SONAR_TOKEN }}"
 
       - name: Build
         run: dotnet build --configuration Release
@@ -37,4 +56,4 @@ jobs:
         run: dotnet test --configuration Release --no-build
 
       - name: Sonar end
-        run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+        run: dotnet sonarscanner end /d:sonar.token="${{ env.SONAR_TOKEN }}"
