@@ -1,5 +1,7 @@
 # ElBruno.CopilotCLIMonitor
 
+> **Retired:** This project is no longer maintained. No further updates, bug fixes, security fixes, or support will be provided. The documentation and releases below are preserved for existing users and historical reference; new installations are not recommended.
+
 ![30-second demo of ElBruno.CopilotCLIMonitor](images/Copilot%20CLI%20Monitor%20-%20demo01.gif)
 
 ![license](https://img.shields.io/github/license/elbruno/ElBruno.CopilotCLIMonitor)
